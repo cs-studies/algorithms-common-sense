@@ -91,25 +91,38 @@ fn foundations_array() {
     println!("The size of 'arr' is {}", arr_len);
     println!("'arr' occupies {} bytes", size_of_val(&arr));
 
-    // Read
+    //// Read
+    if let Some(val) = arr.get(1) {
+        println!("Read value at index 1: {val}");
+    }
+    // Using 'for'.
     for i in 0..arr_len {
         println!("Index {}: {}", i, arr[i]);
     }
 
-    // Search
+    //// Search
     println!("'arr' contains 'dates': {}", arr.contains(&"dates"));
     println!("'arr' contains 'pears': {}", arr.contains(&"pears"));
-    // Finds the first item only.
-    println!("'dates' are at index {:?}",
-             arr.iter().position(|val| *val == "dates"));
-    println!("'horses' are at index {:?}",
-             arr.iter().position(|val| *val == "horses"));
+    // Find the first occurrence.
+    for item in ["dates", "hourses"] {
+        if let Some(index) = arr.iter().position(|val| *val == item) {
+            println!("Found '{item}' at index {index}");
+        } else {
+            println!("Didn't find '{item}'");
+        }
+    }
 
-    // Insert (actually Replace)
+    //// Insert
+    // Actually replace.
     arr[1] = "pears";
     println!("'arr' after replace {:?}", arr);
 
-    // Delete
+    //// Delete
+    // Kinda 🫣. Array is a fixed-size type in Rust.
+    // Since we're playing around with the basics,
+    // let's mention a dynamically-sized slice here.
+    let sl = &arr[1..];
+    println!("Slice without 'apples': {:?}", sl);
 }
 
 fn foundations_vector() {
@@ -119,25 +132,29 @@ fn foundations_vector() {
     println!("The size of 'vec' is {}", vec.len());
     println!("'vec' occupies {} bytes", size_of_val(&vec));
 
-    // Read
+    //// Read
+    if let Some(val) = vec.get(1) {
+        println!("Read value at index 1: {val}");
+    }
+    // Using 'for_each'.
     vec.iter().enumerate().for_each(|(i, val)| println!("Index {}: {}", i, val));
 
-    // Search
+    //// Search
     println!("'vec' contains 'dates': {}", vec.contains(&"dates"));
     println!("'vec' contains 'pears': {}", vec.contains(&"pears"));
-    // Finds all items.
+    // Find all occurrences.
     vec
         .iter()
         .enumerate()
         .filter(|&(_i, val)| *val == "dates")
         .for_each(|(i, _val)| println!("Found 'dates' at index {i}"));
 
-    // Insert
+    //// Insert
     vec.insert(1, "horses");
     vec.push("pears");
     println!("'vec' after inserts is {:?}", vec);
 
-    // Delete
+    //// Delete
     vec.remove(1);
     vec.pop();
     println!("'vec' after removals is {:?}", vec);
@@ -151,7 +168,7 @@ fn foundations_set() {
     println!("The size of 'set' is {}", set.len());
     println!("'set' occupies {} bytes", size_of_val(&set));
 
-    // Read
+    //// Read
     for val in set {
         println!("{val}");
     }
