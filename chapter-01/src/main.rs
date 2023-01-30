@@ -84,36 +84,32 @@ fn greet_us_array() {
 }
 
 fn foundations_array() {
-    let mut arr = ["apples", "bananas", "dates"];
-    let arr_len = arr.len();
+    let mut arr = ["apples", "bananas", "dates", "dates"];
 
     println!("\n*** Array");
-    println!("The size of 'arr' is {}", arr_len);
+    println!("{:?}", arr);
+    println!("The size of 'arr' is {}", arr.len());
     println!("'arr' occupies {} bytes", size_of_val(&arr));
 
     //// Read
-    if let Some(val) = arr.get(1) {
-        println!("Read value at index 1: {val}");
-    }
-    // Using 'for'.
-    for i in 0..arr_len {
-        println!("Index {}: {}", i, arr[i]);
+    let i = 1;
+    if let Some(val) = arr.get(i) {
+        println!("Read value at index {}: {:?}", i, val);
     }
 
     //// Search
-    println!("'arr' contains 'dates': {}", arr.contains(&"dates"));
-    println!("'arr' contains 'pears': {}", arr.contains(&"pears"));
-    // Find the first occurrence.
-    for item in ["dates", "hourses"] {
-        if let Some(index) = arr.iter().position(|val| *val == item) {
-            println!("Found '{item}' at index {index}");
-        } else {
-            println!("Didn't find '{item}'");
+    // Linear search.
+    let lookup = "dates";
+    for (i, val) in arr.iter().enumerate() {
+        if val.eq(&lookup) {
+            println!("Found {:?} at index {}", val, i);
         }
     }
 
     //// Insert
-    // Actually replace.
+    // Kinda 🫣. Array is a fixed-size type in Rust,
+    // hence we cannot insert new elements.
+    // But we can change value stored at some index.
     arr[1] = "pears";
     println!("'arr' after replace {:?}", arr);
 
@@ -121,55 +117,74 @@ fn foundations_array() {
     // Kinda 🫣. Array is a fixed-size type in Rust.
     // Since we're playing around with the basics,
     // let's mention a dynamically-sized slice here.
+    // We also examine a vector (growable array)
+    // in the following function.
     let sl = &arr[1..];
     println!("Slice without 'apples': {:?}", sl);
 }
 
 fn foundations_vector() {
-    let mut vec = vec!["apples", "bananas", "dates"];
+    let mut vec = vec!["apples", "bananas", "dates", "dates"];
 
     println!("\n*** Vector");
+    println!("{:?}", vec);
     println!("The size of 'vec' is {}", vec.len());
     println!("'vec' occupies {} bytes", size_of_val(&vec));
 
     //// Read
-    if let Some(val) = vec.get(1) {
-        println!("Read value at index 1: {val}");
+    let i = 1;
+    if let Some(val) = vec.get(i) {
+        println!("Read value at index {}: {:?}", i, val);
     }
-    // Using 'for_each'.
-    vec.iter().enumerate().for_each(|(i, val)| println!("Index {}: {}", i, val));
 
     //// Search
-    println!("'vec' contains 'dates': {}", vec.contains(&"dates"));
-    println!("'vec' contains 'pears': {}", vec.contains(&"pears"));
-    // Find all occurrences.
-    vec
-        .iter()
-        .enumerate()
-        .filter(|&(_i, val)| *val == "dates")
-        .for_each(|(i, _val)| println!("Found 'dates' at index {i}"));
+    // Linear search. Find all occurrences.
+    let lookup = "dates";
+    for (i, val) in vec.iter().enumerate() {
+        if val.eq(&lookup) {
+            println!("Found {:?} at index {}", val, i);
+        }
+    }
 
     //// Insert
     vec.insert(1, "horses");
+    // Append to the back of collection.
     vec.push("pears");
     println!("'vec' after inserts is {:?}", vec);
 
     //// Delete
     vec.remove(1);
+    // Remove the last element.
     vec.pop();
     println!("'vec' after removals is {:?}", vec);
 }
 
 
 fn foundations_set() {
-    let set = HashSet::from(["apples", "bananas", "dates"]);
+    let mut set = HashSet::from(["apples", "bananas", "dates", "dates"]);
 
-    println!("\n*** HashSet (unordered)");
+    println!("\n*** HashSet");
+    println!("{:?}", set);
     println!("The size of 'set' is {}", set.len());
     println!("'set' occupies {} bytes", size_of_val(&set));
 
     //// Read
-    for val in set {
-        println!("{val}");
+    if let Some(val) = set.get(&"bananas") {
+        println!("Got reference to {:?}", val);
     }
+
+    //// Search
+    // HashSet does not implement Index trait by default,
+    // hence we only check if 'set' contains a value.
+    let lookup = "dates";
+    println!("'set' contains {:?}: {}", lookup, set.contains(lookup));
+
+    //// Insert
+    set.insert("horses");
+    set.insert("dates");
+    println!("'set' after inserts is {:?}", set);
+
+    //// Delete
+    set.remove("horses");
+    println!("'set' after removal is {:?}", set);
 }
