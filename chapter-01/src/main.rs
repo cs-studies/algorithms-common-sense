@@ -1,10 +1,10 @@
-use crate::print_numbers::*;
-use crate::greet_us::*;
 use crate::foundations::*;
+use crate::greet_us::*;
+use crate::print_numbers::*;
 
-mod print_numbers;
-mod greet_us;
 mod foundations;
+mod greet_us;
+mod print_numbers;
 
 fn main() {
     println!("\n*** Chapter 01 ***\n");
@@ -14,7 +14,7 @@ fn main() {
     evens_step_by();
     evens_filter();
 
-    println!("");
+    println!();
     hello_strings();
     hello_array();
 
