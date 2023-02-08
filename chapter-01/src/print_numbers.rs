@@ -26,7 +26,7 @@ pub fn evens_v2() {
     println!("evens_v2: {count} 'while' calls.");
 }
 
-//// Rust Away
+//// Rust Extras
 
 pub fn evens_step_by() {
     let mut count = 0;

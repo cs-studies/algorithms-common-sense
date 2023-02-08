@@ -25,7 +25,7 @@ pub fn review_array() {
 
     //// Insert
     //// Delete
-    // Kinda 🫣. Array is a fixed-size type in Rust,
+    // Kinda 🫣. Array is a fixed-size type in Rust.
     // Since we're playing around with the basics,
     // let's replace a value at an index
     // and mention a dynamically-sized slice type.
