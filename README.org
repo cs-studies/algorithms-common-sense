@@ -1,0 +1,38 @@
+* What
+
+This repository contains *code illustrations* written while reading the book [[https://www.goodreads.com/book/show/34695800-a-common-sense-guide-to-data-structures-and-algorithms][A
+Common-Sense Guide to Data Structures and Algorithms]], Second Edition by /Jay
+Wengrow/. This is an introductory book to *algorithms* and *data structures*. It
+is suitable for *beginners* in *programming* and *computer science*. At the same
+time, code examples in it are provided in different programming languages, which
+the same beginners may find not convenient to use in practice. Thus...
+
+
+* How
+
+With the aforementioned in mind, the /code illustrations/ in this repository
+were aimed to be written in a foundational manner, sometimes at a cost of being
+not the most efficient or fully idiomatic code (the same strategy, naturally,
+was chosen by the author of the book). It was also attempted to follow the
+book's structure and contents closely, to simplify the usage of the samples
+alongside reading the book.
+
+All the code illustrations were implemented in [[https://www.rust-lang.org][Rust programming language]]. From
+time to time, digressions examining the *Rust* capabilities -- essential or in
+some way interesting-- were allowed to slip into this repository.
+
+
+* Why
+
+The choice of the programming language was influenced by several factors, mostly
+because *Rust* is:
+
+- a /low-level/ language, potentially convenient for programming concepts
+  investigation;
+- a /modern/ language, with many accompanying tools provided out-of-the-box;
+- famously /memory-safe/ (helps to write less error-prone code);
+- quite easy to grasp for /basic/ usage;
+- subjectively /pleasant/ to use.
+
+
+Have Fun!
