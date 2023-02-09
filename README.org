@@ -1,3 +1,9 @@
+#+begin_quote
+everything about data structures and algorithms boils down to common sense.
+
+/Jay Wengrow/
+#+end_quote
+
 * What
 
 This repository contains *code illustrations* written while reading the book [[https://www.goodreads.com/book/show/34695800-a-common-sense-guide-to-data-structures-and-algorithms][A
