@@ -1,5 +1,5 @@
 [package]
-name = "chapter-01"
+name = "chapter_01"
 version = "0.1.0"
 edition = "2021"
 
