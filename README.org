@@ -25,7 +25,9 @@ alongside reading the book.
 
 All the code illustrations were implemented in [[https://www.rust-lang.org][Rust programming language]]. From
 time to time, digressions examining the *Rust* capabilities -- essential or in
-some way interesting-- were allowed to slip into this repository.
+some way interesting -- were allowed to slip into this repository. For an
+introduction into the language, start with [[https://doc.rust-lang.org/book/][The Rust Programming Language]] (a.k.a.
+/The Book/).
 
 
 * Why
