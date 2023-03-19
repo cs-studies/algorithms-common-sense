@@ -1,3 +1,5 @@
+mod exercises;
+
 fn main() {
     println!("\n*** Chapter 03 ***\n");
 
