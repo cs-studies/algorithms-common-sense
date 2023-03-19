@@ -1,4 +1,5 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
+
 fn is_leap_year(year: u16) -> bool {
     if year % 100 == 0 {
         year % 400 == 0
@@ -7,7 +8,6 @@ fn is_leap_year(year: u16) -> bool {
     }
 }
 
-#[allow(dead_code)]
 fn array_sum(arr: &[i32]) -> i32 {
     let mut sum: i32 = 0;
     for i in arr {
@@ -16,7 +16,6 @@ fn array_sum(arr: &[i32]) -> i32 {
     sum
 }
 
-#[allow(dead_code)]
 fn chessboard_space(grains: u32) -> u32 {
     let mut squares: u32 = 1;
     let mut placed_grains = 1;
@@ -77,6 +76,14 @@ mod tests {
     #[test]
     fn test_chessboard_space() {
         assert_eq!(1, chessboard_space(1));
+        assert_eq!(2, chessboard_space(2));
+        assert_eq!(3, chessboard_space(4));
+        assert_eq!(4, chessboard_space(8));
         assert_eq!(5, chessboard_space(16));
+    }
+
+    #[test]
+    fn test_chessboard_space_panics() {
+        chessboard_space(3);
     }
 }
