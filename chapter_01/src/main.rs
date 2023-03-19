@@ -1,7 +1,3 @@
-use crate::foundations::*;
-use crate::greet_us::*;
-use crate::print_numbers::*;
-
 mod foundations;
 mod greet_us;
 mod print_numbers;
@@ -9,17 +5,17 @@ mod print_numbers;
 fn main() {
     println!("\n*** Chapter 01 ***\n");
 
-    evens_v1();
-    evens_v2();
-    evens_step_by();
-    evens_filter();
+    print_numbers::evens_v1();
+    print_numbers::evens_v2();
+    print_numbers::evens_step_by();
+    print_numbers::evens_filter();
 
     println!();
-    hello_strings();
-    hello_array();
+    greet_us::hello_strings();
+    greet_us::hello_array();
 
-    review_array();
-    review_vector();
-    review_hashset();
-    review_btreeset();
+    foundations::review_array();
+    foundations::review_vector();
+    foundations::review_hashset();
+    foundations::review_btreeset();
 }
