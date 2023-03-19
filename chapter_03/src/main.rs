@@ -27,7 +27,7 @@ fn is_prime(number: i32) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::is_prime;
 
     #[test]
     fn test_is_prime() {
