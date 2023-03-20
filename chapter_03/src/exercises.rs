@@ -1,6 +1,4 @@
-#![allow(dead_code)]
-
-fn is_leap_year(year: u16) -> bool {
+pub fn is_leap_year(year: u16) -> bool {
     if year % 100 == 0 {
         year % 400 == 0
     } else {
@@ -8,7 +6,7 @@ fn is_leap_year(year: u16) -> bool {
     }
 }
 
-fn array_sum(arr: &[i32]) -> i32 {
+pub fn array_sum(arr: &[i32]) -> i32 {
     let mut sum: i32 = 0;
     for i in arr {
         sum = sum.checked_add(*i).expect("We've got an overflow!");
@@ -16,14 +14,25 @@ fn array_sum(arr: &[i32]) -> i32 {
     sum
 }
 
-fn chessboard_space(grains: u32) -> u32 {
-    let mut squares: u32 = 1;
+pub fn chessboard_space(grains: u32) -> u8 {
+    println!("Given {grains} grains");
+
+    let mut square: u8 = 1;
     let mut placed_grains = 1;
+
     while placed_grains < grains {
+        println!("while: {placed_grains} < {grains}");
+
+        print!("placed_grains: {placed_grains} * 2 = ");
         placed_grains = placed_grains.checked_mul(2).expect("Grains overflow!");
-        squares = squares.checked_add(1).expect("Gimmi a bigger board!");
+        println!("{placed_grains}");
+
+        print!("square: {square} + 1 = ");
+        // Even with u32::MAX grains, we'd use only 33 squares!
+        square = square.checked_add(1).unwrap();
+        println!("{square}");
     }
-    squares
+    square
 }
 
 #[cfg(test)]
@@ -77,13 +86,25 @@ mod tests {
     fn test_chessboard_space() {
         assert_eq!(1, chessboard_space(1));
         assert_eq!(2, chessboard_space(2));
+        assert_eq!(3, chessboard_space(3));
         assert_eq!(3, chessboard_space(4));
+        assert_eq!(4, chessboard_space(5));
         assert_eq!(4, chessboard_space(8));
+        assert_eq!(5, chessboard_space(9));
         assert_eq!(5, chessboard_space(16));
+        assert_eq!(6, chessboard_space(17));
+        assert_eq!(32, chessboard_space((u32::MAX / 2) + 1));
     }
 
     #[test]
+    #[should_panic]
     fn test_chessboard_space_panics() {
-        chessboard_space(3);
+        chessboard_space(u32::MAX);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_chessboard_space_panics_2() {
+        chessboard_space((u32::MAX / 2) + 2);
     }
 }

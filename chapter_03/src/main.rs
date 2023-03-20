@@ -7,6 +7,18 @@ fn main() {
     print_things(&["a", "b", "c", "d", "e", "f", "g"]);
 
     println!("149 is a prime number: {}", is_prime(149));
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    println!("2025 is a leap year: {}\n", exercises::is_leap_year(2025));
+
+    let arr = [2, 5, 3];
+    println!("array_sum: {:?} = {}\n", &arr, exercises::array_sum(&arr));
+
+    exercises::chessboard_space(3);
+    // For those interested to see the efficiency of doubling.
+    // exercises::chessboard_space(u32::MAX / 2);
 }
 
 fn print_things(things: &[&str]) {
