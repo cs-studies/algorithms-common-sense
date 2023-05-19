@@ -32,8 +32,8 @@ fn main() {
     println!("Duplicates: {}\n", has_duplicates_linear(&a));
 }
 
-fn bubble_sort(data: &Vec<i32>) -> Vec<i32> {
-    let mut result = data.clone();
+fn bubble_sort(data: &[i32]) -> Vec<i32> {
+    let mut result = data.to_owned();
     let mut last_index = match result.len().checked_sub(1) {
         Some(val) => val,
         None => return result,
