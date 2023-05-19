@@ -1,33 +1,39 @@
 fn main() {
     println!("\n*** Chapter 04 ***\n");
 
-    let mut v = vec![4, 2, 7, 1, 3];
+    let v = vec![];
     println!("Vector: {:?}", v);
-    println!("Sorted: {:?}\n", bubble_sort(&mut v));
+    println!("Sorted: {:?}\n", bubble_sort(&v));
 
-    v = vec![65, -55, 45, -35, 0, 15, 10];
+    let v = vec![4, 2, 7, 1, 3];
     println!("Vector: {:?}", v);
-    println!("Sorted: {:?}", bubble_sort(&mut v));
+    println!("Sorted: {:?}\n", bubble_sort(&v));
+
+    let v = vec![65, -55, 45, -35, 0, 15, 10];
+    println!("Vector: {:?}", v);
+    println!("Sorted: {:?}", bubble_sort(&v));
 }
 
-/// In each pass-through, the highest unsorted value
-/// "bubbles" up to its correct position.
-fn bubble_sort(data: &mut Vec<i32>) -> &mut Vec<i32> {
-    let mut last_index = data.len() - 1;
-    let mut is_finish = false;
+fn bubble_sort(data: &Vec<i32>) -> Vec<i32> {
+    let mut result = data.clone();
+    let mut last_index = match result.len().checked_sub(1) {
+        Some(val) => val,
+        None => return result,
+    };
+    let mut is_sorted = false;
 
-    while !is_finish {
-        is_finish = true;
+    while !is_sorted {
+        is_sorted = true;
         for i in 0..last_index {
-            if data[i] > data[i + 1] {
-                data.swap(i, i + 1);
-                is_finish = false;
+            if result[i] > result[i + 1] {
+                is_sorted = false;
+                result.swap(i, i + 1);
             }
-            println!("check index {i}: {:?}", data);
+            println!("check index {i}: {:?}", result);
         }
         last_index -= 1;
     }
-    data
+    result
 }
 
 #[cfg(test)]
@@ -36,8 +42,9 @@ mod tests {
 
     #[test]
     fn test_bubble_sort() {
-        let mut v = vec![65, -55, 45, -35, 0, 15, 10];
-        let mut v_sorted = vec![-55, -35, 0, 10, 15, 45, 65];
-        assert_eq!(&mut v_sorted, bubble_sort(&mut v));
+        assert_eq!(Vec::<i32>::new(), bubble_sort(&vec![]));
+
+        let v = vec![65, -55, 45, -35, 0, 15, 10];
+        assert_eq!(vec![-55, -35, 0, 10, 15, 45, 65], bubble_sort(&v));
     }
 }
