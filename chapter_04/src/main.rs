@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+mod exercises;
 
 fn main() {
     println!("\n*** Chapter 04 ***\n");
@@ -30,6 +31,8 @@ fn main() {
     let a = [65, -55, 45, 45, 10];
     println!("Array: {:?}", a);
     println!("Duplicates: {}\n", has_duplicates_linear(&a));
+
+    println!("Product: {:?}", exercises::greatest_product(&[5, 3, 7, 1]));
 }
 
 fn bubble_sort(data: &[i32]) -> Vec<i32> {
