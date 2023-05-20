@@ -1,5 +1,5 @@
 fn main() {
-    println!("\n*** Chapter 04 ***\n");
+    println!("\n*** Chapter 05 ***\n");
 
     let mut v = vec![4, 2, 7, 1, 3];
     println!("Vector: {:?}", v);
@@ -8,16 +8,19 @@ fn main() {
 }
 
 fn selection_sort(data: &mut [i32]) {
-    let data_len = data.len();
-    for i in 0..data_len {
-        let mut lowest = i;
-        for j in (i+1)..data_len {
-            if data[j] < data[lowest] {
-                lowest = j;
+    let sub_len = match data.len().checked_sub(1) {
+        Some(val) => val,
+        None => return,
+    };
+    for i in 0..sub_len {
+        let mut min = i;
+        for j in (i + 1)..data.len() {
+            if data[j] < data[min] {
+                min = j;
             }
         }
-        if i != lowest {
-            data.swap(i, lowest);
+        if i != min {
+            data.swap(i, min);
         }
         println!("Sorted index {i}: {:?}", data);
     }
