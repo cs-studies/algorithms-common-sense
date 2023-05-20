@@ -32,7 +32,10 @@ fn main() {
     println!("Array: {:?}", a);
     println!("Duplicates: {}\n", has_duplicates_linear(&a));
 
-    println!("Product: {:?}", exercises::greatest_product(&[5, 3, 7, 1]));
+    println!("Greatest Product: {:?}",
+             exercises::greatest_product(&[5, 3, 7, 1]));
+    println!("Greatest Number: {:?}",
+             exercises::greatest_number(&[5, 3, 7, 1]));
 }
 
 fn bubble_sort(data: &[i32]) -> Vec<i32> {
