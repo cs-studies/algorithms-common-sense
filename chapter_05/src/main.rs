@@ -8,11 +8,8 @@ fn main() {
 }
 
 fn selection_sort(data: &mut [i32]) {
-    let sub_len = match data.len().checked_sub(1) {
-        Some(val) => val,
-        None => return,
-    };
-    for i in 0..sub_len {
+    let data_len = data.len();
+    for i in 0..data_len {
         let mut min = i;
         for j in (i + 1)..data.len() {
             if data[j] < data[min] {
