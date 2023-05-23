@@ -5,13 +5,21 @@ fn main() {
     println!("Vector: {:?}", v);
     selection_sort(&mut v);
     println!("Sorted: {:?}\n", v);
+
+    let mut v = vec![5, 4, 3, 2, 1];
+    println!("Vector: {:?}", v);
+    selection_sort_extra(&mut v);
+    println!("Sorted: {:?}\n", v);
 }
 
 fn selection_sort(data: &mut [i32]) {
     let data_len = data.len();
-    for i in 0..data_len {
+    if data_len < 2 {
+        return;
+    }
+    for i in 0..(data_len - 1) {
         let mut min = i;
-        for j in (i + 1)..data.len() {
+        for j in (i + 1)..data_len {
             if data[j] < data[min] {
                 min = j;
             }
@@ -24,10 +32,12 @@ fn selection_sort(data: &mut [i32]) {
 }
 
 //// Rust Extras
-#[allow(dead_code)]
 fn selection_sort_extra(data: &mut [i32]) {
     let data_len = data.len();
-    for i in 0..data_len {
+    if data_len < 2 {
+        return;
+    }
+    for i in 0..(data_len - 1) {
         let min = (i..data_len)
             .min_by_key(|x| data[*x])
             .unwrap();
