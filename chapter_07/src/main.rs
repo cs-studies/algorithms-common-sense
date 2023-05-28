@@ -4,6 +4,10 @@ fn main() {
     let v = vec![4, 2, 4, 1, 3];
     println!("Vector: {:?}", v);
     println!("Evens average: {:?}\n", find_evens_average(&v));
+
+    let v = vec!['a', 'b', 'c', 'd'];
+    println!("Vector: {:?}", v);
+    println!("Permutations: {:?}\n", build_words(&v));
 }
 
 fn find_evens_average(data: &[i32]) -> Option<f32> {
@@ -32,6 +36,22 @@ fn find_evens_average_extra(data: &[i32]) -> Option<f32> {
     }
 }
 
+fn build_words(data: &[char]) -> Vec<String> {
+    let mut result: Vec<String> = Vec::new();
+    let mut word;
+    for c in data {
+        for d in data {
+            if c != d {
+                word = String::new();
+                word.push(*c);
+                word.push(*d);
+                result.push(word);
+            }
+        }
+    }
+    result
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -48,5 +68,14 @@ mod tests {
         assert_eq!(None, find_evens_average_extra(&[]));
         assert_eq!(Some(3.0), find_evens_average_extra(&[4, 2, 7, 1, 3]));
         assert_eq!(Some(2.5), find_evens_average_extra(&[5, 4, 2, 9, 2, 2]));
+    }
+
+    #[test]
+    fn test_build_words() {
+        assert_eq!(Vec::<String>::new(), build_words(&[]));
+        assert_eq!(
+            vec!["ab", "ac", "ba", "bc", "ca", "cb"],
+            build_words(&['a', 'b', 'c'])
+        );
     }
 }
