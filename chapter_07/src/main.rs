@@ -8,6 +8,11 @@ fn main() {
     let v = vec!['a', 'b', 'c', 'd'];
     println!("Vector: {:?}", v);
     println!("Permutations: {:?}\n", build_words(&v));
+
+    let v = vec!(2, 5, 8, 10, 12, 11);
+    println!("Vector: {:?}", v);
+    println!("Sample: {:?}\n", sample(&v));
+
 }
 
 fn find_evens_average(data: &[i32]) -> Option<f32> {
@@ -51,6 +56,14 @@ fn build_words(data: &[char]) -> Vec<String> {
     result
 }
 
+fn sample(data: &[i32]) -> Option<[i32; 3]> {
+    let data_len = data.len();
+    match data_len {
+        0 => None,
+        _ => Some([data[0], data[data_len / 2], data[data_len - 1]]),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -76,5 +89,14 @@ mod tests {
             vec!["ab", "ac", "ba", "bc", "ca", "cb"],
             build_words(&['a', 'b', 'c'])
         );
+    }
+
+    #[test]
+    fn test_sample() {
+        assert_eq!(None, sample(&[]));
+        assert_eq!(Some([2, 2, 2]), sample(&[2]));
+        assert_eq!(Some([2, 4, 10]), sample(&[2, 4, 10]));
+        assert_eq!(Some([2, 8, 10]), sample(&[2, 4, 8, 10]));
+        assert_eq!(Some([2, 9, 11]), sample(&[2, 4, 8, 9, 10, 11]));
     }
 }
