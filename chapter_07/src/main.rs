@@ -42,8 +42,7 @@ fn build_words(data: &[char]) -> Vec<String> {
     for c in data {
         for d in data {
             if c != d {
-                word = String::new();
-                word.push(*c);
+                word = String::from(*c);
                 word.push(*d);
                 result.push(word);
             }
