@@ -16,6 +16,10 @@ fn main() {
     let v = vec![100.5, 80.0, 40.2, 33.3];
     println!("Fahrenheit readings: {:?}", v);
     println!("Celsius average: {:?}\n", find_celsius_average(&v).unwrap());
+
+    let v = vec!["Skirt", "Dress"];
+    println!("Clothes: {:?}", v);
+    println!("Inventory: {:?}\n", mark_inventory(&v, 5));
 }
 
 fn find_evens_average(data: &[i32]) -> Option<f32> {
@@ -100,6 +104,16 @@ fn find_celsius_average_extra(data_fahrenheit: &[f32]) -> Option<f32> {
     }
 }
 
+fn mark_inventory(clothes: &[&str], max_size: i8) -> Vec<String> {
+    let mut inventory: Vec<String> = Vec::new();
+    for cloth in clothes {
+        for size in 1..=max_size {
+            inventory.push(format!("{cloth} Size: {}", size));
+        }
+    }
+    inventory
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -148,5 +162,25 @@ mod tests {
         assert_eq!(None, find_celsius_average_extra(&[]));
         assert_eq!(Some(0.0), find_celsius_average_extra(&[32.0]));
         assert_eq!(Some(30.0), find_celsius_average_extra(&[68.0, 104.0]));
+    }
+
+    #[test]
+    fn test_mark_inventory() {
+        assert_eq!(Vec::<String>::new(), mark_inventory(&[], 5));
+        let inventory = &["Purple Shirt", "Green Shirt"];
+        let marked_inventory_1 = vec!(
+            "Purple Shirt Size: 1",
+            "Green Shirt Size: 1",
+        );
+        assert_eq!(marked_inventory_1, mark_inventory(inventory, 1));
+        let marked_inventory_3 = vec!(
+            "Purple Shirt Size: 1",
+            "Purple Shirt Size: 2",
+            "Purple Shirt Size: 3",
+            "Green Shirt Size: 1",
+            "Green Shirt Size: 2",
+            "Green Shirt Size: 3",
+        );
+        assert_eq!(marked_inventory_3, mark_inventory(inventory, 3));
     }
 }
