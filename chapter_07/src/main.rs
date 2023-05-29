@@ -3,16 +3,19 @@ fn main() {
 
     let v = vec![4, 2, 4, 1, 3];
     println!("Vector: {:?}", v);
-    println!("Evens average: {:?}\n", find_evens_average(&v));
+    println!("Evens average: {:?}\n", find_evens_average(&v).unwrap());
 
     let v = vec!['a', 'b', 'c', 'd'];
     println!("Vector: {:?}", v);
     println!("Permutations: {:?}\n", build_words(&v));
 
-    let v = vec!(2, 5, 8, 10, 12, 11);
+    let v = vec![2, 5, 8, 10, 12, 11];
     println!("Vector: {:?}", v);
-    println!("Sample: {:?}\n", sample(&v));
+    println!("Sample: {:?}\n", sample(&v).unwrap());
 
+    let v = vec![100.5, 80.0, 40.2, 33.3];
+    println!("Fahrenheit readings: {:?}", v);
+    println!("Celsius average: {:?}\n", find_celsius_average(&v).unwrap());
 }
 
 fn find_evens_average(data: &[i32]) -> Option<f32> {
@@ -64,6 +67,39 @@ fn sample(data: &[i32]) -> Option<[i32; 3]> {
     }
 }
 
+fn find_celsius_average(data_fahrenheit: &[f32]) -> Option<f32> {
+    if data_fahrenheit.is_empty() {
+        return None;
+    }
+    let mut data_celsius = Vec::new();
+    for f in data_fahrenheit {
+        let converted = (f - 32.0) / 1.8;
+        data_celsius.push(converted);
+    }
+    let mut sum = 0.0;
+    for c in data_celsius.iter() {
+        sum += c;
+    }
+    Some(sum / data_celsius.len() as f32)
+}
+
+//// Rust Extras
+#[allow(dead_code)]
+fn find_celsius_average_extra(data_fahrenheit: &[f32]) -> Option<f32> {
+    let data_len = data_fahrenheit.len();
+    match data_len {
+        0 => None,
+        _ => {
+            let sum: f32 = data_fahrenheit
+                .iter()
+                .copied()
+                .map(|f| (f - 32.0) / 1.8)
+                .sum();
+            Some(sum / data_len as f32)
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -98,5 +134,19 @@ mod tests {
         assert_eq!(Some([2, 4, 10]), sample(&[2, 4, 10]));
         assert_eq!(Some([2, 8, 10]), sample(&[2, 4, 8, 10]));
         assert_eq!(Some([2, 9, 11]), sample(&[2, 4, 8, 9, 10, 11]));
+    }
+
+    #[test]
+    fn test_find_celsius_average() {
+        assert_eq!(None, find_celsius_average(&[]));
+        assert_eq!(Some(0.0), find_celsius_average(&[32.0]));
+        assert_eq!(Some(30.0), find_celsius_average(&[68.0, 104.0]));
+    }
+
+    #[test]
+    fn test_find_celsius_average_extra() {
+        assert_eq!(None, find_celsius_average_extra(&[]));
+        assert_eq!(Some(0.0), find_celsius_average_extra(&[32.0]));
+        assert_eq!(Some(30.0), find_celsius_average_extra(&[68.0, 104.0]));
     }
 }
