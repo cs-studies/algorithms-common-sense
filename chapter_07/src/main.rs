@@ -20,6 +20,10 @@ fn main() {
     let v = vec!["Skirt", "Dress"];
     println!("Clothes: {:?}", v);
     println!("Inventory: {:?}\n", mark_inventory(&v, 5));
+
+    let v = vec![vec![0, 1, 1, 1, 0], vec![0, 1, 0, 1, 0, 1], vec![1, 0]];
+    println!("Vector: {:?}", v);
+    println!("Ones: {:?}\n", count_ones(v));
 }
 
 fn find_evens_average(data: &[i32]) -> Option<f32> {
@@ -114,6 +118,24 @@ fn mark_inventory(clothes: &[&str], max_size: i8) -> Vec<String> {
     inventory
 }
 
+fn count_ones(data: Vec<Vec<u8>>) -> usize {
+    let mut count = 0;
+    for inner in data.iter() {
+        for n in inner.iter() {
+            if *n == 1 {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+
+//// Rust Extras
+#[allow(dead_code)]
+fn count_ones_extra(data: Vec<Vec<u8>>) -> usize {
+    data.into_iter().flatten().filter(|x| *x == 1).count()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -168,19 +190,32 @@ mod tests {
     fn test_mark_inventory() {
         assert_eq!(Vec::<String>::new(), mark_inventory(&[], 5));
         let inventory = &["Purple Shirt", "Green Shirt"];
-        let marked_inventory_1 = vec!(
-            "Purple Shirt Size: 1",
-            "Green Shirt Size: 1",
-        );
+        let marked_inventory_1 = vec!["Purple Shirt Size: 1", "Green Shirt Size: 1"];
         assert_eq!(marked_inventory_1, mark_inventory(inventory, 1));
-        let marked_inventory_3 = vec!(
+        let marked_inventory_3 = vec![
             "Purple Shirt Size: 1",
             "Purple Shirt Size: 2",
             "Purple Shirt Size: 3",
             "Green Shirt Size: 1",
             "Green Shirt Size: 2",
             "Green Shirt Size: 3",
-        );
+        ];
         assert_eq!(marked_inventory_3, mark_inventory(inventory, 3));
+    }
+
+    #[test]
+    fn test_count_ones() {
+        assert_eq!(0, count_ones(vec![vec![]]));
+        assert_eq!(0, count_ones(vec![vec![0, 0], vec![0, 0]]));
+        assert_eq!(1, count_ones(vec![vec![0, 1], vec![0, 0]]));
+        assert_eq!(3, count_ones(vec![vec![0, 1], vec![1, 1]]));
+    }
+
+    #[test]
+    fn test_count_ones_extra() {
+        assert_eq!(0, count_ones_extra(vec![vec![]]));
+        assert_eq!(0, count_ones_extra(vec![vec![0, 0], vec![0, 0]]));
+        assert_eq!(1, count_ones_extra(vec![vec![0, 1], vec![0, 0]]));
+        assert_eq!(3, count_ones_extra(vec![vec![0, 1], vec![1, 1]]));
     }
 }
