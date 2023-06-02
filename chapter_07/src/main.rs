@@ -24,6 +24,10 @@ fn main() {
     let v = vec![vec![0, 1, 1, 1, 0], vec![0, 1, 0, 1, 0, 1], vec![1, 0]];
     println!("Vector: {:?}", v);
     println!("Ones: {:?}\n", count_ones(v));
+
+    let s = "rotor";
+    println!("String: {:?}", s);
+    println!("Palindrome: {:?}\n", is_palindrome(s));
 }
 
 fn find_evens_average(data: &[i32]) -> Option<f32> {
@@ -136,6 +140,33 @@ fn count_ones_extra(data: Vec<Vec<u8>>) -> usize {
     data.into_iter().flatten().filter(|x| *x == 1).count()
 }
 
+// Accessing of string elements by index
+// isn't implemented in Rust.
+fn is_palindrome(s: &str) -> bool {
+    let mid = s.len() / 2;
+    let left = s.bytes().take(mid);
+    let right = s.bytes().rev().take(mid);
+    for (l, r) in left.zip(right) {
+        if l != r {
+            return false;
+        }
+    }
+    true
+}
+
+#[allow(dead_code)]
+fn is_palindrome_1(s: &str) -> bool {
+    let mid = s.len() / 2;
+    let left = s.bytes().take(mid);
+    let right = s.bytes().rev().take(mid);
+    left.eq(right)
+}
+
+#[allow(dead_code)]
+fn is_palindrome_2(s: &str) -> bool {
+    s == s.chars().rev().collect::<String>()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -217,5 +248,38 @@ mod tests {
         assert_eq!(0, count_ones_extra(vec![vec![0, 0], vec![0, 0]]));
         assert_eq!(1, count_ones_extra(vec![vec![0, 1], vec![0, 0]]));
         assert_eq!(3, count_ones_extra(vec![vec![0, 1], vec![1, 1]]));
+    }
+
+    #[test]
+    fn test_is_palindrome() {
+        assert!(is_palindrome(""));
+        assert!(is_palindrome("a"));
+        assert!(is_palindrome("abba"));
+        assert!(!is_palindrome("abja"));
+        assert!(is_palindrome("rotor"));
+        assert!(!is_palindrome("motor"));
+        assert!(is_palindrome("racecar"));
+    }
+
+    #[test]
+    fn test_is_palindrome_1() {
+        assert!(is_palindrome_1(""));
+        assert!(is_palindrome_1("a"));
+        assert!(is_palindrome_1("abba"));
+        assert!(!is_palindrome_1("abja"));
+        assert!(is_palindrome_1("rotor"));
+        assert!(!is_palindrome_1("motor"));
+        assert!(is_palindrome_1("racecar"));
+    }
+
+    #[test]
+    fn test_is_palindrome_2() {
+        assert!(is_palindrome_2(""));
+        assert!(is_palindrome_2("a"));
+        assert!(is_palindrome_2("abba"));
+        assert!(!is_palindrome_2("abja"));
+        assert!(is_palindrome_2("rotor"));
+        assert!(!is_palindrome_2("motor"));
+        assert!(is_palindrome_2("racecar"));
     }
 }
