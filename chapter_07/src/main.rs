@@ -25,7 +25,7 @@ fn main() {
     println!("Vector: {:?}", v);
     println!("Ones: {:?}\n", count_ones(v));
 
-    let s = "rotor";
+    let s = "rötör";
     println!("String: {:?}", s);
     println!("Palindrome: {:?}\n", is_palindrome(s));
 }
@@ -140,12 +140,24 @@ fn count_ones_extra(data: Vec<Vec<u8>>) -> usize {
     data.into_iter().flatten().filter(|x| *x == 1).count()
 }
 
-// Accessing of string elements by index
-// isn't implemented in Rust.
 fn is_palindrome(s: &str) -> bool {
+    let chars: Vec<char> = s.chars().collect();
+    let len = chars.len();
+
+    for i in 0..(len / 2) {
+        if chars[i] != chars[len - 1 - i] {
+            return false;
+        }
+    }
+    true
+}
+
+//// Rust Extras
+#[allow(dead_code)]
+fn is_palindrome_extra_1(s: &str) -> bool {
     let mid = s.len() / 2;
-    let left = s.bytes().take(mid);
-    let right = s.bytes().rev().take(mid);
+    let left = s.chars().take(mid);
+    let right = s.chars().rev().take(mid);
     for (l, r) in left.zip(right) {
         if l != r {
             return false;
@@ -155,15 +167,15 @@ fn is_palindrome(s: &str) -> bool {
 }
 
 #[allow(dead_code)]
-fn is_palindrome_1(s: &str) -> bool {
+fn is_palindrome_extra_2(s: &str) -> bool {
     let mid = s.len() / 2;
-    let left = s.bytes().take(mid);
-    let right = s.bytes().rev().take(mid);
+    let left = s.chars().take(mid);
+    let right = s.chars().rev().take(mid);
     left.eq(right)
 }
 
 #[allow(dead_code)]
-fn is_palindrome_2(s: &str) -> bool {
+fn is_palindrome_extra_3(s: &str) -> bool {
     s == s.chars().rev().collect::<String>()
 }
 
@@ -256,30 +268,41 @@ mod tests {
         assert!(is_palindrome("a"));
         assert!(is_palindrome("abba"));
         assert!(!is_palindrome("abja"));
-        assert!(is_palindrome("rotor"));
-        assert!(!is_palindrome("motor"));
+        assert!(!is_palindrome("rotör"));
+        assert!(is_palindrome("rötör"));
         assert!(is_palindrome("racecar"));
     }
 
     #[test]
-    fn test_is_palindrome_1() {
-        assert!(is_palindrome_1(""));
-        assert!(is_palindrome_1("a"));
-        assert!(is_palindrome_1("abba"));
-        assert!(!is_palindrome_1("abja"));
-        assert!(is_palindrome_1("rotor"));
-        assert!(!is_palindrome_1("motor"));
-        assert!(is_palindrome_1("racecar"));
+    fn test_is_palindrome_extra_1() {
+        assert!(is_palindrome_extra_1(""));
+        assert!(is_palindrome_extra_1("a"));
+        assert!(is_palindrome_extra_1("abba"));
+        assert!(!is_palindrome_extra_1("abja"));
+        assert!(!is_palindrome_extra_1("rotör"));
+        assert!(is_palindrome_extra_1("rötör"));
+        assert!(is_palindrome_extra_1("racecar"));
     }
 
     #[test]
-    fn test_is_palindrome_2() {
-        assert!(is_palindrome_2(""));
-        assert!(is_palindrome_2("a"));
-        assert!(is_palindrome_2("abba"));
-        assert!(!is_palindrome_2("abja"));
-        assert!(is_palindrome_2("rotor"));
-        assert!(!is_palindrome_2("motor"));
-        assert!(is_palindrome_2("racecar"));
+    fn test_is_palindrome_extra_2() {
+        assert!(is_palindrome_extra_2(""));
+        assert!(is_palindrome_extra_2("a"));
+        assert!(is_palindrome_extra_2("abba"));
+        assert!(!is_palindrome_extra_2("abja"));
+        assert!(!is_palindrome_extra_2("rotör"));
+        assert!(is_palindrome_extra_2("rötör"));
+        assert!(is_palindrome_extra_2("racecar"));
+    }
+
+    #[test]
+    fn test_is_palindrome_extra_3() {
+        assert!(is_palindrome_extra_3(""));
+        assert!(is_palindrome_extra_3("a"));
+        assert!(is_palindrome_extra_3("abba"));
+        assert!(!is_palindrome_extra_3("abja"));
+        assert!(!is_palindrome_extra_3("rotör"));
+        assert!(is_palindrome_extra_3("rötör"));
+        assert!(is_palindrome_extra_3("racecar"));
     }
 }
