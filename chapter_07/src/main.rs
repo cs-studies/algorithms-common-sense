@@ -1,10 +1,11 @@
 mod average_celsius;
 mod average_evens;
 mod clothing;
-mod sample;
-mod word_builder;
 mod count_ones;
 mod palindrome_checker;
+mod products;
+mod sample;
+mod word_builder;
 
 fn main() {
     println!("\n*** Chapter 07 ***\n");
@@ -39,4 +40,8 @@ fn main() {
     let s = "rötör";
     println!("String: {:?}", s);
     println!("Palindrome: {:?}\n", palindrome_checker::is_palindrome(s));
+
+    let v = vec![1, 2, 3, 4, 5];
+    println!("Vector: {:?}", v);
+    println!("Products: {:?}\n", products::get(&v));
 }
