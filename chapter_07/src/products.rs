@@ -13,6 +13,22 @@ pub fn get(data: &[i32]) -> Vec<i32> {
     products
 }
 
+//// Rust Extras
+#[allow(dead_code)]
+fn get_extra(data: &[i32]) -> Vec<i32> {
+    data.iter()
+        .enumerate()
+        // .inspect(|(_, n)| println!("{n}"))
+        .flat_map(|(i, n)| {
+            data.iter()
+                .skip(i + 1)
+                // .inspect(|m| print!("  * {m}"))
+                .map(|&m| n.checked_mul(m).unwrap())
+                // .inspect(|m| println!(" = {m}"))
+        })
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -23,5 +39,13 @@ mod tests {
         assert_eq!(Vec::<i32>::new(), get(&[2]));
         assert_eq!(vec![2], get(&[1, 2]));
         assert_eq!(vec![2, 3, 4, 6, 8, 12], get(&[1, 2, 3, 4]));
+    }
+
+    #[test]
+    fn test_get_extra() {
+        assert_eq!(Vec::<i32>::new(), get_extra(&[]));
+        assert_eq!(Vec::<i32>::new(), get_extra(&[2]));
+        assert_eq!(vec![2], get_extra(&[1, 2]));
+        assert_eq!(vec![2, 3, 4, 6, 8, 12], get_extra(&[1, 2, 3, 4]));
     }
 }
