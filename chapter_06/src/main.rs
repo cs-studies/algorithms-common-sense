@@ -50,30 +50,30 @@ mod tests {
     fn test_insertion_sort() {
         let mut v: Vec<i32> = vec![];
         insertion_sort(&mut v);
-        assert_eq!(Vec::<i32>::new(), v);
+        assert_eq!(v, Vec::<i32>::new());
 
         let mut a = [65, -55, 45, -35, 0, 15, 10];
         insertion_sort(&mut a);
-        assert_eq!([-55, -35, 0, 10, 15, 45, 65], a);
+        assert_eq!(a, [-55, -35, 0, 10, 15, 45, 65]);
     }
 
     #[test]
     fn test_intersection() {
         let v_empty = Vec::<i32>::new();
-        assert_eq!(v_empty, intersection(&[], &[]));
-        assert_eq!(v_empty, intersection(&[1], &[]));
-        assert_eq!(v_empty, intersection(&[], &[1]));
+        assert_eq!(intersection(&[], &[]), v_empty);
+        assert_eq!(intersection(&[1], &[]), v_empty);
+        assert_eq!(intersection(&[], &[1]), v_empty);
         let x = intersection(&[3, 1, 4, 2], &[4, 5, 3, 6]);
-        assert_eq!(vec![3, 4], x);
+        assert_eq!(x, vec![3, 4]);
     }
 
     #[test]
     fn test_intersection_extra() {
         let v_empty = Vec::<i32>::new();
-        assert_eq!(v_empty, intersection_extra(&[], &[]));
-        assert_eq!(v_empty, intersection_extra(&[1], &[]));
-        assert_eq!(v_empty, intersection_extra(&[], &[1]));
+        assert_eq!(intersection_extra(&[], &[]), v_empty);
+        assert_eq!(intersection_extra(&[1], &[]), v_empty);
+        assert_eq!(intersection_extra(&[], &[1]), v_empty);
         let x = intersection_extra(&[3, 1, 4, 2], &[4, 5, 3, 6]);
-        assert_eq!(vec![3, 4], x);
+        assert_eq!(x, vec![3, 4]);
     }
 }

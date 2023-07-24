@@ -38,9 +38,7 @@ fn selection_sort_extra(data: &mut [i32]) {
         return;
     }
     for i in 0..(data_len - 1) {
-        let min = (i..data_len)
-            .min_by_key(|x| data[*x])
-            .unwrap();
+        let min = (i..data_len).min_by_key(|x| data[*x]).unwrap();
         data.swap(i, min);
     }
 }
@@ -53,21 +51,21 @@ mod tests {
     fn test_selection_sort() {
         let mut v: Vec<i32> = vec![];
         selection_sort(&mut v);
-        assert_eq!(Vec::<i32>::new(), v);
+        assert_eq!(v, Vec::<i32>::new());
 
         let mut a = [65, -55, 45, -35, 0, 15, 10];
         selection_sort(&mut a);
-        assert_eq!([-55, -35, 0, 10, 15, 45, 65], a);
+        assert_eq!(a, [-55, -35, 0, 10, 15, 45, 65]);
     }
 
     #[test]
     fn test_selection_sort_extra() {
         let mut v: Vec<i32> = vec![];
         selection_sort_extra(&mut v);
-        assert_eq!(Vec::<i32>::new(), v);
+        assert_eq!(v, Vec::<i32>::new());
 
         let mut a = [65, -55, 45, -35, 0, 15, 10];
         selection_sort_extra(&mut a);
-        assert_eq!([-55, -35, 0, 10, 15, 45, 65], a);
+        assert_eq!(a, [-55, -35, 0, 10, 15, 45, 65]);
     }
 }

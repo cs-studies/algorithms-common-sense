@@ -8,17 +8,16 @@ pub fn mark_inventory(clothes: &[&str], max_size: i8) -> Vec<String> {
     inventory
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn test_mark_inventory() {
-        assert_eq!(Vec::<String>::new(), mark_inventory(&[], 5));
+        assert_eq!(mark_inventory(&[], 5), Vec::<String>::new());
         let inventory = &["Purple Shirt", "Green Shirt"];
         let marked_inventory_1 = vec!["Purple Shirt Size: 1", "Green Shirt Size: 1"];
-        assert_eq!(marked_inventory_1, mark_inventory(inventory, 1));
+        assert_eq!(mark_inventory(inventory, 1), marked_inventory_1);
         let marked_inventory_3 = vec![
             "Purple Shirt Size: 1",
             "Purple Shirt Size: 2",
@@ -27,6 +26,6 @@ mod tests {
             "Green Shirt Size: 2",
             "Green Shirt Size: 3",
         ];
-        assert_eq!(marked_inventory_3, mark_inventory(inventory, 3));
+        assert_eq!(mark_inventory(inventory, 3), marked_inventory_3);
     }
 }

@@ -52,10 +52,10 @@ mod tests {
 
     #[test]
     fn test_get() {
-        assert_eq!(Vec::<i32>::new(), get(&[]));
-        assert_eq!(Vec::<i32>::new(), get(&[2]));
-        assert_eq!(vec![2], get(&[1, 2]));
-        assert_eq!(vec![2, 3, 4, 6, 8, 12], get(&[1, 2, 3, 4]));
+        assert_eq!(get(&[]), Vec::<i32>::new());
+        assert_eq!(get(&[2]), Vec::<i32>::new());
+        assert_eq!(get(&[1, 2]), vec![2]);
+        assert_eq!(get(&[1, 2, 3, 4]), vec![2, 3, 4, 6, 8, 12]);
     }
 
     #[test]
@@ -66,10 +66,10 @@ mod tests {
 
     #[test]
     fn test_get_extra() {
-        assert_eq!(Vec::<i32>::new(), get_extra(&[]));
-        assert_eq!(Vec::<i32>::new(), get_extra(&[2]));
-        assert_eq!(vec![2], get_extra(&[1, 2]));
-        assert_eq!(vec![2, 3, 4, 6, 8, 12], get_extra(&[1, 2, 3, 4]));
+        assert_eq!(get_extra(&[]), Vec::<i32>::new());
+        assert_eq!(get_extra(&[2]), Vec::<i32>::new());
+        assert_eq!(get_extra(&[1, 2]), vec![2]);
+        assert_eq!(get_extra(&[1, 2, 3, 4]), vec![2, 3, 4, 6, 8, 12]);
     }
 
     #[test]
@@ -80,14 +80,14 @@ mod tests {
 
     #[test]
     fn test_get_multi() {
-        assert_eq!(Vec::<i32>::new(), get_multi(&[], &[]));
-        assert_eq!(Vec::<i32>::new(), get_multi(&[2], &[]));
-        assert_eq!(Vec::<i32>::new(), get_multi(&[], &[2]));
-        assert_eq!(vec![1, 2], get_multi(&[1, 2], &[1]));
-        assert_eq!(vec![3, 4, 6, 8], get_multi(&[1, 2], &[3, 4]));
+        assert_eq!(get_multi(&[], &[]), Vec::<i32>::new());
+        assert_eq!(get_multi(&[2], &[]), Vec::<i32>::new());
+        assert_eq!(get_multi(&[], &[2]), Vec::<i32>::new());
+        assert_eq!(get_multi(&[1, 2], &[1]), vec![1, 2]);
+        assert_eq!(get_multi(&[1, 2], &[3, 4]), vec![3, 4, 6, 8]);
         assert_eq!(
-            vec![10, 100, 1000, 20, 200, 2000],
-            get_multi(&[1, 2], &[10, 100, 1000])
+            get_multi(&[1, 2], &[10, 100, 1000]),
+            vec![10, 100, 1000, 20, 200, 2000]
         );
     }
 

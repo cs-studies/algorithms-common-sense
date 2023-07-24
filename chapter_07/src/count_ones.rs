@@ -22,17 +22,17 @@ mod tests {
 
     #[test]
     fn test_count() {
-        assert_eq!(0, count(vec![vec![]]));
-        assert_eq!(0, count(vec![vec![0, 0], vec![0, 0]]));
-        assert_eq!(1, count(vec![vec![0, 1], vec![0, 0]]));
-        assert_eq!(3, count(vec![vec![0, 1], vec![1, 1]]));
+        assert_eq!(count(vec![vec![]]), 0);
+        assert_eq!(count(vec![vec![0, 0], vec![0, 0]]), 0);
+        assert_eq!(count(vec![vec![0, 1], vec![0, 0]]), 1);
+        assert_eq!(count(vec![vec![0, 1], vec![1, 1]]), 3);
     }
 
     #[test]
     fn test_count_extra() {
-        assert_eq!(0, count_extra(vec![vec![]]));
-        assert_eq!(0, count_extra(vec![vec![0, 0], vec![0, 0]]));
-        assert_eq!(1, count_extra(vec![vec![0, 1], vec![0, 0]]));
-        assert_eq!(3, count_extra(vec![vec![0, 1], vec![1, 1]]));
+        assert_eq!(count_extra(vec![vec![]]), 0);
+        assert_eq!(count_extra(vec![vec![0, 0], vec![0, 0]]), 0);
+        assert_eq!(count_extra(vec![vec![0, 1], vec![0, 0]]), 1);
+        assert_eq!(count_extra(vec![vec![0, 1], vec![1, 1]]), 3);
     }
 }

@@ -49,25 +49,25 @@ mod tests {
 
     #[test]
     fn test_greatest_product() {
-        assert_eq!(None, greatest_product(&[]));
-        assert_eq!(Some(24), greatest_product(&[4, 1, 6, 2]));
+        assert_eq!(greatest_product(&[]), None);
+        assert_eq!(greatest_product(&[4, 1, 6, 2]), Some(24));
     }
 
     #[test]
     fn test_greatest_product_sorted() {
-        assert_eq!(None, greatest_product_sorted(&[]));
-        assert_eq!(Some(24), greatest_product_sorted(&[4, 1, 6, 2]));
+        assert_eq!(greatest_product_sorted(&[]), None);
+        assert_eq!(greatest_product_sorted(&[4, 1, 6, 2]), Some(24));
     }
 
     #[test]
     fn test_greatest_number() {
-        assert_eq!(None, greatest_number(&[]));
-        assert_eq!(Some(6), greatest_number(&[4, 1, 6, 2]));
+        assert_eq!(greatest_number(&[]), None);
+        assert_eq!(greatest_number(&[4, 1, 6, 2]), Some(6));
     }
 
     #[test]
     fn test_greatest_number_extra() {
-        assert_eq!(None, greatest_number_extra(&[]));
-        assert_eq!(Some(&6), greatest_number_extra(&[4, 1, 6, 2]));
+        assert_eq!(greatest_number_extra(&[]), None);
+        assert_eq!(greatest_number_extra(&[4, 1, 6, 2]), Some(&6));
     }
 }

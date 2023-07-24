@@ -95,19 +95,19 @@ mod tests {
 
     #[test]
     fn test_linear_search() {
-        assert_eq!(None, linear_search(&mut [], 2));
+        assert_eq!(linear_search(&mut [], 2), None);
 
         let mut a = [10, 30, 3, 42, 3];
-        assert_eq!(None, linear_search(&mut a, 2));
-        assert_eq!(Some(2), linear_search(&mut a, 10));
+        assert_eq!(linear_search(&mut a, 2), None);
+        assert_eq!(linear_search(&mut a, 10), Some(2));
     }
 
     #[test]
     fn test_binary_search() {
-        assert_eq!(None, binary_search(&mut [], 2));
+        assert_eq!(binary_search(&mut [], 2), None);
 
         let mut a = [10, 30, 3, 42, 3];
-        assert_eq!(None, binary_search(&mut a, 2));
-        assert_eq!(Some(2), binary_search(&mut a, 10));
+        assert_eq!(binary_search(&mut a, 2), None);
+        assert_eq!(binary_search(&mut a, 10), Some(2));
     }
 }

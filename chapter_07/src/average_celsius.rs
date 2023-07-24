@@ -37,15 +37,15 @@ mod tests {
 
     #[test]
     fn test_find() {
-        assert_eq!(None, find(&[]));
-        assert_eq!(Some(0.0), find(&[32.0]));
-        assert_eq!(Some(30.0), find(&[68.0, 104.0]));
+        assert_eq!(find(&[]), None);
+        assert_eq!(find(&[32.0]), Some(0.0));
+        assert_eq!(find(&[68.0, 104.0]), Some(30.0));
     }
 
     #[test]
     fn test_find_extra() {
-        assert_eq!(None, find_extra(&[]));
-        assert_eq!(Some(0.0), find_extra(&[32.0]));
-        assert_eq!(Some(30.0), find_extra(&[68.0, 104.0]));
+        assert_eq!(find_extra(&[]), None);
+        assert_eq!(find_extra(&[32.0]), Some(0.0));
+        assert_eq!(find_extra(&[68.0, 104.0]), Some(30.0));
     }
 }

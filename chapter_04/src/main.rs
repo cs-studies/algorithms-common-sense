@@ -97,22 +97,22 @@ mod tests {
     fn test_bubble_sort() {
         let mut v: Vec<i32> = vec![];
         bubble_sort(&mut v);
-        assert_eq!(Vec::<i32>::new(), v);
+        assert_eq!(v, Vec::<i32>::new());
 
         let mut a = [65, -55, 45, -35, 0, 15, 10];
         bubble_sort(&mut a);
-        assert_eq!([-55, -35, 0, 10, 15, 45, 65], a);
+        assert_eq!(a, [-55, -35, 0, 10, 15, 45, 65]);
     }
 
     #[test]
     fn test_has_duplicates() {
-        assert_eq!(false, has_duplicates(&[]));
+        assert_eq!(has_duplicates(&[]), false);
         assert!(has_duplicates(&[1, 5, 3, 9, 1, 4]));
     }
 
     #[test]
     fn test_has_duplicates_linear() {
-        assert_eq!(false, has_duplicates_linear(&[]));
+        assert_eq!(has_duplicates_linear(&[]), false);
         assert!(has_duplicates_linear(&[1, 5, 3, 9, 1, 4]));
     }
 }

@@ -19,10 +19,10 @@ mod tests {
 
     #[test]
     fn test_build_words() {
-        assert_eq!(Vec::<String>::new(), build(&[]));
+        assert_eq!(build(&[]), Vec::<String>::new());
         assert_eq!(
-            vec!["ab", "ac", "ba", "bc", "ca", "cb"],
-            build(&['a', 'b', 'c'])
+            build(&['a', 'b', 'c']),
+            vec!["ab", "ac", "ba", "bc", "ca", "cb"]
         );
     }
 }

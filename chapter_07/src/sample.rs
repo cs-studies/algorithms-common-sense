@@ -12,10 +12,10 @@ mod tests {
 
     #[test]
     fn test_sample() {
-        assert_eq!(None, sample(&[]));
-        assert_eq!(Some([2, 2, 2]), sample(&[2]));
-        assert_eq!(Some([2, 4, 10]), sample(&[2, 4, 10]));
-        assert_eq!(Some([2, 8, 10]), sample(&[2, 4, 8, 10]));
-        assert_eq!(Some([2, 9, 11]), sample(&[2, 4, 8, 9, 10, 11]));
+        assert_eq!(sample(&[]), None);
+        assert_eq!(sample(&[2]), Some([2, 2, 2]));
+        assert_eq!(sample(&[2, 4, 10]), Some([2, 4, 10]));
+        assert_eq!(sample(&[2, 4, 8, 10]), Some([2, 8, 10]));
+        assert_eq!(sample(&[2, 4, 8, 9, 10, 11]), Some([2, 9, 11]));
     }
 }

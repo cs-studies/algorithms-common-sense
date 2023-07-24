@@ -30,15 +30,15 @@ mod tests {
 
     #[test]
     fn test_find() {
-        assert_eq!(None, find(&[]));
-        assert_eq!(Some(3.0), find(&[4, 2, 7, 1, 3]));
-        assert_eq!(Some(2.5), find(&[5, 4, 2, 9, 2, 2]));
+        assert_eq!(find(&[]), None);
+        assert_eq!(find(&[4, 2, 7, 1, 3]), Some(3.0));
+        assert_eq!(find(&[5, 4, 2, 9, 2, 2]), Some(2.5));
     }
 
     #[test]
     fn test_find_extra() {
-        assert_eq!(None, find_extra(&[]));
-        assert_eq!(Some(3.0), find_extra(&[4, 2, 7, 1, 3]));
-        assert_eq!(Some(2.5), find_extra(&[5, 4, 2, 9, 2, 2]));
+        assert_eq!(find_extra(&[]), None);
+        assert_eq!(find_extra(&[4, 2, 7, 1, 3]), Some(3.0));
+        assert_eq!(find_extra(&[5, 4, 2, 9, 2, 2]), Some(2.5));
     }
 }
