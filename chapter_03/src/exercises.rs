@@ -9,7 +9,9 @@ pub fn is_leap_year(year: u16) -> bool {
 pub fn array_sum(arr: &[i32]) -> i32 {
     let mut sum: i32 = 0;
     for i in arr {
-        sum = sum.checked_add(*i).expect("We've got an overflow!");
+        sum = sum
+            .checked_add(*i)
+            .expect("simple examples should not overflow memory");
     }
     sum
 }
@@ -24,12 +26,16 @@ pub fn chessboard_space(grains: u32) -> u8 {
         println!("while: {placed_grains} < {grains}");
 
         print!("placed_grains: {placed_grains} * 2 = ");
-        placed_grains = placed_grains.checked_mul(2).expect("Grains overflow!");
+        placed_grains = placed_grains
+            .checked_mul(2)
+            .expect("simple examples should not overflow memory");
         println!("{placed_grains}");
 
         print!("square: {square} + 1 = ");
         // Even with u32::MAX grains, we'd use only 33 squares!
-        square = square.checked_add(1).unwrap();
+        square = square
+            .checked_add(1)
+            .expect("simple examples should not overflow memory");
         println!("{square}");
     }
     square
