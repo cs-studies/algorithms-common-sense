@@ -18,7 +18,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_build_words() {
+    fn test_build() {
         assert_eq!(build(&[]), Vec::<String>::new());
         assert_eq!(
             build(&['a', 'b', 'c']),
