@@ -44,4 +44,10 @@ fn main() {
     let v = vec![1, 2, 3, 4, 5];
     println!("Vector: {:?}", v);
     println!("Products: {:?}\n", products::get(&v));
+
+    let v1 = vec![1, 2, 3];
+    let v2 = vec![10, 100, 1000];
+    println!("Vector 1: {:?}", v1);
+    println!("Vector 2: {:?}", v2);
+    println!("Products: {:?}\n", products::get_multi(&v1, &v2));
 }

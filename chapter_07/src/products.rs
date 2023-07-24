@@ -33,6 +33,19 @@ fn get_extra(data: &[i32]) -> Vec<i32> {
         .collect()
 }
 
+pub fn get_multi(a: &[i32], b: &[i32]) -> Vec<i32> {
+    let mut products: Vec<i32> = vec![];
+    for i in a {
+        for j in b {
+            let product = i
+                .checked_mul(*j)
+                .expect("simple examples should not overflow memory");
+            products.push(product);
+        }
+    }
+    products
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -63,5 +76,24 @@ mod tests {
     #[should_panic]
     fn test_get_extra_panics() {
         get_extra(&[1, 2, 3, i32::MAX]);
+    }
+
+    #[test]
+    fn test_get_multi() {
+        assert_eq!(Vec::<i32>::new(), get_multi(&[], &[]));
+        assert_eq!(Vec::<i32>::new(), get_multi(&[2], &[]));
+        assert_eq!(Vec::<i32>::new(), get_multi(&[], &[2]));
+        assert_eq!(vec![1, 2], get_multi(&[1, 2], &[1]));
+        assert_eq!(vec![3, 4, 6, 8], get_multi(&[1, 2], &[3, 4]));
+        assert_eq!(
+            vec![10, 100, 1000, 20, 200, 2000],
+            get_multi(&[1, 2], &[10, 100, 1000])
+        );
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_get_multi_panics() {
+        get_multi(&[1, 2, 3, i32::MAX], &[2]);
     }
 }
