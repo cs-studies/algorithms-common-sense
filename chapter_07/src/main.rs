@@ -3,6 +3,7 @@ mod average_evens;
 mod clothing;
 mod count_ones;
 mod palindrome_checker;
+mod password_cracker;
 mod products;
 mod sample;
 mod word_builder;
@@ -50,4 +51,13 @@ fn main() {
     println!("Vector 1: {:?}", v1);
     println!("Vector 2: {:?}", v2);
     println!("Products: {:?}\n", products::get_multi(&v1, &v2));
+
+    println!(
+        "Password Combinations Iterative: {:?}\n",
+        password_cracker::combinations(3)
+    );
+    println!(
+        "Passwords Combinations Recursive: {:?}\n",
+        password_cracker::combinations_recur(3)
+    );
 }
