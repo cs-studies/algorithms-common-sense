@@ -5,7 +5,6 @@ const ALPHABET: &str = "abcd";
 // generating 6-letter combinations on Apple M2 Max with 32 Gb of memory.
 // 7-letter combinations generation fails due to a lack of memory.
 pub fn combinations(len: u8) -> Vec<String> {
-    // println!("ALPHABET length is {}", ALPHABET.len());
     let mut result = vec![String::new()];
 
     for _ in 0..len {
