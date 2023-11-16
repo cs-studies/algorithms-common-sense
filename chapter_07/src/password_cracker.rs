@@ -1,9 +1,13 @@
+// The performance of the functions was benchmarked
+// using the full alphabet on an Apple M2 Max with 32 Gb of memory.
+// With both functions, the generation of 7-letter combinations
+// failed due to a lack of memory.
+// The iterative function generated 6-letter combinations in 51 seconds.
+// The recursive function did the same in 282 seconds.
+
 // const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyz";
 const ALPHABET: &str = "abcd";
 
-// This iterative function runs for around 50 seconds with the full alphabet,
-// generating 6-letter combinations on Apple M2 Max with 32 Gb of memory.
-// 7-letter combinations generation fails due to a lack of memory.
 pub fn combinations(len: u8) -> Vec<String> {
     let mut result = vec![String::new()];
 
@@ -19,9 +23,6 @@ pub fn combinations(len: u8) -> Vec<String> {
     result
 }
 
-// The recursive function runs for around 280 seconds with the full alphabet,
-// generating 6-letter combinations on Apple M2 Max with 32 Gb of memory.
-// 7-letter combinations generation fails due to lack of memory.
 pub fn combinations_recur(len: u8) -> Vec<String> {
     if len == 0 {
         return vec![String::new()];
