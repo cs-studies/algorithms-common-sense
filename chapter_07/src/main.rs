@@ -1,7 +1,10 @@
+#![allow(clippy::four_forward_slashes)]
+
 mod average_celsius;
 mod average_evens;
 mod clothing;
 mod count_ones;
+mod exercises;
 mod palindrome_checker;
 mod password_cracker;
 mod products;
@@ -60,4 +63,11 @@ fn main() {
         "Passwords Combinations Recursive: {:?}\n",
         password_cracker::combinations_recur(3)
     );
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    let v = vec![1, 97, 3, 2];
+    let is_100_sum = exercises::is_one_hundred_sum(&v);
+    println!("{:?} contains a sum 100: {}\n", &v, is_100_sum);
 }
