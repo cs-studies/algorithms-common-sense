@@ -70,4 +70,9 @@ fn main() {
     let v = vec![1, 97, 3, 2];
     let is_100_sum = exercises::is_one_hundred_sum(&v);
     println!("{:?} contains a sum 100: {}\n", &v, is_100_sum);
+
+    let a = vec![1, 97];
+    let b = vec![-3, 2, 103];
+    let merged = exercises::merge_sorted(&a, &b);
+    println!("{:?} and {:?} merged to {:?}\n", &a, &b, merged);
 }
