@@ -14,18 +14,10 @@ pub fn is_one_hundred_sum(data: &[i32]) -> bool {
 
 pub fn merge_sorted(a: &[i32], b: &[i32]) -> Vec<i32> {
     let mut result = Vec::<i32>::new();
-    let a_len = a.len();
-    let b_len = b.len();
     let (mut a_idx, mut b_idx) = (0, 0);
 
-    while a_idx < a_len || b_idx < b_len {
-        if a_idx == a_len {
-            result.push(b[b_idx]);
-            b_idx += 1;
-        } else if b_idx == b_len {
-            result.push(a[a_idx]);
-            a_idx += 1;
-        } else if a[a_idx] < b[b_idx] {
+    while a_idx < a.len() && b_idx < b.len() {
+        if a[a_idx] < b[b_idx] {
             result.push(a[a_idx]);
             a_idx += 1;
         } else {
@@ -33,6 +25,10 @@ pub fn merge_sorted(a: &[i32], b: &[i32]) -> Vec<i32> {
             b_idx += 1;
         }
     }
+
+    result.extend_from_slice(&a[a_idx..]);
+    result.extend_from_slice(&b[b_idx..]);
+
     result
 }
 
