@@ -24,5 +24,6 @@ mod tests {
         assert_eq!(is_one_hundred_sum(&[1, 99]), true);
         assert_eq!(is_one_hundred_sum(&[1, 100, 2]), false);
         assert_eq!(is_one_hundred_sum(&[1, 97, 3, 5]), true);
+        assert_eq!(is_one_hundred_sum(&[1, 103, -3, 5]), true);
     }
 }
