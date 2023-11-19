@@ -32,6 +32,29 @@ pub fn merge_sorted(a: &[i32], b: &[i32]) -> Vec<i32> {
     result
 }
 
+// haystack.contains(needle)
+pub fn find_needle(needle: &str, haystack: &str) -> bool {
+    if needle.is_empty() {
+        return true;
+    }
+
+    let needle_len = needle.chars().count();
+    let mut count = 0;
+
+    for c in haystack.chars() {
+        if c == needle.chars().nth(count).unwrap() {
+            count += 1;
+            if count == needle_len {
+                return true;
+            }
+        } else {
+            count = 0;
+        }
+    }
+    false
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -59,5 +82,15 @@ mod tests {
             merge_sorted(&[11, 20, 30], &[-10, 15]),
             vec![-10, 11, 15, 20, 30]
         );
+    }
+
+    #[test]
+    fn test_find_needle() {
+        assert!(find_needle("", ""));
+        assert!(find_needle("", "project"));
+        assert!(!find_needle("pro", ""));
+        assert!(find_needle("pro", "project"));
+        assert!(find_needle("om", "home"));
+        assert!(!find_needle("om", "project"));
     }
 }

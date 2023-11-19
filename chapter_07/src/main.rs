@@ -75,4 +75,11 @@ fn main() {
     let b = vec![-3, 2, 103];
     let merged = exercises::merge_sorted(&a, &b);
     println!("{:?} and {:?} merged to {:?}\n", &a, &b, merged);
+
+    let needle = "dog";
+    let haystack = "hotdogs";
+    println!("Found '{}' in a '{}': {}",
+             needle,
+             haystack,
+             exercises::find_needle(needle, haystack));
 }
