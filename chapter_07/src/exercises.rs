@@ -54,6 +54,29 @@ pub fn find_needle(needle: &str, haystack: &str) -> bool {
     false
 }
 
+pub fn largest_product(data: &[i32]) -> Option<i32> {
+    let data_len = data.len();
+    if data_len < 3 {
+        return None;
+    }
+    let mut result = i32::MIN;
+
+    for i in 0..data_len {
+        for j in (i + 1)..data_len {
+            for k in (j + 1)..data_len {
+                let product = data[i]
+                    .checked_mul(data[j])
+                    .and_then(|p| p.checked_mul(data[k]));
+                match product {
+                    Some(p) => result = result.max(p),
+                    None => return None
+                }
+            }
+        }
+    }
+    Some(result)
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -92,5 +115,17 @@ mod tests {
         assert!(find_needle("pro", "project"));
         assert!(find_needle("om", "home"));
         assert!(!find_needle("om", "project"));
+    }
+
+    #[test]
+    fn test_largest_product() {
+        assert_eq!(largest_product(&[]), None);
+        assert_eq!(largest_product(&[1]), None);
+        assert_eq!(largest_product(&[1, 2]), None);
+        assert_eq!(largest_product(&[1, 2, i32::MAX]), None);
+        assert_eq!(largest_product(&[1, 2, 3]), Some(6));
+        assert_eq!(largest_product(&[1, 2, 2, -3]), Some(4));
+        assert_eq!(largest_product(&[5, 2, 3, 4]), Some(60));
+        assert_eq!(largest_product(&[-1, -2, -3]), Some(-6));
     }
 }

@@ -82,4 +82,9 @@ fn main() {
              needle,
              haystack,
              exercises::find_needle(needle, haystack));
+
+    let v = vec![0, -42, -1, 1];
+    println!("The largest product in '{:?}' is '{:?}'",
+             v,
+             exercises::largest_product(&v));
 }
