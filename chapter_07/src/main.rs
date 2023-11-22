@@ -78,13 +78,18 @@ fn main() {
 
     let needle = "dog";
     let haystack = "hotdogs";
-    println!("Found '{}' in a '{}': {}",
+    println!("Found '{}' in a '{}': {}\n",
              needle,
              haystack,
              exercises::find_needle(needle, haystack));
 
     let v = vec![0, -42, -1, 1];
-    println!("The largest product in '{:?}' is '{:?}'",
+    println!("The largest product in '{:?}' is '{:?}'\n",
              v,
              exercises::largest_product(&v));
+
+    let v = vec![50, 40, 60, 70, 10, 100];
+    println!("Picked resume '{:?}' from '{:?}'\n",
+             exercises::pick_resume(&v).unwrap(),
+             &v);
 }

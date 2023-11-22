@@ -77,6 +77,24 @@ pub fn largest_product(data: &[i32]) -> Option<i32> {
     Some(result)
 }
 
+pub fn pick_resume(resumes: &[i32]) -> Option<i32> {
+    if resumes.is_empty() {
+        return None;
+    }
+    let mut remove_top = true;
+    let mut result = resumes;
+
+    while result.len() > 1 {
+        let midpoint = result.len() / 2;
+        result = if remove_top {
+            &result[0..midpoint]
+        } else {
+            &result[midpoint..]
+        };
+        remove_top = !remove_top;
+    }
+    Some(result[0])
+}
 
 #[cfg(test)]
 mod tests {
@@ -127,5 +145,14 @@ mod tests {
         assert_eq!(largest_product(&[1, 2, 2, -3]), Some(4));
         assert_eq!(largest_product(&[5, 2, 3, 4]), Some(60));
         assert_eq!(largest_product(&[-1, -2, -3]), Some(-6));
+    }
+
+    #[test]
+    fn test_pick_resume() {
+        assert_eq!(pick_resume(&[]), None);
+        assert_eq!(pick_resume(&[1]), Some(1));
+        assert_eq!(pick_resume(&[2, 3]), Some(2));
+        assert_eq!(pick_resume(&[4, 5, 6]), Some(4));
+        assert_eq!(pick_resume(&[7, 8, 9, 10]), Some(8));
     }
 }
