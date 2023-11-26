@@ -25,6 +25,10 @@ fn main() {
     let v2 = vec![0, 2, 4, 6, 8];
     println!("v2: {:?}", v2);
     println!("Intersection: {:?} \n", exercises::intersect(&v1, &v2));
+
+    let v = vec!["a", "b", "c", "d", "c", "e", "f"];
+    println!("v: {:?}", v);
+    println!("Duplicate: {:?} \n", exercises::find_duplicate(&v));
 }
 
 fn is_subset(a: &[&str], b: &[&str]) -> bool {
