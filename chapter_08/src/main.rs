@@ -17,6 +17,7 @@ fn main() {
 }
 
 fn is_subset(a: &[&str], b: &[&str]) -> bool {
+    #[rustfmt::skip]
     let (large, small) = if a.len() > b.len() {
         (a, b)
     } else {
@@ -38,6 +39,7 @@ fn is_subset(a: &[&str], b: &[&str]) -> bool {
 }
 
 fn is_subset_hash(a: &[&str], b: &[&str]) -> bool {
+    #[rustfmt::skip]
     let (large, small) = if a.len() > b.len() {
         (a, b)
     } else {
@@ -56,7 +58,6 @@ fn is_subset_hash(a: &[&str], b: &[&str]) -> bool {
     }
     true
 }
-
 
 #[cfg(test)]
 mod tests {
