@@ -1,5 +1,7 @@
 use std::collections::HashSet;
 
+mod exercises;
+
 fn main() {
     println!("\n*** Chapter 08 ***\n");
 
@@ -14,6 +16,15 @@ fn main() {
     println!("v1: {:?}", &v1);
     println!("v2: {:?}", &v2);
     println!("is_subset_hash: {}\n", is_subset_hash(&v1, &v2));
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    let v1 = vec![1, 2, 3, 4, 5];
+    println!("v1: {:?}", v1);
+    let v2 = vec![0, 2, 4, 6, 8];
+    println!("v2: {:?}", v2);
+    println!("Intersection: {:?} \n", exercises::intersect(&v1, &v2));
 }
 
 fn is_subset(a: &[&str], b: &[&str]) -> bool {
@@ -46,7 +57,7 @@ fn is_subset_hash(a: &[&str], b: &[&str]) -> bool {
         (b, a)
     };
 
-    let mut large_set: HashSet<_> = HashSet::new();
+    let mut large_set = HashSet::new();
     for l in large {
         large_set.insert(l);
     }
