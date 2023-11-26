@@ -43,7 +43,12 @@ fn is_subset_hash(a: &[&str], b: &[&str]) -> bool {
     } else {
         (b, a)
     };
-    let large_set: HashSet<_> = large.iter().cloned().collect();
+
+    let mut large_set: HashSet<_> = HashSet::new();
+    for l in large {
+        large_set.insert(l);
+    }
+
     for s in small {
         if !large_set.contains(s) {
             return false;
