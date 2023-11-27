@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 pub fn intersect(a: &[i32], b: &[i32]) -> Vec<i32> {
     let mut result = Vec::new();
@@ -46,6 +46,20 @@ pub fn find_missing(line: &str) -> Option<char> {
     None
 }
 
+pub fn first_non_dup(line: &str) -> Option<char> {
+    let mut hm = HashMap::new();
+    for c in line.chars() {
+        hm.entry(c).and_modify(|count| *count += 1).or_insert(1);
+    }
+    for c in line.chars() {
+        match hm.get(&c) {
+            Some(v) if *v == 1 => return Some(c),
+            _ => (),
+        };
+    }
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -83,5 +97,12 @@ mod tests {
             find_missing("the quick brown box jumps over a lazy dog"),
             Some('f')
         );
+    }
+
+    #[test]
+    fn test_first_non_dup() {
+        assert_eq!(first_non_dup(""), None);
+        assert_eq!(first_non_dup("mama"), None);
+        assert_eq!(first_non_dup("minimum"), Some('n'));
     }
 }

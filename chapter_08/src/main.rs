@@ -33,6 +33,10 @@ fn main() {
     let s = "the quick brown box jumps over a lazy dog";
     println!("s: '{s}'");
     println!("Letter: {:?} \n", exercises::find_missing(s));
+
+    let s = "minimum";
+    println!("s: '{s}'");
+    println!("Letter: {:?} \n", exercises::first_non_dup(s));
 }
 
 fn is_subset(a: &[&str], b: &[&str]) -> bool {
