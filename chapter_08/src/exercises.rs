@@ -27,6 +27,25 @@ pub fn find_duplicate(data: &[&str]) -> Option<String> {
     None
 }
 
+pub const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyz";
+
+pub fn find_missing(line: &str) -> Option<char> {
+    if line.len() < 25 {
+        return None;
+    }
+    let mut hs = HashSet::new();
+    for c in line.chars() {
+        hs.insert(c);
+    }
+    #[allow(clippy::manual_find)]
+    for c in ALPHABET.chars() {
+        if !hs.contains(&c) {
+            return Some(c);
+        }
+    }
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -53,6 +72,16 @@ mod tests {
         assert_eq!(
             find_duplicate(&["cat", "dog", "fish", "dog"]),
             Some("dog".to_string())
+        );
+    }
+
+    #[test]
+    fn test_find_missing() {
+        assert_eq!(find_missing(""), None);
+        assert_eq!(find_missing(&ALPHABET[0..(ALPHABET.len() - 1)]), Some('z'));
+        assert_eq!(
+            find_missing("the quick brown box jumps over a lazy dog"),
+            Some('f')
         );
     }
 }

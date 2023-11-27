@@ -29,6 +29,10 @@ fn main() {
     let v = vec!["a", "b", "c", "d", "c", "e", "f"];
     println!("v: {:?}", v);
     println!("Duplicate: {:?} \n", exercises::find_duplicate(&v));
+
+    let s = "the quick brown box jumps over a lazy dog";
+    println!("s: '{s}'");
+    println!("Letter: {:?} \n", exercises::find_missing(s));
 }
 
 fn is_subset(a: &[&str], b: &[&str]) -> bool {
