@@ -1,15 +1,11 @@
 use std::collections::HashMap;
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 struct Stack<T> {
     data: Vec<T>,
 }
 
 impl<T> Stack<T> {
-    fn new(data: Vec<T>) -> Self {
-        Self { data }
-    }
-
     fn push(&mut self, element: T) {
         self.data.push(element);
     }
@@ -32,7 +28,7 @@ pub struct Linter {
 impl Linter {
     pub fn new() -> Self {
         Self {
-            stack: Stack::new(Vec::<char>::new()),
+            stack: Default::default(),
             braces: HashMap::from([('(', ')'), ('[', ']'), ('{', '}')]),
         }
     }
@@ -78,7 +74,9 @@ mod tests {
 
     #[test]
     fn test_stack() {
-        let mut stack = Stack::new(vec![10, 40, 30]);
+        let mut stack = Stack {
+            data: vec![10, 40, 30],
+        };
         assert_eq!(stack.data, vec![10, 40, 30]);
 
         stack.push(33);
@@ -88,8 +86,7 @@ mod tests {
         assert_eq!(popped, Some(33));
         assert_eq!(stack.data, vec![10, 40, 30]);
 
-        let last = stack.read();
-        assert_eq!(last, Some(&30));
+        assert_eq!(stack.read(), Some(&30));
     }
 
     #[test]
@@ -106,6 +103,8 @@ mod tests {
             Linter::new().lint("(var x = [1, 2, 3)]").unwrap_err(),
             String::from("')' has mismatched opening brace")
         );
-        assert!(Linter::new().lint("( var x = { y: [1, 2, 3] } )").is_ok());
+        assert!(Linter::new()
+            .lint("( var x = { y: [1, 2, 3] } )")
+            .is_ok());
     }
 }
