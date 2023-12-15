@@ -4,6 +4,7 @@
 use linter::Linter;
 use printer::PrintManager;
 
+mod exercises;
 mod linter;
 mod printer;
 
@@ -24,4 +25,8 @@ fn main() {
     print_manager.queue_job("Third".to_string());
     println!("{:?}", &print_manager);
     print_manager.run();
+
+    let line = "abcde";
+    println!("\nLine: {line}");
+    println!("Reversed: {}", exercises::reverse(line));
 }
