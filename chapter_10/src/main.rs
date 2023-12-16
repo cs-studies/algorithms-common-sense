@@ -1,4 +1,7 @@
+use exercises::Recur::{Leaf, Node};
 use std::{fs, io, path::Path};
+
+mod exercises;
 
 fn main() {
     println!("\n*** Chapter 10 ***\n");
@@ -8,6 +11,56 @@ fn main() {
     println!("\n5! = {}\n", factorial(5));
 
     find_directories(Path::new(".")).unwrap();
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    exercises::print_every_other(-2, 14);
+
+    println!(
+        "\nsum of numbers in a range 1..=10 is {}",
+        exercises::sum(1, 10)
+    );
+
+    let v = vec![
+        Leaf(1),
+        Leaf(2),
+        Leaf(3),
+        Node(vec![Leaf(4), Leaf(5), Leaf(6)]),
+        Leaf(7),
+        Node(vec![
+            Leaf(8),
+            Node(vec![
+                Leaf(9),
+                Leaf(10),
+                Leaf(11),
+                Node(vec![Leaf(12), Leaf(13), Leaf(14)]),
+            ]),
+        ]),
+        Node(vec![
+            Leaf(15),
+            Leaf(16),
+            Leaf(17),
+            Leaf(18),
+            Leaf(19),
+            Node(vec![
+                Leaf(20),
+                Leaf(21),
+                Leaf(22),
+                Node(vec![
+                    Leaf(23),
+                    Leaf(24),
+                    Leaf(25),
+                    Node(vec![Leaf(26), Leaf(27), Leaf(28), Leaf(29)]),
+                ]),
+                Leaf(30),
+                Leaf(31),
+            ]),
+            Leaf(32),
+        ]),
+        Leaf(33),
+    ];
+    exercises::print_all_numbers(v);
 }
 
 fn countdown(num: u8) {
