@@ -3,7 +3,10 @@ fn main() {
 
     let mut v = [1, 2, 3, 4, 5];
     double(&mut v, 0);
-    println!("doubled: {:?}", v);
+    println!("doubled: {:?}\n", v);
+
+    println!("5! = {}", factorial(5));
+    println!("5! = {}", factorial_params(5, 1, 1));
 }
 
 fn double(data: &mut [i32], idx: usize) {
@@ -12,6 +15,20 @@ fn double(data: &mut [i32], idx: usize) {
     }
     data[idx] *= 2;
     double(data, idx + 1);
+}
+
+fn factorial(num: u8) -> u8 {
+    let mut product = 1;
+    (2..=num).for_each(|n| product *= n);
+    product
+}
+
+fn factorial_params(num: u8, i: u8, product: u8) -> u8 {
+    if i > num {
+        product
+    } else {
+        factorial_params(num, i + 1, product * i)
+    }
 }
 
 #[cfg(test)]
@@ -31,5 +48,26 @@ mod tests {
         let mut v = vec![0, 1, 2, 3];
         double(&mut v, 0);
         assert_eq!(v, vec![0, 2, 4, 6]);
+    }
+
+    #[test]
+    fn test_factorial() {
+        assert_eq!(factorial(0), 1);
+        assert_eq!(factorial(1), 1);
+        assert_eq!(factorial(2), 2);
+        assert_eq!(factorial(3), 6);
+        assert_eq!(factorial(4), 24);
+        assert_eq!(factorial(5), 120);
+    }
+
+    #[test]
+    fn test_factorial_params() {
+        assert_eq!(factorial_params(0, 1, 1), 1);
+        assert_eq!(factorial_params(1, 1, 1), 1);
+        assert_eq!(factorial_params(2, 1, 1), 2);
+        assert_eq!(factorial_params(3, 1, 1), 6);
+        assert_eq!(factorial_params(4, 1, 1), 24);
+        assert_eq!(factorial_params(5, 1, 1), 120);
+        assert_eq!(factorial_params(5, 10, 100), 100);
     }
 }
