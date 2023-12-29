@@ -6,7 +6,10 @@ fn main() {
     println!("doubled: {:?}\n", v);
 
     println!("5! = {}", factorial(5));
-    println!("5! = {}", factorial_params(5, 1, 1));
+    println!("5! = {}\n", factorial_params(5, 1, 1));
+
+    let v = vec![1, 2, 3, 4, 5];
+    println!("sum of {:?} is {}", v, sum(&v));
 }
 
 fn double(data: &mut [i32], idx: usize) {
@@ -28,6 +31,14 @@ fn factorial_params(num: u8, i: u8, product: u8) -> u8 {
         product
     } else {
         factorial_params(num, i + 1, product * i)
+    }
+}
+
+fn sum(data: &[i32]) -> i32 {
+    if data.is_empty() {
+        0
+    } else {
+        data[0] + sum(&data[1..data.len()])
     }
 }
 
@@ -69,5 +80,19 @@ mod tests {
         assert_eq!(factorial_params(4, 1, 1), 24);
         assert_eq!(factorial_params(5, 1, 1), 120);
         assert_eq!(factorial_params(5, 10, 100), 100);
+    }
+
+    #[test]
+    fn test_sum() {
+        assert_eq!(sum(&[]), 0);
+        assert_eq!(sum(&[1]), 1);
+        assert_eq!(sum(&[1, 2]), 3);
+        assert_eq!(sum(&[1, 2, 3]), 6);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_sum_panics() {
+        sum(&[i32::MAX, 1]);
     }
 }
