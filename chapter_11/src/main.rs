@@ -16,6 +16,9 @@ fn main() {
 
     let s = "axbxcxd";
     println!("count of 'x' in {} is {}\n", s, count_x(s));
+
+    let num = 11;
+    println!("number of stair path for {} is {}\n", num, stairs(num));
 }
 
 fn double(data: &mut [i32], idx: usize) {
@@ -65,6 +68,16 @@ fn count_x(s: &str) -> usize {
     } else {
         let (first, rest) = s.split_at(1);
         count_x(rest) + first.eq("x") as usize
+    }
+}
+
+fn stairs(num: u8) -> usize {
+    match num {
+        0 => 0,
+        1 => 1,
+        2 => 2,
+        3 => 4,
+        _ => stairs(num - 1) + stairs(num - 2) + stairs(num - 3),
     }
 }
 
@@ -139,5 +152,15 @@ mod tests {
         assert_eq!(count_x("yxy"), 1);
         assert_eq!(count_x("xyx"), 2);
         assert_eq!(count_x("yxx"), 2);
+    }
+
+    #[test]
+    fn test_stairs() {
+        assert_eq!(stairs(0), 0);
+        assert_eq!(stairs(1), 1);
+        assert_eq!(stairs(2), 2);
+        assert_eq!(stairs(3), 4);
+        assert_eq!(stairs(4), 7);
+        assert_eq!(stairs(5), 13);
     }
 }
