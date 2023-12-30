@@ -12,7 +12,10 @@ fn main() {
     println!("sum of {:?} is {}\n", v, sum(&v));
 
     let s = "abcde";
-    println!("reverse of {} is {}", s, reverse(s));
+    println!("reverse of {} is {}\n", s, reverse(s));
+
+    let s = "axbxcxd";
+    println!("count of 'x' in {} is {}\n", s, count_x(s));
 }
 
 fn double(data: &mut [i32], idx: usize) {
@@ -53,6 +56,15 @@ fn reverse(s: &str) -> String {
         let mut reversed = reverse(rest);
         reversed.push_str(first);
         reversed
+    }
+}
+
+fn count_x(s: &str) -> usize {
+    if s.is_empty() {
+        0
+    } else {
+        let (first, rest) = s.split_at(1);
+        count_x(rest) + first.eq("x") as usize
     }
 }
 
@@ -116,5 +128,16 @@ mod tests {
         assert_eq!(reverse("x"), "x".to_string());
         assert_eq!(reverse("xy"), "yx".to_string());
         assert_eq!(reverse("xyz"), "zyx".to_string());
+    }
+
+    #[test]
+    fn test_count_x() {
+        assert_eq!(count_x(""), 0);
+        assert_eq!(count_x("x"), 1);
+        assert_eq!(count_x("xy"), 1);
+        assert_eq!(count_x("yx"), 1);
+        assert_eq!(count_x("yxy"), 1);
+        assert_eq!(count_x("xyx"), 2);
+        assert_eq!(count_x("yxx"), 2);
     }
 }
