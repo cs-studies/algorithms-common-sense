@@ -9,7 +9,10 @@ fn main() {
     println!("5! = {}\n", factorial_params(5, 1, 1));
 
     let v = vec![1, 2, 3, 4, 5];
-    println!("sum of {:?} is {}", v, sum(&v));
+    println!("sum of {:?} is {}\n", v, sum(&v));
+
+    let s = "abcde";
+    println!("reverse of {} is {}", s, reverse(s));
 }
 
 fn double(data: &mut [i32], idx: usize) {
@@ -39,6 +42,17 @@ fn sum(data: &[i32]) -> i32 {
         0
     } else {
         data[0] + sum(&data[1..data.len()])
+    }
+}
+
+fn reverse(s: &str) -> String {
+    if s.is_empty() {
+        String::new()
+    } else {
+        let (first, rest) = s.split_at(1);
+        let mut reversed = reverse(rest);
+        reversed.push_str(first);
+        reversed
     }
 }
 
@@ -94,5 +108,13 @@ mod tests {
     #[should_panic]
     fn test_sum_panics() {
         sum(&[i32::MAX, 1]);
+    }
+
+    #[test]
+    fn test_reverse() {
+        assert_eq!(reverse(""), "".to_string());
+        assert_eq!(reverse("x"), "x".to_string());
+        assert_eq!(reverse("xy"), "yx".to_string());
+        assert_eq!(reverse("xyz"), "zyx".to_string());
     }
 }
