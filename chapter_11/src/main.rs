@@ -18,7 +18,10 @@ fn main() {
     println!("count of 'x' in {} is {}\n", s, count_x(s));
 
     let num = 11;
-    println!("number of stair path for {} is {}\n", num, stairs(num));
+    println!("number of paths for {} stairs is {}\n", num, stairs(num));
+
+    let s = "abc";
+    println!("anagrams of {:?} are {:?}\n", s, anagrams(s));
 }
 
 fn double(data: &mut [i32], idx: usize) {
@@ -79,6 +82,21 @@ fn stairs(num: u8) -> usize {
         3 => 4,
         _ => stairs(num - 1) + stairs(num - 2) + stairs(num - 3),
     }
+}
+
+fn anagrams(s: &str) -> Vec<String> {
+    if s.is_empty() {
+        return vec![String::new()];
+    }
+    let mut collection = Vec::new();
+    for a in anagrams(&s[1..]) {
+        for i in 0..=a.len() {
+            let mut anagram = a.clone();
+            anagram.insert_str(i, &s[0..1]);
+            collection.push(anagram);
+        }
+    }
+    collection
 }
 
 #[cfg(test)]
@@ -162,5 +180,17 @@ mod tests {
         assert_eq!(stairs(3), 4);
         assert_eq!(stairs(4), 7);
         assert_eq!(stairs(5), 13);
+    }
+
+    #[test]
+    fn test_anagrams() {
+        assert_eq!(anagrams(""), vec![""]);
+        assert_eq!(anagrams("a"), vec!["a"]);
+        assert_eq!(anagrams("ab"), vec!["ab", "ba"]);
+        assert_eq!(
+            anagrams("abc"),
+            vec!["abc", "bac", "bca", "acb", "cab", "cba"]
+        );
+        assert_eq!(anagrams("abcdef").len(), 6 * 5 * 4 * 3 * 2)
     }
 }
