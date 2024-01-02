@@ -37,6 +37,12 @@ fn main() {
         nums,
         exercises::find_evens(&nums)
     );
+
+    println!(
+        "the {}-th triangular number is {}",
+        7,
+        exercises::triangular_number(7)
+    );
 }
 
 fn double(data: &mut [i32], idx: usize) {
