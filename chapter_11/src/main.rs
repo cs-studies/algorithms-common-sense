@@ -1,3 +1,5 @@
+mod exercises;
+
 fn main() {
     println!("\n*** Chapter 11 ***\n");
 
@@ -22,6 +24,12 @@ fn main() {
 
     let s = "abc";
     println!("anagrams of {:?} are {:?}\n", s, anagrams(s));
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    let a = ["ab", "c", "def", "ghij"];
+    println!("chars count in {:?} is {}", a, exercises::count_chars(&a));
 }
 
 fn double(data: &mut [i32], idx: usize) {
