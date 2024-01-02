@@ -24,6 +24,17 @@ pub fn triangular_number(at: u16) -> u16 {
         .expect("simple examples should not overflow memory")
 }
 
+pub fn index_x(s: &str) -> usize {
+    if s.is_empty() {
+        panic!("The string must contain 'x'");
+    }
+    let (first, rest) = s.split_at(1);
+    if first == "x" {
+        return 0;
+    }
+    1 + index_x(rest)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -61,5 +72,23 @@ mod tests {
     #[should_panic]
     fn test_triangular_number_panics() {
         triangular_number(u16::MAX / 2);
+    }
+
+    #[test]
+    fn test_index_x() {
+        assert_eq!(index_x("x"), 0);
+        assert_eq!(index_x("abx"), 2);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_index_x_panics_empty_string() {
+        index_x("");
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_index_x_panics_no_x() {
+        index_x("abc");
     }
 }

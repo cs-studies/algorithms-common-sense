@@ -43,6 +43,9 @@ fn main() {
         7,
         exercises::triangular_number(7)
     );
+
+    let s = "abcdefghijklmnopqrstuvwxyz";
+    println!("'x' is at {}", exercises::index_x(s));
 }
 
 fn double(data: &mut [i32], idx: usize) {
