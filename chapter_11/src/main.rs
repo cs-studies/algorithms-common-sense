@@ -30,6 +30,13 @@ fn main() {
 
     let a = ["ab", "c", "def", "ghij"];
     println!("chars count in {:?} is {}", a, exercises::count_chars(&a));
+
+    let nums = [100, 99, 98, 97, -6, -3, 0];
+    println!(
+        "even numbers in {:?} are {:?}",
+        nums,
+        exercises::find_evens(&nums)
+    );
 }
 
 fn double(data: &mut [i32], idx: usize) {
