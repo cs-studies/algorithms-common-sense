@@ -46,6 +46,11 @@ fn main() {
 
     let s = "abcdefghijklmnopqrstuvwxyz";
     println!("'x' is at {}", exercises::index_x(s));
+
+    println!(
+        "number of unique paths in 3x7 grid is {}",
+        exercises::unique_paths(3, 7)
+    );
 }
 
 fn double(data: &mut [i32], idx: usize) {

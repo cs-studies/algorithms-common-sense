@@ -35,6 +35,18 @@ pub fn index_x(s: &str) -> usize {
     1 + index_x(rest)
 }
 
+pub fn unique_paths(rows: u8, columns: u8) -> u16 {
+    if rows < 1 || columns < 1 {
+        panic!("rows and columns must be positive numbers");
+    }
+    if rows == 1 || columns == 1 {
+        return 1;
+    }
+    unique_paths(rows - 1, columns)
+        .checked_add(unique_paths(rows, columns - 1))
+        .expect("simple examples should not overflow memory")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -90,5 +102,35 @@ mod tests {
     #[should_panic]
     fn test_index_x_panics_no_x() {
         index_x("abc");
+    }
+
+    #[test]
+    fn test_unique_paths() {
+        assert_eq!(unique_paths(1, 1), 1);
+        assert_eq!(unique_paths(2, 1), 1);
+        assert_eq!(unique_paths(1, 2), 1);
+        assert_eq!(unique_paths(2, 2), 2);
+        assert_eq!(unique_paths(3, 1), 1);
+        assert_eq!(unique_paths(1, 3), 1);
+        assert_eq!(unique_paths(3, 2), 3);
+        assert_eq!(unique_paths(2, 3), 3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_unique_paths_00() {
+        unique_paths(0, 0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_unique_paths_01() {
+        unique_paths(0, 1);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_unique_paths_10() {
+        unique_paths(1, 0);
     }
 }
