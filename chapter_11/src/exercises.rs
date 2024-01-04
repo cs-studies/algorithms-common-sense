@@ -26,7 +26,7 @@ pub fn triangular_number(at: u16) -> u16 {
 
 pub fn index_x(s: &str) -> usize {
     if s.is_empty() {
-        panic!("The string must contain 'x'");
+        panic!("the string must contain 'x'");
     }
     let (first, rest) = s.split_at(1);
     if first == "x" {
