@@ -7,9 +7,11 @@ fn main() {
     println!("max in {:?} is {}", v, max(&v));
 
     println!(
-        "The 10th Fibonacci number is {}",
+        "fib: the 10th Fibonacci number is {}",
         fib(10, &mut HashMap::new())
     );
+
+    println!("fib_iter: the 10th Fibonacci number is {}", fib_iter(10));
 }
 
 fn max(data: &[i32]) -> i32 {
@@ -40,6 +42,24 @@ fn fib(n: u8, memo: &mut HashMap<u8, u128>) -> u128 {
 
     memo.insert(n, val);
     val
+}
+
+fn fib_iter(n: u8) -> u128 {
+    if n == 0 {
+        return 0;
+    }
+
+    let mut a = 0;
+    let mut b = 1;
+
+    for _ in 1..n {
+        let tmp: u128 = a;
+        a = b;
+        b = tmp.checked_add(a)
+            .expect("simple examples should not overflow memory");
+    }
+
+    b
 }
 
 #[cfg(test)]
@@ -82,5 +102,26 @@ mod tests {
     #[should_panic]
     fn test_fib_panics() {
         fib(u8::MAX, &mut HashMap::new());
+    }
+
+    #[test]
+    fn test_fib_iter() {
+        assert_eq!(fib_iter(0), 0);
+        assert_eq!(fib_iter(1), 1);
+        assert_eq!(fib_iter(2), 1);
+        assert_eq!(fib_iter(3), 2);
+        assert_eq!(fib_iter(4), 3);
+        assert_eq!(fib_iter(5), 5);
+        assert_eq!(fib_iter(6), 8);
+        assert_eq!(fib_iter(7), 13);
+        assert_eq!(fib_iter(8), 21);
+        assert_eq!(fib_iter(9), 34);
+        assert_eq!(fib_iter(10), 55);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_fib_iter_panics() {
+        fib_iter(u8::MAX);
     }
 }
