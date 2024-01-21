@@ -1,8 +1,15 @@
+use std::collections::HashMap;
+
 fn main() {
     println!("\n*** Chapter 12 ***\n");
 
     let v = vec![1, 2, 3, 4];
     println!("max in {:?} is {}", v, max(&v));
+
+    println!(
+        "The 10th Fibonacci number is {}",
+        fib(10, &mut HashMap::new())
+    );
 }
 
 fn max(data: &[i32]) -> i32 {
@@ -17,6 +24,22 @@ fn max(data: &[i32]) -> i32 {
         return data[0];
     }
     rest_max
+}
+
+fn fib(n: u8, memo: &mut HashMap<u8, u128>) -> u128 {
+    if let Some(&val) = memo.get(&n) {
+        return val;
+    }
+
+    let val = match n {
+        0 | 1 => n as u128,
+        _ => fib(n - 2, memo)
+            .checked_add(fib(n - 1, memo))
+            .expect("simple examples should not overflow memory"),
+    };
+
+    memo.insert(n, val);
+    val
 }
 
 #[cfg(test)]
@@ -37,5 +60,27 @@ mod tests {
     #[should_panic]
     fn test_max_panics() {
         max(&[]);
+    }
+
+    #[test]
+    fn test_fib() {
+        let mut hm = HashMap::new();
+        assert_eq!(fib(0, &mut hm), 0);
+        assert_eq!(fib(1, &mut hm), 1);
+        assert_eq!(fib(2, &mut hm), 1);
+        assert_eq!(fib(3, &mut hm), 2);
+        assert_eq!(fib(4, &mut hm), 3);
+        assert_eq!(fib(5, &mut hm), 5);
+        assert_eq!(fib(6, &mut hm), 8);
+        assert_eq!(fib(7, &mut hm), 13);
+        assert_eq!(fib(8, &mut hm), 21);
+        assert_eq!(fib(9, &mut hm), 34);
+        assert_eq!(fib(10, &mut hm), 55);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_fib_panics() {
+        fib(u8::MAX, &mut HashMap::new());
     }
 }
