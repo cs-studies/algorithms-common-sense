@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+mod exercises;
+
 fn main() {
     println!("\n*** Chapter 12 ***\n");
 
@@ -12,6 +14,12 @@ fn main() {
     );
 
     println!("fib_iter: the 10th Fibonacci number is {}", fib_iter(10));
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+    let nums = [100, u8::MAX];
+    // let nums = [10, 3, 0, 8, 90];
+    println!("sum of {:?} is {:?}", nums, exercises::add_until_100(&nums));
 }
 
 fn max(data: &[i32]) -> i32 {
