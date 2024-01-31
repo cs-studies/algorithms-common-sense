@@ -20,7 +20,7 @@ fn main() {
 
     let nums = [100, u8::MAX];
     println!(
-        "sum of {:?} is {:?}\n",
+        "sum of {:?} is {:?}",
         nums,
         exercises::add_until_100(&nums)
     );
@@ -28,6 +28,11 @@ fn main() {
     println!(
         "12 appears in the Golomb sequence {} times",
         exercises::golomb(12, &mut HashMap::new())
+    );
+
+    println!(
+        "number of unique paths in 3x7 grid is {}",
+        exercises::unique_paths(3, 7, &mut HashMap::new())
     );
 }
 

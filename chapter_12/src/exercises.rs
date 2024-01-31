@@ -24,14 +24,27 @@ pub fn golomb(n: u16, memo: &mut HashMap<u16, u16>) -> u16 {
     if let Some(&val) = memo.get(&n) {
         return val;
     }
-
     let val = match n {
         0 => panic!("Golomb sequence starts with 1"),
         1 => 1,
         _ => 1 + golomb(n - golomb(golomb(n - 1, memo), memo), memo),
     };
-
     memo.insert(n, val);
+    val
+}
+
+pub fn unique_paths(r: u8, c: u8, memo: &mut HashMap<(u8, u8), u16>) -> u16 {
+    if let Some(&val) = memo.get(&(r, c)) {
+        return val;
+    }
+    let val = match (r, c) {
+        (0, _) | (_, 0) => panic!("rows and columns must be positive numbers"),
+        (1, _) | (_, 1) => 1,
+        _ => unique_paths(r - 1, c, memo)
+            .checked_add(unique_paths(r, c - 1, memo))
+            .expect("simple examples should not overflow memory"),
+    };
+    memo.insert((r, c), val);
     val
 }
 
@@ -75,5 +88,36 @@ mod tests {
     #[should_panic(expected = "Golomb sequence starts with 1")]
     fn test_golomb_panics() {
         golomb(0, &mut HashMap::new());
+    }
+
+    #[test]
+    fn test_unique_paths() {
+        let mut hm = HashMap::new();
+        assert_eq!(unique_paths(1, 1, &mut hm), 1);
+        assert_eq!(unique_paths(2, 1, &mut hm), 1);
+        assert_eq!(unique_paths(1, 2, &mut hm), 1);
+        assert_eq!(unique_paths(2, 2, &mut hm), 2);
+        assert_eq!(unique_paths(3, 1, &mut hm), 1);
+        assert_eq!(unique_paths(1, 3, &mut hm), 1);
+        assert_eq!(unique_paths(3, 2, &mut hm), 3);
+        assert_eq!(unique_paths(2, 3, &mut hm), 3);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_unique_paths_00() {
+        unique_paths(0, 0, &mut HashMap::new());
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_unique_paths_01() {
+        unique_paths(0, 1, &mut HashMap::new());
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_unique_paths_10() {
+        unique_paths(1, 0, &mut HashMap::new());
     }
 }
