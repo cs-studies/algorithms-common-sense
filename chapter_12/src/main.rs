@@ -17,9 +17,18 @@ fn main() {
 
     //// Exercises
     println!("\n*** Exercises ***\n");
+
     let nums = [100, u8::MAX];
-    // let nums = [10, 3, 0, 8, 90];
-    println!("sum of {:?} is {:?}", nums, exercises::add_until_100(&nums));
+    println!(
+        "sum of {:?} is {:?}\n",
+        nums,
+        exercises::add_until_100(&nums)
+    );
+
+    println!(
+        "12 appears in the Golomb sequence {} times",
+        exercises::golomb(12, &mut HashMap::new())
+    );
 }
 
 fn max(data: &[i32]) -> i32 {
@@ -63,7 +72,8 @@ fn fib_iter(n: u8) -> u128 {
     for _ in 1..n {
         let tmp: u128 = a;
         a = b;
-        b = tmp.checked_add(a)
+        b = tmp
+            .checked_add(a)
             .expect("simple examples should not overflow memory");
     }
 
