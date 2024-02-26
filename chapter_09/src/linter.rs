@@ -26,7 +26,7 @@ pub struct Linter {
 }
 
 impl Linter {
-    pub fn new() -> Self {
+     pub fn new() -> Self {
         Self {
             stack: Default::default(),
             braces: HashMap::from([('(', ')'), ('[', ']'), ('{', '}')]),
