@@ -66,10 +66,20 @@ mod tests {
 
     #[test]
     fn test_quicksort() {
-        let data = vec![0, -5, 2, 6, 3];
-        let right_idx = data.len() - 1;
-        let mut sa = SortableArray::new(data);
-        sa.quicksort(0, right_idx);
+        let mut sa = SortableArray::new(vec![]);
+        sa.quicksort(0, 0);
+        assert_eq!(sa.data, []);
+
+        let mut sa = SortableArray::new(vec![2]);
+        sa.quicksort(0, 0);
+        assert_eq!(sa.data, [2]);
+
+        let mut sa = SortableArray::new(vec![2, 1]);
+        sa.quicksort(0, 1);
+        assert_eq!(sa.data, [1, 2]);
+
+        let mut sa = SortableArray::new(vec![0, -5, 2, 6, 3]);
+        sa.quicksort(0, 4);
         assert_eq!(sa.data, [-5, 0, 2, 3, 6]);
     }
 }
