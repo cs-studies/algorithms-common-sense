@@ -1,13 +1,23 @@
+use std::cmp::Ordering;
+
 fn main() {
     println!("\n*** Chapter 13 ***\n");
 
     let v = vec![0, -5, 2, 1, -6, 3];
     println!("Before: {:?}", v);
-
     let right_idx = v.len().saturating_sub(1);
     let mut sa = SortableArray::new(v);
     sa.quicksort(0, right_idx);
     println!("After: {:?}", sa.data);
+
+    let v = vec![0, -50, 20, 10, -60, 30];
+    println!("\n{:?}", v);
+    let right_idx = v.len().saturating_sub(1);
+    let mut sa = SortableArray::new(v);
+    println!(
+        "The 3-rd smallest value is {:?}",
+        sa.quickselect(3, 0, right_idx)
+    );
 }
 
 #[derive(Debug)]
@@ -29,6 +39,18 @@ impl SortableArray {
             self.quicksort(left, pivot - 1);
         }
         self.quicksort(pivot + 1, right);
+    }
+
+    pub fn quickselect(&mut self, k: usize, left: usize, right: usize) -> i32 {
+        if left >= right {
+            return self.data[left];
+        }
+        let pivot = self.partition(left, right);
+        match k.cmp(&pivot) {
+            Ordering::Less => self.quickselect(k, left, pivot - 1),
+            Ordering::Greater => self.quickselect(k, pivot + 1, right),
+            Ordering::Equal => self.data[pivot],
+        }
     }
 
     fn partition(&mut self, mut left: usize, mut right: usize) -> usize {
@@ -81,5 +103,20 @@ mod tests {
         let mut sa = SortableArray::new(vec![0, -5, 2, 6, 3]);
         sa.quicksort(0, 4);
         assert_eq!(sa.data, [-5, 0, 2, 3, 6]);
+    }
+
+    #[test]
+    fn test_quickselect() {
+        let mut sa = SortableArray::new(vec![3]);
+        assert_eq!(sa.quickselect(0, 0, 0), 3);
+
+        let mut sa = SortableArray::new(vec![3, 4]);
+        assert_eq!(sa.quickselect(0, 0, 1), 3);
+
+        let mut sa = SortableArray::new(vec![3, 4]);
+        assert_eq!(sa.quickselect(1, 0, 1), 4);
+
+        let mut sa = SortableArray::new(vec![0, -50, 10, -60, 40]);
+        assert_eq!(sa.quickselect(3, 0, 4), 10);
     }
 }
