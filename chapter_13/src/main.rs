@@ -18,6 +18,10 @@ fn main() {
         "The 3-rd smallest value is {:?}",
         sa.quickselect(3, 0, right_idx)
     );
+
+    let mut v = vec![0, -50, 20, 10, -60, 10];
+    println!("\nVector {:?}", v);
+    println!("Has duplicates: {}", has_duplicates(&mut v));
 }
 
 #[derive(Debug)]
@@ -82,6 +86,20 @@ impl SortableArray {
     }
 }
 
+fn has_duplicates(data: &mut [i32]) -> bool {
+    let data_len = data.len();
+    if data_len < 2 {
+        return false;
+    }
+    data.sort();
+    for i in 0..(data_len - 1) {
+        if data[i] == data[i+1] {
+            return true;
+        }
+    }
+    false
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -118,5 +136,12 @@ mod tests {
 
         let mut sa = SortableArray::new(vec![0, -50, 10, -60, 40]);
         assert_eq!(sa.quickselect(3, 0, 4), 10);
+    }
+
+    #[test]
+    fn test_has_duplicates() {
+        assert!(!has_duplicates(&mut []));
+        assert!(!has_duplicates(&mut [3, 9, 4]));
+        assert!(has_duplicates(&mut [5, 3, 1, 9, 1, 4]));
     }
 }
