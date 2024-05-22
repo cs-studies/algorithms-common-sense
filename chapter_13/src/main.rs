@@ -1,4 +1,5 @@
 use std::cmp::Ordering;
+mod exercises;
 
 fn main() {
     println!("\n*** Chapter 13 ***\n");
@@ -22,6 +23,12 @@ fn main() {
     let mut v = vec![0, -50, 20, 10, -60, 10];
     println!("\nVector {:?}", v);
     println!("Has duplicates: {}", has_duplicates(&mut v));
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    println!("Greatest Product: {:?}",
+             exercises::greatest_product(&mut [5, 3, 7, 1]));
 }
 
 #[derive(Debug)]
