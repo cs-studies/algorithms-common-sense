@@ -36,6 +36,19 @@ fn main() {
     println!("\nVector: {:?}", v);
     println!("Missing number: {:?}",
              exercises::find_missing_number(&mut v));
+
+    let v = vec![0, -50, 20, 10, -60, 10];
+    println!("\nVector: {:?}", v);
+    println!("Greatest number O(N^2): {:?}",
+             exercises::max_n2(&v));
+
+    let mut v = vec![0, -50, 20, 10, -60, 10];
+    println!("Greatest number O(N log N): {:?}",
+             exercises::max_nlogn(&mut v));
+
+    let v = vec![0, -50, 20, 10, -60, 10];
+    println!("Greatest number O(N): {:?}",
+             exercises::max_n(&v));
 }
 
 #[derive(Debug)]
