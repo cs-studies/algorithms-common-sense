@@ -27,8 +27,15 @@ fn main() {
     //// Exercises
     println!("\n*** Exercises ***\n");
 
-    println!("Greatest Product: {:?}",
-             exercises::greatest_product(&mut [5, 3, 7, 1]));
+    let mut v = vec![5, 3, 7, 1];
+    println!("Vector: {:?}", v);
+    println!("Greatest product: {:?}",
+             exercises::greatest_product(&mut v));
+
+    let mut v = vec![9, 3, 2, 5, 6, 7, 1, 0, 4];
+    println!("\nVector: {:?}", v);
+    println!("Missing number: {:?}",
+             exercises::find_missing_number(&mut v));
 }
 
 #[derive(Debug)]
