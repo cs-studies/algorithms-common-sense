@@ -1,3 +1,6 @@
+use std::cmp::PartialEq;
+use std::fmt::Debug;
+
 fn main() {
     println!("\n*** Chapter 14 ***\n");
 
@@ -7,8 +10,9 @@ fn main() {
     let n1 = Node::new("once".to_string(), n2.into_link());
 
     let list = LinkedList::new(n1.into_link());
-    let read0 = list.read(2);
-    println!("{:?}", read0);
+    dbg!(&list);
+    println!("Read at 1: {:?}", list.read(1));
+    println!("Index of 'time': {:?}", list.index_of("time".to_string()));
 }
 
 type Link<T> = Option<Box<Node<T>>>;
@@ -18,7 +22,7 @@ struct LinkedList<T> {
     head: Link<T>,
 }
 
-impl<T: std::fmt::Debug> LinkedList<T> {
+impl<T: Debug + PartialEq> LinkedList<T> {
     fn new(head: Link<T>) -> Self {
         Self { head }
     }
@@ -33,6 +37,19 @@ impl<T: std::fmt::Debug> LinkedList<T> {
         }
         current_link.as_ref().map(|node| &node.data)
     }
+
+    fn index_of(&self, value: T) -> Option<usize> {
+        let mut current_link = &self.head;
+        let mut i = 0;
+        while let Some(node) = current_link {
+            if node.data == value {
+                return Some(i);
+            }
+            current_link = &node.next;
+            i += 1;
+        }
+        None
+    }
 }
 
 #[derive(Debug)]
@@ -42,7 +59,7 @@ struct Node<T> {
 }
 
 impl<T> Node<T> {
-    fn new(data: T, next: Option<Box<Self>>) -> Self {
+    fn new(data: T, next: Link<T>) -> Self {
         Self { data, next }
     }
 
@@ -82,5 +99,15 @@ mod tests {
         let list = LinkedList::new(node1.into_link());
         assert_eq!(list.read(0), Some(&111));
         assert_eq!(list.read(1), Some(&222));
+    }
+
+    #[test]
+    fn test_list_index_of() {
+        let node2 = Node::new(222, None);
+        let node1 = Node::new(111, node2.into_link());
+        let list = LinkedList::new(node1.into_link());
+        assert_eq!(list.index_of(111), Some(0));
+        assert_eq!(list.index_of(222), Some(1));
+        assert!(list.index_of(55).is_none());
     }
 }
