@@ -9,10 +9,12 @@ fn main() {
     let n2 = Node::new("upon".to_string(), n3.into_link());
     let n1 = Node::new("once".to_string(), n2.into_link());
 
-    let list = LinkedList::new(n1.into_link());
-    dbg!(&list);
+    let mut list = LinkedList::new(n1.into_link());
     println!("Read at 1: {:?}", list.read(1));
     println!("Index of 'time': {:?}", list.index_of("time".to_string()));
+    println!("Insert 'purple' at 3");
+    list.insert(3, "purple".to_string());
+    dbg!(list);
 }
 
 type Link<T> = Option<Box<Node<T>>>;
@@ -49,6 +51,19 @@ impl<T: Debug + PartialEq> LinkedList<T> {
             i += 1;
         }
         None
+    }
+
+    fn insert(&mut self, at: usize, value: T) {
+        let mut link = &mut self.head;
+        let mut new_node = Node::new(value, None);
+        for _ in 0..at {
+            match link {
+                Some(ref mut node) => link = &mut node.next,
+                None => return,
+            }
+        }
+        new_node.next = link.take();
+        *link = new_node.into_link();
     }
 }
 
@@ -109,5 +124,18 @@ mod tests {
         assert_eq!(list.index_of(111), Some(0));
         assert_eq!(list.index_of(222), Some(1));
         assert!(list.index_of(55).is_none());
+    }
+
+    #[test]
+    fn test_list_insert_at() {
+        let mut list = LinkedList::<i32>::new(None);
+        assert!(list.index_of(11).is_none());
+        assert!(list.index_of(22).is_none());
+
+        list.insert(0, 11);
+        assert_eq!(list.index_of(11), Some(0));
+
+        list.insert(1, 22);
+        assert_eq!(list.index_of(22), Some(1));
     }
 }
