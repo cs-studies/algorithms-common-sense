@@ -14,7 +14,9 @@ fn main() {
     println!("Index of 'time': {:?}", list.index_of("time".to_string()));
     println!("Insert 'purple' at 3");
     list.insert(3, "purple".to_string());
-    dbg!(list);
+    list.delete(0);
+    list.delete(3);
+    dbg!(&list);
 }
 
 type Link<T> = Option<Box<Node<T>>>;
@@ -30,24 +32,24 @@ impl<T: Debug + PartialEq> LinkedList<T> {
     }
 
     fn read(&self, at: usize) -> Option<&T> {
-        let mut current_link = &self.head;
+        let mut link = &self.head;
         for _ in 0..at {
-            match current_link {
-                Some(node) => current_link = &node.next,
+            match link {
+                Some(node) => link = &node.next,
                 None => return None,
             }
         }
-        current_link.as_ref().map(|node| &node.data)
+        link.as_ref().map(|node| &node.data)
     }
 
     fn index_of(&self, value: T) -> Option<usize> {
-        let mut current_link = &self.head;
+        let mut link = &self.head;
         let mut i = 0;
-        while let Some(node) = current_link {
+        while let Some(node) = link {
             if node.data == value {
                 return Some(i);
             }
-            current_link = &node.next;
+            link = &node.next;
             i += 1;
         }
         None
@@ -64,6 +66,19 @@ impl<T: Debug + PartialEq> LinkedList<T> {
         }
         new_node.next = link.take();
         *link = new_node.into_link();
+    }
+
+    fn delete(&mut self, at: usize) {
+        let mut link = &mut self.head;
+        for _ in 0..at {
+            match link {
+                Some(ref mut node) => link = &mut node.next,
+                None => return,
+            }
+        }
+        if let Some(node) = link {
+            *link = node.next.take();
+        }
     }
 }
 
@@ -127,7 +142,7 @@ mod tests {
     }
 
     #[test]
-    fn test_list_insert_at() {
+    fn test_list_insert() {
         let mut list = LinkedList::<i32>::new(None);
         assert!(list.index_of(11).is_none());
         assert!(list.index_of(22).is_none());
@@ -137,5 +152,29 @@ mod tests {
 
         list.insert(1, 22);
         assert_eq!(list.index_of(22), Some(1));
+    }
+
+    #[test]
+    fn test_list_delete() {
+        let mut list = LinkedList::<i32>::new(None);
+        assert!(list.head.is_none());
+        list.delete(0);
+        assert!(list.head.is_none());
+
+        let node2 = Node::new(222, None);
+        let node1 = Node::new(111, node2.into_link());
+        let mut list = LinkedList::new(node1.into_link());
+        list.delete(0);
+        assert_eq!(list.index_of(111), None);
+        assert_eq!(list.index_of(222), Some(0));
+
+        let node2 = Node::new(222, None);
+        let node1 = Node::new(111, node2.into_link());
+        list = LinkedList::new(node1.into_link());
+        list.delete(1);
+        assert_eq!(list.index_of(111), Some(0));
+        assert_eq!(list.index_of(222), None);
+
+        list.delete(10);
     }
 }
