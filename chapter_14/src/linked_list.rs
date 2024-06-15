@@ -8,6 +8,12 @@ pub struct LinkedList<T> {
     head: Link<T>,
 }
 
+#[derive(Debug)]
+pub struct Node<T> {
+    data: T,
+    next: Link<T>,
+}
+
 impl<T: Debug + PartialEq> LinkedList<T> {
     pub fn new(head: Link<T>) -> Self {
         Self { head }
@@ -62,12 +68,6 @@ impl<T: Debug + PartialEq> LinkedList<T> {
             *link = node.next.take();
         }
     }
-}
-
-#[derive(Debug)]
-pub struct Node<T> {
-    data: T,
-    next: Link<T>,
 }
 
 impl<T> Node<T> {
