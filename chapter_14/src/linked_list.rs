@@ -11,7 +11,7 @@ pub struct LinkedList<T> {
 #[derive(Debug)]
 pub struct Node<T> {
     data: T,
-    next: Link<T>,
+    pub next: Link<T>,
 }
 
 impl<T: Debug + PartialEq> LinkedList<T> {
@@ -45,7 +45,7 @@ impl<T: Debug + PartialEq> LinkedList<T> {
 
     pub fn insert(&mut self, at: usize, value: T) {
         let mut link = &mut self.head;
-        let mut new_node = Node::new(value, None);
+        let mut new_node = Node::new(value);
         for _ in 0..at {
             match link {
                 Some(ref mut node) => link = &mut node.next,
@@ -71,8 +71,8 @@ impl<T: Debug + PartialEq> LinkedList<T> {
 }
 
 impl<T> Node<T> {
-    pub fn new(data: T, next: Link<T>) -> Self {
-        Self { data, next }
+    pub fn new(data: T) -> Self {
+        Self { data, next: None }
     }
 
     pub fn into_link(self) -> Link<T> {
@@ -86,9 +86,11 @@ mod tests {
 
     #[test]
     fn test_node_new() {
-        let node = Node::new(555, None);
-        assert_eq!(node.data, 555);
+        let mut node = Node::new(11);
+        assert_eq!(node.data, 11);
         assert!(node.next.is_none());
+        node.next = Node::new(22).into_link();
+        assert!(node.next.is_some());
     }
 
     #[test]
@@ -99,27 +101,27 @@ mod tests {
 
     #[test]
     fn test_list_non_empty() {
-        let node = Node::new(555, None);
+        let node = Node::new(11);
         let list = LinkedList::new(node.into_link());
         assert!(list.head.is_some());
     }
 
     #[test]
     fn test_list_read() {
-        let node2 = Node::new(222, None);
-        let node1 = Node::new(111, node2.into_link());
+        let mut node1 = Node::new(11);
+        node1.next = Node::new(22).into_link();
         let list = LinkedList::new(node1.into_link());
-        assert_eq!(list.read(0), Some(&111));
-        assert_eq!(list.read(1), Some(&222));
+        assert_eq!(list.read(0), Some(&11));
+        assert_eq!(list.read(1), Some(&22));
     }
 
     #[test]
     fn test_list_index_of() {
-        let node2 = Node::new(222, None);
-        let node1 = Node::new(111, node2.into_link());
+        let mut node1 = Node::new(11);
+        node1.next = Node::new(22).into_link();
         let list = LinkedList::new(node1.into_link());
-        assert_eq!(list.index_of(111), Some(0));
-        assert_eq!(list.index_of(222), Some(1));
+        assert_eq!(list.index_of(11), Some(0));
+        assert_eq!(list.index_of(22), Some(1));
         assert!(list.index_of(55).is_none());
     }
 
@@ -143,15 +145,15 @@ mod tests {
         list.delete(0);
         assert!(list.head.is_none());
 
-        let node2 = Node::new(222, None);
-        let node1 = Node::new(111, node2.into_link());
+        let mut node1 = Node::new(11);
+        node1.next = Node::new(22).into_link();
         let mut list = LinkedList::new(node1.into_link());
         list.delete(0);
-        assert_eq!(list.index_of(111), None);
-        assert_eq!(list.index_of(222), Some(0));
+        assert_eq!(list.index_of(11), None);
+        assert_eq!(list.index_of(22), Some(0));
 
-        let node2 = Node::new(222, None);
-        let node1 = Node::new(111, node2.into_link());
+        let mut node1 = Node::new(111);
+        node1.next = Node::new(22).into_link();
         list = LinkedList::new(node1.into_link());
         list.delete(1);
         assert_eq!(list.index_of(111), Some(0));
