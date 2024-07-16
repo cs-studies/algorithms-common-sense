@@ -1,4 +1,7 @@
+mod doubly_linked_list;
 mod linked_list;
+
+use doubly_linked_list::DoublyLinkedList;
 use linked_list::{LinkedList, Node};
 
 fn main() {
@@ -20,5 +23,12 @@ fn main() {
     list.insert(3, "purple".to_string());
     list.delete(0);
     list.delete(3);
+    dbg!(&list);
+
+    let mut list = DoublyLinkedList::new();
+    list.insert_at_end("once");
+    list.insert_at_end("upon");
+    list.insert_at_end("a");
+    list.insert_at_end("time");
     dbg!(&list);
 }
