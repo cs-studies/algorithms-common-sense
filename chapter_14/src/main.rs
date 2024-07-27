@@ -26,9 +26,13 @@ fn main() {
     dbg!(&list);
 
     let mut list = DoublyLinkedList::new();
-    list.insert_at_end("once");
-    list.insert_at_end("upon");
-    list.insert_at_end("a");
-    list.insert_at_end("time");
+    list.push_end("once");
+    list.push_end("upon");
+    list.push_end("a");
+    list.push_end("time");
+
+    dbg!(&list);
+    dbg!(list.pop_front());
+    dbg!(list.pop_front());
     dbg!(&list);
 }
