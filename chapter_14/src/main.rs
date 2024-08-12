@@ -1,8 +1,10 @@
 mod doubly_linked_list;
 mod linked_list;
+mod queue;
 
 use doubly_linked_list::DoublyLinkedList;
 use linked_list::{LinkedList, Node};
+use queue::Queue;
 
 fn main() {
     println!("\n*** Chapter 14 ***\n");
@@ -35,4 +37,16 @@ fn main() {
     dbg!(list.pop_front());
     dbg!(list.pop_front());
     dbg!(&list);
+
+    let mut q = Queue::new();
+    println!("dequeue: {:?}", q.dequeue());
+    println!("read: {:?}", q.read());
+
+    q.enqueue("First".to_string());
+    q.enqueue("Second".to_string());
+    q.enqueue("Third".to_string());
+
+    println!("dequeue: {:?}", q.dequeue());
+    println!("read: {:?}", q.read());
+    dbg!(&q);
 }

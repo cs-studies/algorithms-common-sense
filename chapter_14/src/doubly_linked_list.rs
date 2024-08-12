@@ -6,12 +6,12 @@ type Link<T> = Rc<RefCell<Node<T>>>;
 
 #[derive(Debug)]
 pub struct DoublyLinkedList<T> {
-    head: Option<Link<T>>,
+    pub head: Option<Link<T>>,
     tail: Option<Link<T>>,
 }
 
 pub struct Node<T> {
-    data: T,
+    pub data: T,
     prev: Option<Link<T>>,
     next: Option<Link<T>>,
 }
@@ -37,6 +37,7 @@ impl<T> DoublyLinkedList<T> {
         }
         self.tail = Some(link);
     }
+
     pub fn pop_front(&mut self) -> Option<Node<T>> {
         self.head.take().map(|old_head| {
             match old_head.borrow_mut().next.take() {
