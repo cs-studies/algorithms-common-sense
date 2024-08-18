@@ -68,6 +68,14 @@ impl<T: Debug + PartialEq> LinkedList<T> {
             *link = node.next.take();
         }
     }
+
+    pub fn print_all(&self) {
+        let mut link = &self.head;
+        while let Some(node) = link {
+            println!("{:?}", node.data);
+            link = &node.next;
+        }
+    }
 }
 
 impl<T> Node<T> {

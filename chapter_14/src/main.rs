@@ -19,7 +19,9 @@ fn main() {
     n1.next = n2.into_link();
 
     let mut list = LinkedList::new(n1.into_link());
-    println!("Read at 1: {:?}", list.read(1));
+    println!("print_all:");
+    list.print_all();
+    println!("\nRead at 1: {:?}", list.read(1));
     println!("Index of 'time': {:?}", list.index_of("time".to_string()));
     println!("Insert 'purple' at 3");
     list.insert(3, "purple".to_string());
