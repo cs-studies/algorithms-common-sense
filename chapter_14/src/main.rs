@@ -19,7 +19,7 @@ fn main() {
     n1.next = n2.into_link();
 
     let mut ll = LinkedList::new(n1.into_link());
-    println!("\nRead at 1: {:?}", ll.read(1));
+    println!("Read at 1: {:?}", ll.read(1));
     println!("Index of 'time': {:?}", ll.index_of("time"));
     println!("Insert 'purple' at 3");
     ll.insert(3, "purple");
@@ -49,6 +49,7 @@ fn main() {
     println!("dequeue: {:?}", q.dequeue());
     println!("read: {:?}", q.read());
     dbg!(&q);
+
 
     //// Exercises
     println!("\n*** Exercises ***\n");
