@@ -44,14 +44,13 @@ impl<T: Debug> DoublyLinkedList<T> {
             match old_head.borrow_mut().next.take() {
                 Some(next) => {
                     next.borrow_mut().prev = None;
-                    self.head = Some(Rc::clone(&next));
+                    self.head = Some(next);
                 }
                 None => {
                     self.tail = None;
                 }
             }
             Rc::try_unwrap(old_head)
-                .ok()
                 .expect("RefCell contained in Rc")
                 .into_inner()
         })
@@ -80,8 +79,8 @@ impl<T: fmt::Debug> fmt::Debug for Node<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Node")
             .field("data", &self.data)
-            .field("prev.is_some()", &self.prev.is_some())
-            .field("next", &self.next)
+            .field("prev", &self.prev.as_ref().map(|_| "Node"))
+            .field("next", &self.next.as_ref().map(|_| "Node"))
             .finish()
     }
 }

@@ -9,42 +9,42 @@ use queue::Queue;
 fn main() {
     println!("\n*** Chapter 14 ***\n");
 
-    let mut n1 = Node::new("once".to_string());
-    let mut n2 = Node::new("upon".to_string());
-    let mut n3 = Node::new("a".to_string());
-    let n4 = Node::new("time".to_string());
+    let mut n1 = Node::new("once");
+    let mut n2 = Node::new("upon");
+    let mut n3 = Node::new("a");
+    let n4 = Node::new("time");
 
     n3.next = n4.into_link();
     n2.next = n3.into_link();
     n1.next = n2.into_link();
 
-    let mut list = LinkedList::new(n1.into_link());
-    println!("\nRead at 1: {:?}", list.read(1));
-    println!("Index of 'time': {:?}", list.index_of("time".to_string()));
+    let mut ll = LinkedList::new(n1.into_link());
+    println!("\nRead at 1: {:?}", ll.read(1));
+    println!("Index of 'time': {:?}", ll.index_of("time"));
     println!("Insert 'purple' at 3");
-    list.insert(3, "purple".to_string());
-    list.delete(0);
-    list.delete(3);
-    dbg!(&list);
+    ll.insert(3, "purple");
+    ll.delete(0);
+    ll.delete(3);
+    dbg!(&ll);
 
-    let mut list = DoublyLinkedList::new();
-    list.push_end("once");
-    list.push_end("upon");
-    list.push_end("a");
-    list.push_end("time");
+    let mut dl = DoublyLinkedList::new();
+    dl.push_end("once");
+    dl.push_end("upon");
+    dl.push_end("a");
+    dl.push_end("time");
 
-    dbg!(&list);
-    dbg!(list.pop_front());
-    dbg!(list.pop_front());
-    dbg!(&list);
+    dbg!(&dl);
+    dbg!(dl.pop_front());
+    dbg!(dl.pop_front());
+    dbg!(&dl);
 
     let mut q = Queue::new();
     println!("dequeue: {:?}", q.dequeue());
     println!("read: {:?}", q.read());
 
-    q.enqueue("First".to_string());
-    q.enqueue("Second".to_string());
-    q.enqueue("Third".to_string());
+    q.enqueue("First");
+    q.enqueue("Second");
+    q.enqueue("Third");
 
     println!("dequeue: {:?}", q.dequeue());
     println!("read: {:?}", q.read());
