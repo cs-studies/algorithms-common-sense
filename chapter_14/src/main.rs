@@ -50,7 +50,6 @@ fn main() {
     println!("read: {:?}", q.read());
     dbg!(&q);
 
-
     //// Exercises
     println!("\n*** Exercises ***\n");
 

@@ -1,6 +1,5 @@
 use std::cell::RefCell;
-use std::fmt;
-use std::fmt::Debug;
+use std::fmt::{Debug, Formatter, Result};
 use std::rc::Rc;
 
 type Link<T> = Rc<RefCell<Node<T>>>;
@@ -75,8 +74,8 @@ impl<T: Debug> Node<T> {
     }
 }
 
-impl<T: fmt::Debug> fmt::Debug for Node<T> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl<T: Debug> Debug for Node<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         f.debug_struct("Node")
             .field("data", &self.data)
             .field("prev", &self.prev.as_ref().map(|_| "Node"))

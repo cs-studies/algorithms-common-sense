@@ -1,5 +1,5 @@
-use std::{cell::Ref, fmt::Debug};
 use crate::doubly_linked_list::DoublyLinkedList;
+use std::{cell::Ref, fmt::Debug};
 
 #[derive(Debug)]
 pub struct Queue<T> {
@@ -22,9 +22,10 @@ impl<T: Debug> Queue<T> {
     }
 
     pub fn read(&self) -> Option<Ref<T>> {
-        self.data.head.as_ref().map(|node| {
-            Ref::map(node.borrow(), |t| &t.data)
-        })
+        self.data
+            .head
+            .as_ref()
+            .map(|node| Ref::map(node.borrow(), |t| &t.data))
     }
 }
 
