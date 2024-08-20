@@ -19,8 +19,6 @@ fn main() {
     n1.next = n2.into_link();
 
     let mut list = LinkedList::new(n1.into_link());
-    println!("print_all:");
-    list.print_all();
     println!("\nRead at 1: {:?}", list.read(1));
     println!("Index of 'time': {:?}", list.index_of("time".to_string()));
     println!("Insert 'purple' at 3");
@@ -51,4 +49,25 @@ fn main() {
     println!("dequeue: {:?}", q.dequeue());
     println!("read: {:?}", q.read());
     dbg!(&q);
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    let mut n1 = Node::new("print");
+    let mut n2 = Node::new("all");
+    let n3 = Node::new("elements");
+    n2.next = n3.into_link();
+    n1.next = n2.into_link();
+    let ll2 = LinkedList::new(n1.into_link());
+    println!("print_all:");
+    ll2.print_all();
+
+    let mut dl2 = DoublyLinkedList::new();
+    dl2.push_end("print");
+    dl2.push_end("all");
+    dl2.push_end("elements");
+    dl2.push_end("reversed");
+
+    println!("print_all:");
+    dl2.print_all();
 }

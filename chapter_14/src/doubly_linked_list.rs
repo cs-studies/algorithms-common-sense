@@ -1,5 +1,6 @@
 use std::cell::RefCell;
 use std::fmt;
+use std::fmt::Debug;
 use std::rc::Rc;
 
 type Link<T> = Rc<RefCell<Node<T>>>;
@@ -16,7 +17,7 @@ pub struct Node<T> {
     next: Option<Link<T>>,
 }
 
-impl<T> DoublyLinkedList<T> {
+impl<T: Debug> DoublyLinkedList<T> {
     pub fn new() -> Self {
         Self {
             head: None,
@@ -55,9 +56,17 @@ impl<T> DoublyLinkedList<T> {
                 .into_inner()
         })
     }
+
+    pub fn print_all(&self) {
+        let mut current = self.tail.as_ref().map(Rc::clone);
+        while let Some(node) = current {
+            println!("{:?}", node.borrow().data);
+            current = node.borrow().prev.as_ref().map(Rc::clone);
+        }
+    }
 }
 
-impl<T> Node<T> {
+impl<T: Debug> Node<T> {
     pub fn new(data: T) -> Link<T> {
         Rc::new(RefCell::new(Self {
             data,

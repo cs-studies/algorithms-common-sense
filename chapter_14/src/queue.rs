@@ -1,4 +1,4 @@
-use std::cell::Ref;
+use std::{cell::Ref, fmt::Debug};
 use crate::doubly_linked_list::DoublyLinkedList;
 
 #[derive(Debug)]
@@ -6,7 +6,7 @@ pub struct Queue<T> {
     data: DoublyLinkedList<T>,
 }
 
-impl<T> Queue<T> {
+impl<T: Debug> Queue<T> {
     pub fn new() -> Self {
         Self {
             data: DoublyLinkedList::new(),
