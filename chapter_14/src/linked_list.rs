@@ -76,6 +76,17 @@ impl<T: Debug + PartialEq> LinkedList<T> {
             link = &node.next;
         }
     }
+
+    pub fn read_last(&self) -> Option<&T> {
+        let mut link = &self.head;
+        while let Some(node) = link {
+            if node.next.is_none() {
+                return Some(&node.data);
+            }
+            link = &node.next;
+        }
+        None
+    }
 }
 
 impl<T> Node<T> {
@@ -168,5 +179,17 @@ mod tests {
         assert_eq!(list.index_of(222), None);
 
         list.delete(10);
+    }
+
+    #[test]
+    fn test_read_last() {
+        let mut list = LinkedList::<char>::new(None);
+        assert!(list.read_last().is_none());
+
+        list.insert(0, 'A');
+        assert_eq!(list.read_last().unwrap(), &'A');
+
+        list.insert(1, 'B');
+        assert_eq!(list.read_last().unwrap(), &'B');
     }
 }

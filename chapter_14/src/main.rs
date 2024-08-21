@@ -67,7 +67,8 @@ fn main() {
     dl2.push_end("all");
     dl2.push_end("elements");
     dl2.push_end("reversed");
-
     println!("print_all:");
     dl2.print_all();
+
+    println!("read_last: {:?}", ll2.read_last());
 }
