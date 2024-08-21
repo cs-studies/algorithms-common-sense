@@ -25,7 +25,7 @@ impl<T: Debug> Queue<T> {
         self.data
             .head
             .as_ref()
-            .map(|node| Ref::map(node.borrow(), |t| &t.data))
+            .map(|val| Ref::map(val.borrow(), |node| &node.data))
     }
 }
 
