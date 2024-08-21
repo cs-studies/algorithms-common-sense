@@ -49,7 +49,7 @@ impl<T: Debug + PartialEq> LinkedList<T> {
         for _ in 0..at {
             match link {
                 Some(ref mut node) => link = &mut node.next,
-                None => return,
+                None => panic!("Index out of bounds"),
             }
         }
         new_node.next = link.take();
@@ -155,6 +155,13 @@ mod tests {
 
         list.insert(1, 22);
         assert_eq!(list.index_of(22), Some(1));
+    }
+
+    #[test]
+    #[should_panic(expected = "Index out of bounds")]
+    fn test_list_insert_panics() {
+        let mut list = LinkedList::<i32>::new(None);
+        list.insert(1, 22);
     }
 
     #[test]
