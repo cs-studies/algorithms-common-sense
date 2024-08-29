@@ -87,6 +87,20 @@ impl<T: Debug + PartialEq> LinkedList<T> {
         }
         None
     }
+
+    pub fn reverse(&mut self) {
+        let mut previous: Link<T> = None;
+        let mut current = self.head.take();
+
+        while let Some(mut current_node) = current {
+            let next = current_node.next.take();
+            current_node.next = previous;
+            previous = Some(current_node);
+            current = next;
+        }
+
+        self.head = previous;
+    }
 }
 
 impl<T> Node<T> {
@@ -198,5 +212,22 @@ mod tests {
 
         list.insert(1, 'B');
         assert_eq!(list.read_last().unwrap(), &'B');
+    }
+
+    #[test]
+    fn test_reverse() {
+        let mut list = LinkedList::<char>::new(None);
+
+        list.insert(0, 'a');
+        list.insert(1, 'b');
+        list.insert(2, 'c');
+        list.insert(3, 'd');
+
+        list.reverse();
+
+        assert_eq!(list.read(0), Some(&'d'));
+        assert_eq!(list.read(1), Some(&'c'));
+        assert_eq!(list.read(2), Some(&'b'));
+        assert_eq!(list.read(3), Some(&'a'));
     }
 }

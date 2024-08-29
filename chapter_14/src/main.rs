@@ -58,7 +58,7 @@ fn main() {
     let n3 = Node::new("elements");
     n2.next = n3.into_link();
     n1.next = n2.into_link();
-    let ll2 = LinkedList::new(n1.into_link());
+    let mut ll2 = LinkedList::new(n1.into_link());
     println!("print_all:");
     ll2.print_all();
 
@@ -71,4 +71,8 @@ fn main() {
     dl2.print_all();
 
     println!("read_last: {:?}", ll2.read_last());
+
+    ll2.reverse();
+    println!("reverse: ");
+    dbg!(&ll2);
 }
