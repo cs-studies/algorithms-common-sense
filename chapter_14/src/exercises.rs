@@ -1,6 +1,6 @@
 use crate::{
     doubly_linked_list::DoublyLinkedList,
-    linked_list::LinkedList,
+    linked_list::{LinkedList, Node},
 };
 use std::{fmt::Debug, rc::Rc};
 
@@ -36,6 +36,30 @@ impl<T: Debug> LinkedList<T> {
         }
 
         self.head = previous;
+    }
+
+    // Remove "a node from somewhere in the middle" of a list.
+    pub unsafe fn yank(&mut self, node_ptr: Option<*mut Node<T>>) {
+        if let Some(node) = node_ptr {
+            // No changes are made if this is the last node.
+            if let Some(mut next_node) = (*node).next.take() {
+                (*node).data = next_node.data;
+                (*node).next = next_node.next.take();
+            }
+        }
+    }
+
+    // Getting "access to a node from somewhere in the middle" of a list.
+    // We do not prevent access to the last node for readability of the code.
+    pub fn get_node(&mut self, at: usize) -> Option<*mut Node<T>> {
+        let mut link = &mut self.head;
+        for _ in 0..at {
+            match link {
+                Some(node) => link = &mut node.next,
+                None => return None,
+            }
+        }
+        link.as_deref_mut().map(|node| node as *mut _)
     }
 }
 
@@ -80,5 +104,22 @@ mod tests {
         assert_eq!(list.read(1), Some(&'c'));
         assert_eq!(list.read(2), Some(&'b'));
         assert_eq!(list.read(3), Some(&'a'));
+    }
+
+    #[test]
+    fn test_yank() {
+        let mut list = LinkedList::<char>::new(None);
+
+        list.insert(0, 'a');
+        list.insert(1, 'b');
+        list.insert(2, 'c');
+
+        let node = list.get_node(1);
+        unsafe {
+            list.yank(node);
+        }
+
+        assert_eq!(list.read(0), Some(&'a'));
+        assert_eq!(list.read(1), Some(&'c'));
     }
 }

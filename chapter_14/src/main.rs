@@ -1,7 +1,7 @@
 mod doubly_linked_list;
+mod exercises;
 mod linked_list;
 mod queue;
-mod exercises;
 
 use doubly_linked_list::DoublyLinkedList;
 use linked_list::{LinkedList, Node};
@@ -76,4 +76,20 @@ fn main() {
     ll2.reverse();
     println!("reverse: ");
     dbg!(&ll2);
+
+    let mut n1 = Node::new("A");
+    let mut n2 = Node::new("B");
+    let n3 = Node::new("C");
+    n2.next = n3.into_link();
+    n1.next = n2.into_link();
+    let mut ll3 = LinkedList::new(n1.into_link());
+    println!("Before yank()");
+    dbg!(&ll3);
+
+    let node = ll3.get_node(1);
+    unsafe{
+        ll3.yank(node);
+    }
+    println!("After yank()");
+    dbg!(ll3);
 }
