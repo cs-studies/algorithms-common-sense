@@ -1,6 +1,7 @@
 mod doubly_linked_list;
 mod linked_list;
 mod queue;
+mod exercises;
 
 use doubly_linked_list::DoublyLinkedList;
 use linked_list::{LinkedList, Node};

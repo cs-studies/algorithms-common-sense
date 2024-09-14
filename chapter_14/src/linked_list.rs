@@ -5,16 +5,16 @@ type Link<T> = Option<Box<Node<T>>>;
 
 #[derive(Debug)]
 pub struct LinkedList<T> {
-    head: Link<T>,
+    pub head: Link<T>,
 }
 
 #[derive(Debug)]
 pub struct Node<T> {
-    data: T,
+    pub data: T,
     pub next: Link<T>,
 }
 
-impl<T: Debug + PartialEq> LinkedList<T> {
+impl<T: PartialEq> LinkedList<T> {
     pub fn new(head: Link<T>) -> Self {
         Self { head }
     }
@@ -67,39 +67,6 @@ impl<T: Debug + PartialEq> LinkedList<T> {
         if let Some(node) = link {
             *link = node.next.take();
         }
-    }
-
-    pub fn print_all(&self) {
-        let mut link = &self.head;
-        while let Some(node) = link {
-            println!("{:?}", node.data);
-            link = &node.next;
-        }
-    }
-
-    pub fn read_last(&self) -> Option<&T> {
-        let mut link = &self.head;
-        while let Some(node) = link {
-            if node.next.is_none() {
-                return Some(&node.data);
-            }
-            link = &node.next;
-        }
-        None
-    }
-
-    pub fn reverse(&mut self) {
-        let mut previous: Link<T> = None;
-        let mut current = self.head.take();
-
-        while let Some(mut current_node) = current {
-            let next = current_node.next.take();
-            current_node.next = previous;
-            previous = Some(current_node);
-            current = next;
-        }
-
-        self.head = previous;
     }
 }
 
@@ -200,34 +167,5 @@ mod tests {
         assert_eq!(list.index_of(222), None);
 
         list.delete(10);
-    }
-
-    #[test]
-    fn test_read_last() {
-        let mut list = LinkedList::<char>::new(None);
-        assert!(list.read_last().is_none());
-
-        list.insert(0, 'A');
-        assert_eq!(list.read_last().unwrap(), &'A');
-
-        list.insert(1, 'B');
-        assert_eq!(list.read_last().unwrap(), &'B');
-    }
-
-    #[test]
-    fn test_reverse() {
-        let mut list = LinkedList::<char>::new(None);
-
-        list.insert(0, 'a');
-        list.insert(1, 'b');
-        list.insert(2, 'c');
-        list.insert(3, 'd');
-
-        list.reverse();
-
-        assert_eq!(list.read(0), Some(&'d'));
-        assert_eq!(list.read(1), Some(&'c'));
-        assert_eq!(list.read(2), Some(&'b'));
-        assert_eq!(list.read(3), Some(&'a'));
     }
 }

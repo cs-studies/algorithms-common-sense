@@ -7,12 +7,12 @@ type Link<T> = Rc<RefCell<Node<T>>>;
 #[derive(Debug)]
 pub struct DoublyLinkedList<T> {
     pub head: Option<Link<T>>,
-    tail: Option<Link<T>>,
+    pub tail: Option<Link<T>>,
 }
 
 pub struct Node<T> {
     pub data: T,
-    prev: Option<Link<T>>,
+    pub prev: Option<Link<T>>,
     next: Option<Link<T>>,
 }
 
@@ -53,14 +53,6 @@ impl<T: Debug> DoublyLinkedList<T> {
                 .expect("RefCell contained in Rc")
                 .into_inner()
         })
-    }
-
-    pub fn print_all(&self) {
-        let mut current = self.tail.as_ref().map(Rc::clone);
-        while let Some(node) = current {
-            println!("{:?}", node.borrow().data);
-            current = node.borrow().prev.as_ref().map(Rc::clone);
-        }
     }
 }
 
