@@ -25,6 +25,24 @@ impl<T: Ord> TreeNode<T> {
             Ordering::Greater => self.right.as_deref()?.search(value),
         }
     }
+
+    pub fn insert(&mut self, value: T) {
+        match value.cmp(&self.value) {
+            Ordering::Equal => {}
+            Ordering::Less => match self.left {
+                Some(ref mut node) => node.insert(value),
+                None => {
+                    self.left = TreeNode::new(value, None, None).into_child();
+                }
+            },
+            Ordering::Greater => match self.right {
+                Some(ref mut node) => node.insert(value),
+                None => {
+                    self.right = TreeNode::new(value, None, None).into_child();
+                }
+            },
+        }
+    }
 }
 
 #[cfg(test)]
@@ -65,5 +83,21 @@ mod tests {
         );
         assert!(node2.search(100).is_none());
         assert_eq!(node2.search(22).unwrap().value, 22);
+    }
+
+    #[test]
+    fn test_insert() {
+        let mut root = TreeNode::new(20, None, None);
+        root.insert(20);
+        assert!(root.left.is_none());
+        assert!(root.right.is_none());
+
+        root.insert(30);
+        assert!(root.left.is_none());
+        assert_eq!(root.right.as_ref().unwrap().value, 30);
+
+        root.insert(10);
+        assert_eq!(root.left.unwrap().value, 10);
+        assert_eq!(root.right.unwrap().value, 30);
     }
 }
