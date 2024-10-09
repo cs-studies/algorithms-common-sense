@@ -3,13 +3,13 @@ use std::cmp::Ordering;
 type Child<T> = Option<Box<TreeNode<T>>>;
 
 #[derive(Debug)]
-pub struct TreeNode<T> {
+pub struct TreeNode<T: Ord + Clone> {
     value: T,
     left: Child<T>,
     right: Child<T>,
 }
 
-impl<T: Ord> TreeNode<T> {
+impl<T: Ord + Clone> TreeNode<T> {
     pub fn new(value: T, left: Child<T>, right: Child<T>) -> Self {
         Self { value, left, right }
     }
@@ -39,6 +39,46 @@ impl<T: Ord> TreeNode<T> {
                 Some(ref mut node) => node.insert(value),
                 None => {
                     self.right = TreeNode::new(value, None, None).into_child();
+                }
+            },
+        }
+    }
+
+    // This implementation is not ideal,
+    // but close enough to the book.
+    // Maybe, it'll be improved with time.
+    pub fn delete(&mut self, value: T) {
+        self.left = Self::delete_do(value.clone(), self.left.take());
+        self.right = Self::delete_do(value, self.right.take());
+    }
+
+    fn delete_do(value: T, root: Child<T>) -> Child<T> {
+        match root {
+            None => None,
+            Some(mut node) => match value.cmp(&node.value) {
+                Ordering::Less => {
+                    node.left = Self::delete_do(value, node.left);
+                    Some(node)
+                }
+                Ordering::Greater => {
+                    node.right = Self::delete_do(value, node.right);
+                    Some(node)
+                }
+                Ordering::Equal => {
+                    if node.left.is_none() {
+                        node.right
+                    } else if node.right.is_none() {
+                        node.left
+                    } else {
+                        let mut successor = node.right.as_ref();
+                        while let Some(ref s) = successor.unwrap().left {
+                            successor = Some(s);
+                        }
+                        let successor_val = &successor.unwrap().value;
+                        node.value = successor_val.clone();
+                        node.right = Self::delete_do(successor_val.clone(), node.right);
+                        Some(node)
+                    }
                 }
             },
         }
@@ -99,5 +139,20 @@ mod tests {
         root.insert(10);
         assert_eq!(root.left.unwrap().value, 10);
         assert_eq!(root.right.unwrap().value, 30);
+    }
+
+    #[test]
+    fn test_delete() {
+        let mut root = TreeNode::new(20, None, None);
+        root.insert(10);
+        root.delete(10);
+        assert!(root.left.is_none());
+        assert!(root.right.is_none());
+
+        root.insert(10);
+        root.insert(30);
+        root.delete(30);
+        assert_eq!(root.left.unwrap().value, 10);
+        assert!(root.right.is_none());
     }
 }

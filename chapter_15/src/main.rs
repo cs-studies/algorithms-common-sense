@@ -17,8 +17,21 @@ fn main() {
     dbg!(&found_none);
 
     root.insert(50);
-    root.insert(22);
-    root.insert(80);
+    root.insert(11);
+    root.insert(33);
+    root.insert(30);
+    root.insert(40);
+    root.insert(75);
+    root.insert(56);
+    root.insert(52);
+    root.insert(61);
+    root.insert(89);
+    root.insert(82);
+    root.insert(95);
     println!("After insert()");
+    dbg!(&root);
+
+    root.delete(56);
+    println!("After delete()");
     dbg!(&root);
 }
