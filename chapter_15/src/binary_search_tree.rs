@@ -85,8 +85,17 @@ impl<T: Ord> Node<T> {
                     (None, Some(_)) => *tree = node.right.take(),
                     (Some(_), None) => *tree = node.left.take(),
                     (Some(_), Some(_)) => {
-                        node.value = lift(&mut node.right).unwrap();
+                        let mut successor = &mut node.right;
+                        while successor.as_ref().unwrap().left.is_some() {
+                            successor = &mut successor.as_mut().unwrap().left;
+                        }
+                        let successor_node = successor.take().unwrap();
+                        *successor = successor_node.right;
+                        node.value = successor_node.value;
 
+                        // Or use the lift function instead.
+                        /*
+                        node.value = lift(&mut node.right).unwrap();
                         fn lift<T>(tree: &mut Tree<T>) -> Option<T> {
                             if tree.as_ref().unwrap().left.is_some() {
                                 lift(&mut tree.as_mut().unwrap().left)
@@ -95,7 +104,7 @@ impl<T: Ord> Node<T> {
                                 *tree = node.right;
                                 Some(node.value)
                             }
-                        }
+                        }*/
                     }
                 },
             }
