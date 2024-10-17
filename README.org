@@ -1,14 +1,10 @@
 #+begin_quote
-Any code that does anything at all is technically an algorithm--it's a
-particular process for solving a problem.
+"Any code that does anything at all is technically an algorithm--it's a
+particular process for solving a problem."
 
-/--- Jay Wengrow, "ACSGTDSAA", Chapter 3/
-#+end_quote
+"... everything about data structures and algorithms boils down to common sense."
 
-#+begin_quote
-everything about data structures and algorithms boils down to common sense.
-
-/--- Jay Wengrow, "ACSGTDSAA", Preface/
+/--- Jay Wengrow, A Common-Sense Guide to Data Structures and Algorithms/
 #+end_quote
 
 * What
