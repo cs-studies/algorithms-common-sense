@@ -58,5 +58,19 @@ because *Rust* is:
 - quite easy to grasp for /basic/ usage;
 - subjectively /pleasant/ to use.
 
-
 Have Fun!
+
+* Contents Highlights
+
+- [[chapter_02/src/main.rs][Linear and binary search]]
+- [[chapter_04/src/main.rs][Bubble sort]]
+- [[chapter_05/src/main.rs][Selection sort]]
+- [[chapter_06/src/main.rs][Insertion sort]]
+- [[chapter_09/src/linter.rs][Stack with Vec]]
+- [[chapter_09/src/printer.rs][Queue with VecDeque]]
+- [[chapter_12/src/main.rs][Dynamic programming]]
+- [[chapter_13/src/main.rs][Quicksort and Quickselect]]
+- [[chapter_14/src/linked_list.rs][Linked List]]
+- [[chapter_14/src/doubly_linked_list.rs][Doubly Linked List]]
+- [[chapter_14/src/queue.rs][Queue with Doubly Linked List]]
+- [[chapter_15/src/binary_search_tree.rs][Binary Search Tree]]
