@@ -20,9 +20,9 @@ impl<T: Ord + Debug> BinarySearchTree<T> {
     }
 
     pub fn search(&self, value: T) -> Option<&Node<T>> {
-        match self.root {
+        match &self.root {
             None => None,
-            Some(ref node) => node.search(value),
+            Some(node) => node.search(value),
         }
     }
 
@@ -40,9 +40,9 @@ impl<T: Ord + Debug> BinarySearchTree<T> {
     }
 
     pub fn traverse_inorder(&self) {
-        match self.root {
+        match &self.root {
             None => {},
-            Some(ref node) => node.traverse_inorder(),
+            Some(node) => node.traverse_inorder(),
         }
     }
 }
@@ -119,11 +119,11 @@ impl<T: Ord + Debug> Node<T> {
     }
 
     fn traverse_inorder(&self) {
-        if let Some(ref left) = self.left {
+        if let Some(left) = &self.left {
             left.traverse_inorder();
         }
         println!("{:?}", &self.value);
-        if let Some(ref right) = self.right {
+        if let Some(right) = &self.right {
             right.traverse_inorder();
         }
     }
