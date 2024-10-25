@@ -1,51 +1,51 @@
 use std::cmp::Ordering;
 
-type Link<T> = Option<Box<Node<T>>>;
+type Tree<T> = Option<Box<Node<T>>>;
 
 #[derive(Debug)]
 pub struct Node<T> {
     value: T,
-    left: Link<T>,
-    right: Link<T>,
+    left: Tree<T>,
+    right: Tree<T>,
 }
 
 #[derive(Debug)]
 pub struct BinarySearchTree<T> {
-    head: Link<T>,
+    root: Tree<T>,
 }
 
 impl<T: Ord> BinarySearchTree<T> {
-    pub fn new(root: Link<T>) -> Self {
-        Self { head: root }
+    pub fn new(root: Tree<T>) -> Self {
+        Self { root }
     }
 
     pub fn search(&self, value: T) -> Option<&Node<T>> {
-        match &self.head {
+        match &self.root {
             None => None,
             Some(node) => node.search(value),
         }
     }
 
     pub fn insert(&mut self, value: T) {
-        match self.head {
+        match self.root {
             None => {
-                self.head = Node::new(value, None, None).into_link();
+                self.root = Node::new(value, None, None).into_tree();
             }
             Some(ref mut node) => node.insert(value),
         }
     }
 
     pub fn delete(&mut self, value: T) {
-        Node::delete(&mut self.head, value);
+        Node::delete(&mut self.root, value);
     }
 }
 
 impl<T: Ord> Node<T> {
-    pub fn new(value: T, left: Link<T>, right: Link<T>) -> Self {
+    pub fn new(value: T, left: Tree<T>, right: Tree<T>) -> Self {
         Self { value, left, right }
     }
 
-    pub fn into_link(self) -> Link<T> {
+    pub fn into_tree(self) -> Tree<T> {
         Some(Box::new(self))
     }
 
@@ -63,19 +63,19 @@ impl<T: Ord> Node<T> {
             Ordering::Less => match self.left {
                 Some(ref mut node) => node.insert(value),
                 None => {
-                    self.left = Node::new(value, None, None).into_link();
+                    self.left = Node::new(value, None, None).into_tree();
                 }
             },
             Ordering::Greater => match self.right {
                 Some(ref mut node) => node.insert(value),
                 None => {
-                    self.right = Node::new(value, None, None).into_link();
+                    self.right = Node::new(value, None, None).into_tree();
                 }
             },
         }
     }
 
-    fn delete(link: &mut Link<T>, value: T) {
+    fn delete(link: &mut Tree<T>, value: T) {
         if let Some(ref mut node) = link {
             match value.cmp(&node.value) {
                 Ordering::Less => Node::delete(&mut node.left, value),
@@ -94,16 +94,17 @@ impl<T: Ord> Node<T> {
                         node.value = successor_node.value;
 
                         // Or use the lift function instead.
-                        // node.value = lift(&mut node.right).unwrap();
-                        // fn lift<T>(link: &mut Link<T>) -> Option<T> {
-                        //     if link.as_ref().unwrap().left.is_some() {
-                        //         lift(&mut link.as_mut().unwrap().left)
-                        //     } else {
-                        //         let node = link.take().unwrap();
-                        //         *link = node.right;
-                        //         Some(node.value)
-                        //     }
-                        // }
+                        /*
+                        node.value = lift(&mut node.right).unwrap();
+                        fn lift<T>(link: &mut Tree<T>) -> Option<T> {
+                            if link.as_ref().unwrap().left.is_some() {
+                                lift(&mut link.as_mut().unwrap().left)
+                            } else {
+                                let node = link.take().unwrap();
+                                *link = node.right;
+                                Some(node.value)
+                            }
+                        }*/
                     }
                 },
             }
@@ -118,20 +119,20 @@ mod tests {
     #[test]
     fn test_tree_new() {
         let bst = BinarySearchTree::<i32>::new(None);
-        assert!(bst.head.is_none());
+        assert!(bst.root.is_none());
 
         let node = Node::new(1, None, None);
-        let bst = BinarySearchTree::new(node.into_link());
-        assert!(bst.head.is_some());
-        assert_eq!(bst.head.unwrap().value, 1);
+        let bst = BinarySearchTree::new(node.into_tree());
+        assert!(bst.root.is_some());
+        assert_eq!(bst.root.unwrap().value, 1);
 
         let node = Node::new(
             2,
-            Node::new(1, None, None).into_link(),
-            Node::new(3, None, None).into_link(),
+            Node::new(1, None, None).into_tree(),
+            Node::new(3, None, None).into_tree(),
         );
-        let bst = BinarySearchTree::new(node.into_link());
-        let head = bst.head.as_ref().unwrap();
+        let bst = BinarySearchTree::new(node.into_tree());
+        let head = bst.root.as_ref().unwrap();
         assert_eq!(head.value, 2);
         assert_eq!(head.left.as_ref().unwrap().value, 1);
         assert_eq!(head.right.as_ref().unwrap().value, 3);
@@ -144,15 +145,15 @@ mod tests {
         assert!(node1.left.is_none());
         assert!(node1.right.is_none());
 
-        let node2 = Node::new(30, node1.into_link(), None);
+        let node2 = Node::new(30, node1.into_tree(), None);
         assert_eq!(node2.value, 30);
         assert_eq!(node2.left.unwrap().value, 25);
         assert!(node2.right.is_none());
 
         let node3 = Node::new(
             2,
-            Node::new(1, None, None).into_link(),
-            Node::new(3, None, None).into_link(),
+            Node::new(1, None, None).into_tree(),
+            Node::new(3, None, None).into_tree(),
         );
         assert_eq!(node3.value, 2);
         assert_eq!(node3.left.unwrap().value, 1);
@@ -162,16 +163,16 @@ mod tests {
     #[test]
     fn test_search() {
         let node = Node::new(25, None, None);
-        let bst = BinarySearchTree::new(node.into_link());
+        let bst = BinarySearchTree::new(node.into_tree());
         assert!(bst.search(20).is_none());
         assert_eq!(bst.search(25).unwrap().value, 25);
 
         let node = Node::new(
             2,
-            Node::new(1, None, None).into_link(),
-            Node::new(3, None, None).into_link(),
+            Node::new(1, None, None).into_tree(),
+            Node::new(3, None, None).into_tree(),
         );
-        let bst = BinarySearchTree::new(node.into_link());
+        let bst = BinarySearchTree::new(node.into_tree());
         assert!(bst.search(20).is_none());
         assert_eq!(bst.search(1).unwrap().value, 1);
         assert_eq!(bst.search(2).unwrap().value, 2);
@@ -182,24 +183,24 @@ mod tests {
     fn test_insert() {
         let mut bst = BinarySearchTree::new(None);
         bst.insert(1);
-        assert_eq!(bst.head.unwrap().value, 1);
+        assert_eq!(bst.root.unwrap().value, 1);
 
         let node = Node::new(2, None, None);
-        let mut bst = BinarySearchTree::new(node.into_link());
+        let mut bst = BinarySearchTree::new(node.into_tree());
 
         bst.insert(2);
-        let head = bst.head.as_ref().unwrap();
+        let head = bst.root.as_ref().unwrap();
         assert_eq!(head.value, 2);
         assert!(head.left.is_none());
         assert!(head.right.is_none());
 
         bst.insert(3);
-        let head = bst.head.as_ref().unwrap();
+        let head = bst.root.as_ref().unwrap();
         assert!(head.left.is_none());
         assert_eq!(head.right.as_ref().unwrap().value, 3);
 
         bst.insert(1);
-        let head = bst.head.as_ref().unwrap();
+        let head = bst.root.as_ref().unwrap();
         assert_eq!(head.left.as_ref().unwrap().value, 1);
         assert_eq!(head.right.as_ref().unwrap().value, 3);
     }
@@ -208,14 +209,14 @@ mod tests {
     fn test_delete() {
         let mut bst = BinarySearchTree::new(None);
         bst.delete(1);
-        assert!(bst.head.is_none());
+        assert!(bst.root.is_none());
 
         let node = Node::new(2, None, None);
-        let mut bst = BinarySearchTree::new(node.into_link());
+        let mut bst = BinarySearchTree::new(node.into_tree());
         bst.delete(1);
-        assert!(bst.head.is_some());
+        assert!(bst.root.is_some());
         bst.delete(2);
-        assert!(bst.head.is_none());
+        assert!(bst.root.is_none());
 
         bst.insert(10);
         bst.insert(5);
@@ -224,7 +225,7 @@ mod tests {
         bst.insert(25);
 
         bst.delete(10);
-        let head = bst.head.as_ref().unwrap();
+        let head = bst.root.as_ref().unwrap();
         assert_eq!(head.value, 15);
         assert!(head.left.is_some());
         assert!(head.right.is_some());

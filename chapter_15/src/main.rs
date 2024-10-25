@@ -7,10 +7,10 @@ fn main() {
 
     let node1 = Node::new(25, None, None);
     let node2 = Node::new(75, None, None);
-    let root =
-        Node::new(50, node1.into_link(), node2.into_link()).into_link();
 
-    let mut bst = BinarySearchTree::new(root);
+    let mut bst = BinarySearchTree::new(
+        Node::new(50, node1.into_tree(), node2.into_tree()).into_tree(),
+    );
     dbg!(&bst);
 
     let found = bst.search(25);
