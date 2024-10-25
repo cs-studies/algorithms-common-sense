@@ -103,12 +103,12 @@ impl<T: Ord + Debug> Node<T> {
                         // Or use the lift function instead.
                         /*
                         node.value = lift(&mut node.right).unwrap();
-                        fn lift<T>(link: &mut Tree<T>) -> Option<T> {
-                            if link.as_ref().unwrap().left.is_some() {
-                                lift(&mut link.as_mut().unwrap().left)
+                        fn lift<T>(tree: &mut Tree<T>) -> Option<T> {
+                            if tree.as_ref().unwrap().left.is_some() {
+                                lift(&mut tree.as_mut().unwrap().left)
                             } else {
-                                let node = link.take().unwrap();
-                                *link = node.right;
+                                let node = tree.take().unwrap();
+                                *tree = node.right;
                                 Some(node.value)
                             }
                         }*/
