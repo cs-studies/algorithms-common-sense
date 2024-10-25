@@ -4,14 +4,14 @@ type Tree<T> = Option<Box<Node<T>>>;
 
 #[derive(Debug)]
 pub struct Node<T> {
-    value: T,
+    pub(crate) value: T,
     left: Tree<T>,
-    right: Tree<T>,
+    pub(crate) right: Tree<T>,
 }
 
 #[derive(Debug)]
 pub struct BinarySearchTree<T> {
-    root: Tree<T>,
+    pub(crate) root: Tree<T>,
 }
 
 impl<T: Ord + Debug> BinarySearchTree<T> {

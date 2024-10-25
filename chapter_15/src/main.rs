@@ -1,4 +1,5 @@
 mod binary_search_tree;
+mod exercises;
 
 use binary_search_tree::{BinarySearchTree, Node};
 
@@ -38,7 +39,7 @@ fn main() {
     println!("\nAfter delete()");
     dbg!(&bst);
 
-    let bst = BinarySearchTree::new(
+    let library = BinarySearchTree::new(
         Node::new(
             "Moby Dick",
             Node::new(
@@ -58,5 +59,11 @@ fn main() {
     );
 
     println!("\nTraverse inorder:");
-    bst.traverse_inorder();
+    library.traverse_inorder();
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    println!("greatest: {:?}", bst.find_greatest());
+    println!("greatest: {:?}", library.find_greatest());
 }
