@@ -1,4 +1,4 @@
-use std::cmp::Ordering;
+use std::{cmp::Ordering, fmt::Debug};
 
 type Tree<T> = Option<Box<Node<T>>>;
 
@@ -14,15 +14,15 @@ pub struct BinarySearchTree<T> {
     root: Tree<T>,
 }
 
-impl<T: Ord> BinarySearchTree<T> {
+impl<T: Ord + Debug> BinarySearchTree<T> {
     pub fn new(root: Tree<T>) -> Self {
         Self { root }
     }
 
     pub fn search(&self, value: T) -> Option<&Node<T>> {
-        match &self.root {
+        match self.root {
             None => None,
-            Some(node) => node.search(value),
+            Some(ref node) => node.search(value),
         }
     }
 
@@ -38,9 +38,16 @@ impl<T: Ord> BinarySearchTree<T> {
     pub fn delete(&mut self, value: T) {
         Node::delete(&mut self.root, value);
     }
+
+    pub fn traverse_inorder(&self) {
+        match self.root {
+            None => {},
+            Some(ref node) => node.traverse_inorder(),
+        }
+    }
 }
 
-impl<T: Ord> Node<T> {
+impl<T: Ord + Debug> Node<T> {
     pub fn new(value: T, left: Tree<T>, right: Tree<T>) -> Self {
         Self { value, left, right }
     }
@@ -108,6 +115,16 @@ impl<T: Ord> Node<T> {
                     }
                 },
             }
+        }
+    }
+
+    fn traverse_inorder(&self) {
+        if let Some(ref left) = self.left {
+            left.traverse_inorder();
+        }
+        println!("{:?}", &self.value);
+        if let Some(ref right) = self.right {
+            right.traverse_inorder();
         }
     }
 }

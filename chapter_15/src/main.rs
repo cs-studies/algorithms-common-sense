@@ -31,10 +31,32 @@ fn main() {
     bst.insert(89);
     bst.insert(82);
     bst.insert(95);
-    println!("After insert()");
+    println!("\nAfter insert()");
     dbg!(&bst);
 
     bst.delete(56);
-    println!("After delete()");
+    println!("\nAfter delete()");
     dbg!(&bst);
+
+    let bst = BinarySearchTree::new(
+        Node::new(
+            "Moby Dick",
+            Node::new(
+                "Great Expectations",
+                Node::new("Alice in Wonderland", None, None).into_tree(),
+                Node::new("Lord of the Files", None, None).into_tree(),
+            )
+            .into_tree(),
+            Node::new(
+                "Robinson Crusoe",
+                Node::new("Pride and Prejudice", None, None).into_tree(),
+                Node::new("The Odyssey", None, None).into_tree(),
+            )
+            .into_tree(),
+        )
+        .into_tree(),
+    );
+
+    println!("\nTraverse inorder:");
+    bst.traverse_inorder();
 }
