@@ -5,7 +5,7 @@ type Tree<T> = Option<Box<Node<T>>>;
 #[derive(Debug)]
 pub struct Node<T> {
     pub(crate) value: T,
-    left: Tree<T>,
+    pub(crate) left: Tree<T>,
     pub(crate) right: Tree<T>,
 }
 

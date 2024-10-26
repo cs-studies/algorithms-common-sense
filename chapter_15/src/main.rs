@@ -66,4 +66,10 @@ fn main() {
 
     println!("greatest: {:?}", bst.find_greatest());
     println!("greatest: {:?}", library.find_greatest());
+
+    println!("\nTraverse preorder:");
+    library.traverse_preorder();
+
+    println!("\nTraverse postorder:");
+    library.traverse_postorder();
 }
