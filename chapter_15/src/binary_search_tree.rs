@@ -14,11 +14,13 @@ pub struct BinarySearchTree<T> {
     pub(crate) root: Tree<T>,
 }
 
-impl<T: Ord + Debug> BinarySearchTree<T> {
+impl<T> BinarySearchTree<T> {
     pub fn new(root: Tree<T>) -> Self {
         Self { root }
     }
+}
 
+impl<T: Ord> BinarySearchTree<T> {
     pub fn search(&self, value: T) -> Option<&Node<T>> {
         match &self.root {
             None => None,
@@ -38,16 +40,18 @@ impl<T: Ord + Debug> BinarySearchTree<T> {
     pub fn delete(&mut self, value: T) {
         Node::delete(&mut self.root, value);
     }
+}
 
+impl<T: Debug> BinarySearchTree<T> {
     pub fn traverse_inorder(&self) {
         match &self.root {
-            None => {},
+            None => {}
             Some(node) => node.traverse_inorder(),
         }
     }
 }
 
-impl<T: Ord + Debug> Node<T> {
+impl<T> Node<T> {
     pub fn new(value: T, left: Tree<T>, right: Tree<T>) -> Self {
         Self { value, left, right }
     }
@@ -55,7 +59,9 @@ impl<T: Ord + Debug> Node<T> {
     pub fn into_tree(self) -> Tree<T> {
         Some(Box::new(self))
     }
+}
 
+impl<T: Ord> Node<T> {
     fn search(&self, value: T) -> Option<&Self> {
         match value.cmp(&self.value) {
             Ordering::Equal => Some(self),
@@ -117,7 +123,9 @@ impl<T: Ord + Debug> Node<T> {
             }
         }
     }
+}
 
+impl<T: Debug> Node<T> {
     fn traverse_inorder(&self) {
         if let Some(left) = &self.left {
             left.traverse_inorder();
