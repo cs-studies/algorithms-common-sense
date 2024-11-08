@@ -33,6 +33,7 @@ impl<T: PartialOrd> Heap<T> {
 
         let mut node_idx = self.data.len() - 1;
 
+        // When node_idx is 0, parent_index returns None.
         while let Some(parent_idx) = Self::parent_index(node_idx) {
             if self.data[node_idx] > self.data[parent_idx] {
                 self.data.swap(node_idx, parent_idx);
