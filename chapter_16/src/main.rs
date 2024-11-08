@@ -1,7 +1,12 @@
 fn main() {
     println!("\n*** Chapter 16 ***\n");
 
-    let h: Heap<i32> = Heap::new();
+    let mut h: Heap<i32> = Heap::new();
+    h.insert(10);
+    h.insert(15);
+    h.insert(25);
+    h.insert(8);
+    h.insert(20);
     dbg!(&h);
 }
 
