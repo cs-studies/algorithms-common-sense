@@ -10,7 +10,7 @@ struct Heap<T> {
     data: Vec<T>,
 }
 
-impl<T> Heap<T> {
+impl<T: PartialOrd> Heap<T> {
     fn new() -> Self {
         Self { data: Vec::new() }
     }
@@ -25,6 +25,19 @@ impl<T> Heap<T> {
 
     fn insert(&mut self, value: T) {
         self.data.push(value);
+
+        let mut node_idx = self.data.len() - 1;
+
+        while node_idx > 0 {
+            if let Some(parent_idx) = Self::parent_index(node_idx) {
+                if self.data[node_idx] > self.data[parent_idx] {
+                    self.data.swap(node_idx, parent_idx);
+                    node_idx = parent_idx;
+                    continue;
+                }
+            }
+            break;
+        }
     }
 
     fn left_child_index(i: usize) -> Option<usize> {
@@ -47,11 +60,20 @@ mod tests {
     #[test]
     fn test_heap() {
         let mut heap = Heap::new();
-        heap.insert("A");
-        heap.insert("B");
-        heap.insert("C");
-        assert_eq!(heap.root_node(), Some(&"A"));
-        assert_eq!(heap.last_node(), Some(&"C"));
+        heap.insert(1);
+        heap.insert(2);
+        heap.insert(3);
+        // heap now contains 3 1 2
+        assert_eq!(heap.root_node().unwrap(), &3);
+        assert_eq!(heap.last_node().unwrap(), &2);
+
+        let mut heap = Heap::new();
+        heap.insert("X");
+        heap.insert("Y");
+        heap.insert("Z");
+        // heap now contains Z X Y
+        assert_eq!(heap.root_node().unwrap(), &"Z");
+        assert_eq!(heap.last_node().unwrap(), &"Y");
     }
 
     #[test]
