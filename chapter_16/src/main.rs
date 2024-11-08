@@ -33,15 +33,13 @@ impl<T: PartialOrd> Heap<T> {
 
         let mut node_idx = self.data.len() - 1;
 
-        while node_idx > 0 {
-            if let Some(parent_idx) = Self::parent_index(node_idx) {
-                if self.data[node_idx] > self.data[parent_idx] {
-                    self.data.swap(node_idx, parent_idx);
-                    node_idx = parent_idx;
-                    continue;
-                }
+        while let Some(parent_idx) = Self::parent_index(node_idx) {
+            if self.data[node_idx] > self.data[parent_idx] {
+                self.data.swap(node_idx, parent_idx);
+                node_idx = parent_idx;
+            } else {
+                break;
             }
-            break;
         }
     }
 
@@ -65,20 +63,22 @@ mod tests {
     #[test]
     fn test_heap() {
         let mut heap = Heap::new();
-        heap.insert(1);
-        heap.insert(2);
-        heap.insert(3);
-        // heap now contains 3 1 2
-        assert_eq!(heap.root_node().unwrap(), &3);
-        assert_eq!(heap.last_node().unwrap(), &2);
-
-        let mut heap = Heap::new();
         heap.insert("X");
         heap.insert("Y");
         heap.insert("Z");
         // heap now contains Z X Y
         assert_eq!(heap.root_node().unwrap(), &"Z");
         assert_eq!(heap.last_node().unwrap(), &"Y");
+
+        let mut heap = Heap::new();
+        heap.insert(1);
+        heap.insert(2);
+        heap.insert(3);
+        heap.insert(4);
+        heap.insert(5);
+        // heap now contains 5 4 2 1 3
+        assert_eq!(heap.root_node().unwrap(), &5);
+        assert_eq!(heap.last_node().unwrap(), &3);
     }
 
     #[test]
