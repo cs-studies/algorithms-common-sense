@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 fn main() {
     println!("\n*** Chapter 16 ***\n");
 
@@ -12,24 +14,24 @@ fn main() {
 
 #[derive(Debug)]
 struct Heap<T> {
-    data: Vec<T>,
+    data: VecDeque<T>,
 }
 
 impl<T: PartialOrd> Heap<T> {
     fn new() -> Self {
-        Self { data: Vec::new() }
+        Self { data: VecDeque::new() }
     }
 
     fn root_node(&self) -> Option<&T> {
-        self.data.first()
+        self.data.front()
     }
 
     fn last_node(&self) -> Option<&T> {
-        self.data.last()
+        self.data.back()
     }
 
     fn insert(&mut self, value: T) {
-        self.data.push(value);
+        self.data.push_back(value);
 
         let mut node_idx = self.data.len() - 1;
 
