@@ -57,10 +57,10 @@ impl<T: PartialOrd> Heap<T> {
 
     fn delete(&mut self) {
         if let Some(last) = self.data.pop_back() {
-            if self.data.is_empty() {
-                return;
-            } else {
+            if !self.data.is_empty() {
                 self.data[0] = last;
+            } else {
+                return;
             }
         } else {
             return;
