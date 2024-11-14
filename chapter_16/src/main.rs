@@ -10,6 +10,13 @@ fn main() {
     h.insert(8);
     h.insert(20);
     dbg!(&h);
+    println!("root_node: {:?}", h.root_node());
+    println!("last_node: {:?}\n", h.last_node());
+
+    h.delete();
+    dbg!(&h);
+    println!("root_node: {:?}", h.root_node());
+    println!("last_node: {:?}", h.last_node());
 }
 
 #[derive(Debug)]
@@ -19,7 +26,9 @@ struct Heap<T> {
 
 impl<T: PartialOrd> Heap<T> {
     fn new() -> Self {
-        Self { data: VecDeque::new() }
+        Self {
+            data: VecDeque::new(),
+        }
     }
 
     fn root_node(&self) -> Option<&T> {
@@ -43,6 +52,41 @@ impl<T: PartialOrd> Heap<T> {
             } else {
                 break;
             }
+        }
+    }
+
+    fn delete(&mut self) {
+        if let Some(last) = self.data.pop_back() {
+            if self.data.is_empty() {
+                return;
+            } else {
+                self.data[0] = last;
+            }
+        } else {
+            return;
+        }
+
+        let mut trickle_idx = 0;
+
+        while let Some(greater_idx) = self.greater_child_index(trickle_idx) {
+            self.data.swap(trickle_idx, greater_idx);
+            trickle_idx = greater_idx;
+        }
+    }
+
+    fn greater_child_index(&self, i: usize) -> Option<usize> {
+        let val = &self.data.get(i)?;
+
+        let left_idx = Self::left_child_index(i)?;
+        let right_idx = Self::right_child_index(i)?;
+
+        let left_val = &self.data.get(left_idx);
+        let right_val = &self.data.get(right_idx);
+
+        match (left_val, right_val) {
+            (Some(l), Some(r)) if r > l && r > val => Some(right_idx),
+            (Some(l), _) if l > val => Some(left_idx),
+            _ => None,
         }
     }
 
@@ -82,6 +126,30 @@ mod tests {
         // heap now contains 5 4 2 1 3
         assert_eq!(heap.root_node().unwrap(), &5);
         assert_eq!(heap.last_node().unwrap(), &3);
+    }
+
+    #[test]
+    fn test_delete() {
+        let mut heap = Heap::<i32>::new();
+        heap.delete();
+        assert!(heap.data.is_empty());
+
+        heap.insert(1);
+        heap.delete();
+        assert!(heap.data.is_empty());
+
+        heap.insert(1);
+        heap.insert(2);
+        heap.delete();
+        assert_eq!(heap.root_node().unwrap(), &1);
+        assert_eq!(heap.last_node().unwrap(), &1);
+
+        heap.insert(2);
+        heap.insert(3);
+        // heap now contains 3 1 2
+        heap.delete();
+        assert_eq!(heap.root_node().unwrap(), &2);
+        assert_eq!(heap.last_node().unwrap(), &1);
     }
 
     #[test]
