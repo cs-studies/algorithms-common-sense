@@ -19,6 +19,7 @@ fn main() {
     dbg!(&trie);
 
     dbg!(trie.search("bat"));
+    dbg!(trie.search("batman"));
 }
 
 #[derive(Debug)]
