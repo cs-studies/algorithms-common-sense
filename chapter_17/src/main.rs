@@ -20,6 +20,8 @@ fn main() {
 
     dbg!(trie.search("bat"));
     dbg!(trie.search("batman"));
+
+    dbg!(trie.collect_words());
 }
 
 #[derive(Debug)]
@@ -61,12 +63,30 @@ impl Trie {
 
         Some(current)
     }
+
+    fn collect_words(&self) -> Vec<String> {
+        let mut words = Vec::new();
+        self.root.collect_words("", &mut words);
+        words
+    }
 }
 
 impl TrieNode {
     fn new() -> Self {
         Self {
             children: HashMap::new(),
+        }
+    }
+
+    fn collect_words(&self, word: &str, words: &mut Vec<String>) {
+        for (key, child) in self.children.iter() {
+            if *key == '*' {
+                words.push(word.to_string());
+            } else {
+                let mut new_word = word.to_string();
+                new_word.push(*key);
+                child.collect_words(&new_word, words);
+            }
         }
     }
 }
@@ -103,5 +123,18 @@ mod tests {
         trie.insert("batter");
         assert!(trie.search("bat").is_some());
         assert!(trie.search("batter").is_some());
+    }
+
+    #[test]
+    fn test_collect_words() {
+        let mut trie = Trie::new();
+        let words = ["bake", "bat", "batter"];
+        for word in words.iter() {
+            trie.insert(word);
+        }
+        let collected = trie.collect_words();
+        for word in words.iter() {
+            assert!(collected.contains(&word.to_string()));
+        }
     }
 }
