@@ -133,6 +133,7 @@ mod tests {
             trie.insert(word);
         }
         let collected = trie.collect_words();
+        assert_eq!(collected.len(), words.len());
         for word in words.iter() {
             assert!(collected.contains(&word.to_string()));
         }
