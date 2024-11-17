@@ -70,3 +70,5 @@ Have Fun!
 - [[chapter_14/src/doubly_linked_list.rs][Doubly Linked List]]
 - [[chapter_14/src/queue.rs][Queue with Doubly Linked List]]
 - [[chapter_15/src/binary_search_tree.rs][Binary Search Tree]]
+- [[chapter_16/src/main.rs][Heap with VecDeque]]
+- [[chapter_17/src/main.rs][Trie with HashMap]]
