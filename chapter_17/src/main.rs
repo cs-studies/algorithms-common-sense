@@ -1,3 +1,5 @@
+mod exercises;
+
 use std::collections::HashMap;
 
 fn main() {
@@ -24,6 +26,11 @@ fn main() {
     dbg!(trie.collect_words());
 
     dbg!(trie.autocomplete("cat"));
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    trie.traverse();
 }
 
 #[derive(Debug)]
