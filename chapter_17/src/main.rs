@@ -22,6 +22,8 @@ fn main() {
     dbg!(trie.search("batman"));
 
     dbg!(trie.collect_words());
+
+    dbg!(trie.autocomplete("cat"));
 }
 
 #[derive(Debug)]
@@ -67,6 +69,14 @@ impl Trie {
     fn collect_words(&self) -> Vec<String> {
         let mut words = Vec::new();
         self.root.collect_words("", &mut words);
+        words
+    }
+
+    fn autocomplete(&self, prefix: &str) -> Vec<String> {
+        let mut words = Vec::new();
+        if let Some(node) = self.search(prefix) {
+            node.collect_words("", &mut words);
+        }
         words
     }
 }
@@ -136,6 +146,21 @@ mod tests {
         assert_eq!(collected.len(), words.len());
         for word in words.iter() {
             assert!(collected.contains(&word.to_string()));
+        }
+    }
+
+    #[test]
+    fn test_autocomplete() {
+        let mut trie = Trie::new();
+        let words = ["cat", "cater", "bake", "bat", "batter"];
+        for word in words.iter() {
+            trie.insert(word);
+        }
+        let completions = trie.autocomplete("bat");
+        let expected = vec!["", "ter"];
+        assert_eq!(completions.len(), expected.len());
+        for word in expected.iter() {
+            assert!(completions.contains(&word.to_string()));
         }
     }
 }
