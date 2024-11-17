@@ -31,6 +31,9 @@ fn main() {
     println!("\n*** Exercises ***\n");
 
     trie.traverse();
+
+    println!("autocorrect(): {:?}", trie.autocorrect("catnar"));
+    println!("autocorrect(): {:?}", trie.autocorrect("acc"));
 }
 
 #[derive(Debug)]
