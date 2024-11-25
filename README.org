@@ -1,3 +1,20 @@
+* Contents Highlights
+
+- [[chapter_02/src/main.rs][Linear and binary search]]
+- [[chapter_04/src/main.rs][Bubble sort]]
+- [[chapter_05/src/main.rs][Selection sort]]
+- [[chapter_06/src/main.rs][Insertion sort]]
+- [[chapter_09/src/linter.rs][Stack with Vec]]
+- [[chapter_09/src/printer.rs][Queue with VecDeque]]
+- [[chapter_12/src/main.rs][Dynamic programming]]
+- [[chapter_13/src/main.rs][Quicksort and Quickselect]]
+- [[chapter_14/src/linked_list.rs][Linked List]]
+- [[chapter_14/src/doubly_linked_list.rs][Doubly Linked List]]
+- [[chapter_14/src/queue.rs][Queue with Doubly Linked List]]
+- [[chapter_15/src/binary_search_tree.rs][Binary Search Tree]]
+- [[chapter_16/src/main.rs][Heap with VecDeque]]
+- [[chapter_17/src/main.rs][Trie with HashMap]]
+
 #+begin_quote
 "Any code that does anything at all is technically an algorithm--it's a
 particular process for solving a problem."
@@ -56,19 +73,3 @@ because *Rust* is:
 
 Have Fun!
 
-* Contents Highlights
-
-- [[chapter_02/src/main.rs][Linear and binary search]]
-- [[chapter_04/src/main.rs][Bubble sort]]
-- [[chapter_05/src/main.rs][Selection sort]]
-- [[chapter_06/src/main.rs][Insertion sort]]
-- [[chapter_09/src/linter.rs][Stack with Vec]]
-- [[chapter_09/src/printer.rs][Queue with VecDeque]]
-- [[chapter_12/src/main.rs][Dynamic programming]]
-- [[chapter_13/src/main.rs][Quicksort and Quickselect]]
-- [[chapter_14/src/linked_list.rs][Linked List]]
-- [[chapter_14/src/doubly_linked_list.rs][Doubly Linked List]]
-- [[chapter_14/src/queue.rs][Queue with Doubly Linked List]]
-- [[chapter_15/src/binary_search_tree.rs][Binary Search Tree]]
-- [[chapter_16/src/main.rs][Heap with VecDeque]]
-- [[chapter_17/src/main.rs][Trie with HashMap]]
