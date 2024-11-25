@@ -1,3 +1,12 @@
+#+begin_quote
+"Any code that does anything at all is technically an algorithm--it's a
+particular process for solving a problem."
+
+"... everything about data structures and algorithms boils down to common sense."
+
+/--- Jay Wengrow, A Common-Sense Guide to Data Structures and Algorithms/
+#+end_quote
+
 * Contents Highlights
 
 - [[chapter_02/src/main.rs][Linear and binary search]]
@@ -14,15 +23,6 @@
 - [[chapter_15/src/binary_search_tree.rs][Binary Search Tree]]
 - [[chapter_16/src/main.rs][Heap with VecDeque]]
 - [[chapter_17/src/main.rs][Trie with HashMap]]
-
-#+begin_quote
-"Any code that does anything at all is technically an algorithm--it's a
-particular process for solving a problem."
-
-"... everything about data structures and algorithms boils down to common sense."
-
-/--- Jay Wengrow, A Common-Sense Guide to Data Structures and Algorithms/
-#+end_quote
 
 * What
 
