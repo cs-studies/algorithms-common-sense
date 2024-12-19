@@ -27,7 +27,7 @@ fn main() {
     alice.borrow().traverse_depth_first(&mut HashSet::new());
 
     println!(
-        "Found Bob: {}",
+        "\nFound Bob: {}",
         alice
             .borrow()
             .search_depth_first(&"Bob", &mut HashSet::new())
