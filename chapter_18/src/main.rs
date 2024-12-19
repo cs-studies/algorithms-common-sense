@@ -4,7 +4,7 @@ use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::Hash;
 use std::rc::Rc;
 
-type Neighbour<T> = Rc<RefCell<Vertex<T>>>;
+type Neighbor<T> = Rc<RefCell<Vertex<T>>>;
 
 fn main() {
     println!("\n*** Chapter 18 ***\n");
@@ -13,11 +13,11 @@ fn main() {
     let bob = Vertex::new("Bob");
     let cynthia = Vertex::new("Cynthia");
 
-    alice.borrow_mut().add_neighbour(Rc::clone(&bob));
-    alice.borrow_mut().add_neighbour(Rc::clone(&cynthia));
+    alice.borrow_mut().add_neighbor(Rc::clone(&bob));
+    alice.borrow_mut().add_neighbor(Rc::clone(&cynthia));
 
-    bob.borrow_mut().add_neighbour(Rc::clone(&cynthia));
-    cynthia.borrow_mut().add_neighbour(Rc::clone(&bob));
+    bob.borrow_mut().add_neighbor(Rc::clone(&cynthia));
+    cynthia.borrow_mut().add_neighbor(Rc::clone(&bob));
 
     dbg!(&alice);
     dbg!(&bob);
@@ -41,19 +41,19 @@ fn main() {
 
 struct Vertex<T> {
     value: T,
-    neighbours: Vec<Neighbour<T>>,
+    neighbors: Vec<Neighbor<T>>,
 }
 
 impl<T> Vertex<T> {
-    fn new(value: T) -> Neighbour<T> {
+    fn new(value: T) -> Neighbor<T> {
         Rc::new(RefCell::new(Self {
             value,
-            neighbours: Vec::new(),
+            neighbors: Vec::new(),
         }))
     }
 
-    fn add_neighbour(&mut self, neighbour: Neighbour<T>) {
-        self.neighbours.push(neighbour);
+    fn add_neighbor(&mut self, neighbor: Neighbor<T>) {
+        self.neighbors.push(neighbor);
     }
 }
 
@@ -66,8 +66,8 @@ impl<T: Clone + Eq + Hash> Vertex<T> {
 
         println!("{}", &self.value);
 
-        for neighbour in self.neighbours.iter() {
-            let vertex = neighbour.borrow();
+        for neighbor in self.neighbors.iter() {
+            let vertex = neighbor.borrow();
             if !visited.contains(&vertex.value) {
                 vertex.traverse_deep_first(visited);
             }
@@ -84,8 +84,8 @@ impl<T: Clone + Eq + Hash> Vertex<T> {
         }
         visited.insert(self.value.clone());
 
-        for neighbour in self.neighbours.iter() {
-            let vertex = neighbour.borrow();
+        for neighbor in self.neighbors.iter() {
+            let vertex = neighbor.borrow();
             if !visited.contains(&vertex.value)
                 && vertex.search_deep_first(search_for, visited)
             {
@@ -99,15 +99,15 @@ impl<T: Clone + Eq + Hash> Vertex<T> {
 
 impl<T: Debug + Clone> Debug for Vertex<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        let neighbours: Vec<_> = self
-            .neighbours
+        let neighbors: Vec<_> = self
+            .neighbors
             .iter()
             .map(|n| n.borrow().value.clone())
             .collect();
 
         f.debug_struct("Vertex")
             .field("value", &self.value)
-            .field("neighbours", &neighbours)
+            .field("neighbors", &neighbors)
             .finish()
     }
 }
