@@ -24,18 +24,18 @@ fn main() {
     dbg!(&cynthia);
 
     println!("\nTraverse: ");
-    alice.borrow().traverse_deep_first(&mut HashSet::new());
+    alice.borrow().traverse_depth_first(&mut HashSet::new());
 
     println!(
         "Found Bob: {}",
         alice
             .borrow()
-            .search_deep_first(&"Bob", &mut HashSet::new())
+            .search_depth_first(&"Bob", &mut HashSet::new())
     );
     println!(
         "Found Alice: {}",
         bob.borrow()
-            .search_deep_first(&"Alice", &mut HashSet::new())
+            .search_depth_first(&"Alice", &mut HashSet::new())
     );
 }
 
@@ -58,7 +58,7 @@ impl<T> Vertex<T> {
 }
 
 impl<T: Clone + Eq + Hash> Vertex<T> {
-    fn traverse_deep_first(&self, visited: &mut HashSet<T>)
+    fn traverse_depth_first(&self, visited: &mut HashSet<T>)
     where
         T: Display,
     {
@@ -69,12 +69,12 @@ impl<T: Clone + Eq + Hash> Vertex<T> {
         for neighbor in self.neighbors.iter() {
             let vertex = neighbor.borrow();
             if !visited.contains(&vertex.value) {
-                vertex.traverse_deep_first(visited);
+                vertex.traverse_depth_first(visited);
             }
         }
     }
 
-    fn search_deep_first(
+    fn search_depth_first(
         &self,
         search_for: &T,
         visited: &mut HashSet<T>,
@@ -87,7 +87,7 @@ impl<T: Clone + Eq + Hash> Vertex<T> {
         for neighbor in self.neighbors.iter() {
             let vertex = neighbor.borrow();
             if !visited.contains(&vertex.value)
-                && vertex.search_deep_first(search_for, visited)
+                && vertex.search_depth_first(search_for, visited)
             {
                 return true;
             }
