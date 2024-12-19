@@ -1,7 +1,8 @@
+use std::cell::RefCell;
 use std::collections::HashSet;
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::Hash;
-use std::{cell::RefCell, rc::Rc};
+use std::rc::Rc;
 
 type Neighbour<T> = Rc<RefCell<Vertex<T>>>;
 
@@ -24,6 +25,18 @@ fn main() {
 
     println!("\nTraverse: ");
     alice.borrow().traverse_deep_first(&mut HashSet::new());
+
+    println!(
+        "Found Bob: {}",
+        alice
+            .borrow()
+            .search_deep_first(&"Bob", &mut HashSet::new())
+    );
+    println!(
+        "Found Alice: {}",
+        bob.borrow()
+            .search_deep_first(&"Alice", &mut HashSet::new())
+    );
 }
 
 struct Vertex<T> {
@@ -44,8 +57,11 @@ impl<T> Vertex<T> {
     }
 }
 
-impl<T: Clone + Display + Eq + Hash> Vertex<T> {
-    fn traverse_deep_first(&self, visited: &mut HashSet<T>) {
+impl<T: Clone + Eq + Hash> Vertex<T> {
+    fn traverse_deep_first(&self, visited: &mut HashSet<T>)
+    where
+        T: Display,
+    {
         visited.insert(self.value.clone());
 
         println!("{}", &self.value);
@@ -56,6 +72,28 @@ impl<T: Clone + Display + Eq + Hash> Vertex<T> {
                 vertex.traverse_deep_first(visited);
             }
         }
+    }
+
+    fn search_deep_first(
+        &self,
+        search_for: &T,
+        visited: &mut HashSet<T>,
+    ) -> bool {
+        if search_for == &self.value {
+            return true;
+        }
+        visited.insert(self.value.clone());
+
+        for neighbour in self.neighbours.iter() {
+            let vertex = neighbour.borrow();
+            if !visited.contains(&vertex.value)
+                && vertex.search_deep_first(search_for, visited)
+            {
+                return true;
+            }
+        }
+
+        false
     }
 }
 
