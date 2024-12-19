@@ -12,11 +12,11 @@ fn main() {
     let bob = Vertex::new("Bob");
     let cynthia = Vertex::new("Cynthia");
 
-    alice.borrow_mut().add_neigbour(Rc::clone(&bob));
-    alice.borrow_mut().add_neigbour(Rc::clone(&cynthia));
+    alice.borrow_mut().add_neighbour(Rc::clone(&bob));
+    alice.borrow_mut().add_neighbour(Rc::clone(&cynthia));
 
-    bob.borrow_mut().add_neigbour(Rc::clone(&cynthia));
-    cynthia.borrow_mut().add_neigbour(Rc::clone(&bob));
+    bob.borrow_mut().add_neighbour(Rc::clone(&cynthia));
+    cynthia.borrow_mut().add_neighbour(Rc::clone(&bob));
 
     dbg!(&alice);
     dbg!(&bob);
@@ -39,7 +39,7 @@ impl<T> Vertex<T> {
         }))
     }
 
-    fn add_neigbour(&mut self, neighbour: Neighbour<T>) {
+    fn add_neighbour(&mut self, neighbour: Neighbour<T>) {
         self.neighbours.push(neighbour);
     }
 }
@@ -64,7 +64,7 @@ impl<T: Clone + Debug> Vertex<T> {
 
 impl<T: Debug + Clone> Debug for Vertex<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        let neigbours: Vec<_> = self
+        let neighbours: Vec<_> = self
             .neighbours
             .iter()
             .map(|n| n.borrow().value.clone())
@@ -72,7 +72,7 @@ impl<T: Debug + Clone> Debug for Vertex<T> {
 
         f.debug_struct("Vertex")
             .field("value", &self.value)
-            .field("neigbours", &neigbours)
+            .field("neighbours", &neighbours)
             .finish()
     }
 }
