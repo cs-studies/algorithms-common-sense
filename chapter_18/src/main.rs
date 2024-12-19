@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use std::fmt::{Debug, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::Hash;
 use std::{cell::RefCell, rc::Rc};
 
@@ -44,14 +44,11 @@ impl<T> Vertex<T> {
     }
 }
 
-impl<T: Clone + Debug> Vertex<T> {
-    fn traverse_deep_first(&self, visited: &mut HashSet<T>)
-    where
-        T: Eq + Hash,
-    {
+impl<T: Clone + Display + Eq + Hash> Vertex<T> {
+    fn traverse_deep_first(&self, visited: &mut HashSet<T>) {
         visited.insert(self.value.clone());
 
-        println!("{:?}", &self.value);
+        println!("{}", &self.value);
 
         for neighbour in self.neighbours.iter() {
             let vertex = neighbour.borrow();
