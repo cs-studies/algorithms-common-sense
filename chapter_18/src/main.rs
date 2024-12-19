@@ -1,6 +1,6 @@
-#![allow(unused_variables, dead_code, unused_imports)]
-
+use std::collections::HashSet;
 use std::fmt::{Debug, Formatter, Result};
+use std::hash::Hash;
 use std::{cell::RefCell, rc::Rc};
 
 type Neighbour<T> = Rc<RefCell<Vertex<T>>>;
@@ -21,6 +21,9 @@ fn main() {
     dbg!(&alice);
     dbg!(&bob);
     dbg!(&cynthia);
+
+    println!("\nTraverse: ");
+    alice.borrow().traverse_deep_first(&mut HashSet::new());
 }
 
 struct Vertex<T> {
@@ -38,6 +41,24 @@ impl<T> Vertex<T> {
 
     fn add_neigbour(&mut self, neighbour: Neighbour<T>) {
         self.neighbours.push(neighbour);
+    }
+}
+
+impl<T: Clone + Debug> Vertex<T> {
+    fn traverse_deep_first(&self, visited: &mut HashSet<T>)
+    where
+        T: Eq + Hash,
+    {
+        visited.insert(self.value.clone());
+
+        println!("{:?}", &self.value);
+
+        for neighbour in self.neighbours.iter() {
+            let vertex = neighbour.borrow();
+            if !visited.contains(&vertex.value) {
+                vertex.traverse_deep_first(visited);
+            }
+        }
     }
 }
 
