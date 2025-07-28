@@ -1,5 +1,5 @@
 use std::cell::RefCell;
-use std::collections::HashSet;
+use std::collections::{HashSet, VecDeque};
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::Hash;
 use std::rc::Rc;
@@ -23,7 +23,7 @@ fn main() {
     dbg!(&bob);
     dbg!(&cynthia);
 
-    println!("\nTraverse: ");
+    println!("\nTraverse deapth-first: ");
     alice.borrow().traverse_depth_first(&mut HashSet::new());
 
     println!(
@@ -37,6 +37,9 @@ fn main() {
         bob.borrow()
             .search_depth_first(&"Alice", &mut HashSet::new())
     );
+
+    println!("\nTraverse breadth-first: ");
+    alice.borrow().traverse_breadth_first(&alice);
 }
 
 struct Vertex<T> {
@@ -94,6 +97,29 @@ impl<T: Clone + Eq + Hash> Vertex<T> {
         }
 
         false
+    }
+
+    fn traverse_breadth_first(&self, self_rc: &Neighbor<T>)
+    where
+        T: Display,
+    {
+        let mut visited = HashSet::new();
+        let mut queue = VecDeque::new();
+
+        visited.insert(self.value.clone());
+        queue.push_back(Rc::clone(self_rc));
+
+        while let Some(current_rc) = queue.pop_front() {
+            let current = current_rc.borrow();
+            println!("{}", current.value);
+
+            for neighbor in &current.neighbors {
+                let vertex = neighbor.borrow();
+                if visited.insert(vertex.value.clone()) {
+                    queue.push_back(Rc::clone(neighbor));
+                }
+            }
+        }
     }
 }
 
