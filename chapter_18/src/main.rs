@@ -1,8 +1,11 @@
+mod weighted_graph;
+
 use std::cell::RefCell;
 use std::collections::{HashSet, VecDeque};
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::Hash;
 use std::rc::Rc;
+use weighted_graph::WeightedVertex;
 
 type Neighbor<T> = Rc<RefCell<Vertex<T>>>;
 
@@ -40,6 +43,15 @@ fn main() {
 
     println!("\nTraverse breadth-first: ");
     alice.borrow().traverse_breadth_first(&alice);
+
+    let mut dallas = WeightedVertex::new("Dallas");
+    let mut toronto = WeightedVertex::new("Toronto");
+
+    dallas.add_neighbor(toronto.value, 138);
+    toronto.add_neighbor(dallas.value, 216);
+
+    println!("\n{:?}", dallas);
+    println!("{:?}", toronto);
 }
 
 struct Vertex<T> {
