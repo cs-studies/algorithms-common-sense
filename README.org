@@ -23,6 +23,8 @@ particular process for solving a problem."
 - [[chapter_15/src/binary_search_tree.rs][Binary Search Tree]]
 - [[chapter_16/src/main.rs][Heap with VecDeque]]
 - [[chapter_17/src/main.rs][Trie with HashMap]]
+- [[chapter_18/src/graph.rs][Graph traversal]]
+- [[chapter_18/src/dijkstra.rs][Dijkstra's algorithm]]
 
 * What
 
