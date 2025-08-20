@@ -1,4 +1,5 @@
 mod dijkstra;
+mod dijkstra_priority_queue;
 mod graph;
 mod weighted_graph;
 
@@ -78,4 +79,15 @@ fn main() {
     ]);
 
     println!("{:?}", shortest_path(&routes, atlanta.name, elpaso.name));
+
+    println!("\n Dijkstra's algorithm with priority queue:");
+
+    println!(
+        "{:?}",
+        dijkstra_priority_queue::shortest_path(
+            &routes,
+            atlanta.name,
+            elpaso.name
+        )
+    );
 }

@@ -1,18 +1,9 @@
-use std::collections::{HashMap, HashSet};
+use std::{
+    cmp::Reverse,
+    collections::{BinaryHeap, HashMap, HashSet},
+};
 
-pub(crate) type Name = &'static str;
-pub(crate) type Price = u16;
-pub(crate) type Route = HashMap<Name, Price>;
-
-pub struct City {
-    pub name: Name,
-}
-
-impl City {
-    pub fn new(name: Name) -> Self {
-        Self { name }
-    }
-}
+use crate::dijkstra::{Name, Price, Route};
 
 pub fn shortest_path(
     routes: &HashMap<Name, Route>,
@@ -21,38 +12,27 @@ pub fn shortest_path(
 ) -> Vec<Name> {
     let mut prices: HashMap<Name, Price> = HashMap::new();
     let mut stopovers: HashMap<Name, Name> = HashMap::new();
-    let mut unvisited: HashSet<Name> = HashSet::new();
     let mut visited: HashSet<Name> = HashSet::new();
+    let mut unvisited: BinaryHeap<Reverse<(Price, Name)>> = BinaryHeap::new();
 
     prices.insert(start, 0);
+    unvisited.push(Reverse((0, start)));
 
-    let mut current_opt = Some(start);
-
-    while let Some(current) = current_opt {
-        visited.insert(current);
-        unvisited.remove(&current);
+    while let Some(Reverse((price, current))) = unvisited.pop() {
+        if !visited.insert(current) {
+            continue;
+        }
 
         if let Some(neighbors) = routes.get(&current) {
-            let current_price = prices
-                .get(&current)
-                .copied()
-                .expect("current city must have a known price");
-            for (&adjacent, &price) in neighbors {
-                if !visited.contains(&adjacent) {
-                    unvisited.insert(adjacent);
-                }
-                let new_price = current_price.saturating_add(price);
+            for (&adjacent, &adj_price) in neighbors {
+                let new_price = price.saturating_add(adj_price);
                 if prices.get(&adjacent).is_none_or(|&p| new_price < p) {
                     prices.insert(adjacent, new_price);
                     stopovers.insert(adjacent, current);
+                    unvisited.push(Reverse((new_price, adjacent)));
                 }
             }
         }
-
-        current_opt = unvisited
-            .iter()
-            .min_by_key(|name| prices.get(*name).copied().unwrap_or(Price::MAX))
-            .copied();
     }
 
     let mut path = Vec::new();
@@ -62,7 +42,6 @@ pub fn shortest_path(
         path.push(current);
         current = stopovers
             .get(&current)
-            .copied()
             .expect("stopovers must contain cities unless start is reached");
     }
 
@@ -74,6 +53,7 @@ pub fn shortest_path(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::dijkstra::City;
 
     #[test]
     fn test_shortest_path() {
@@ -105,5 +85,13 @@ mod tests {
             path,
             vec![atlanta.name, denver.name, chicago.name, elpaso.name]
         );
+    }
+
+    #[test]
+    fn test_shortest_path_same_city() {
+        let atlanta = City::new("Atlanta");
+        let routes = HashMap::from([(atlanta.name, HashMap::from([]))]);
+        let path = shortest_path(&routes, atlanta.name, atlanta.name);
+        assert_eq!(path, vec![atlanta.name]);
     }
 }
