@@ -1,7 +1,9 @@
+mod dijkstra;
 mod weighted_graph;
 
+use dijkstra::{shortest_path, City};
 use std::cell::RefCell;
-use std::collections::{HashSet, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::Hash;
 use std::rc::Rc;
@@ -52,6 +54,33 @@ fn main() {
 
     println!("\n{:?}", dallas);
     println!("{:?}", toronto);
+
+    println!("\nDijkstra's algorithm:");
+
+    let atlanta = City::new("Atlanta");
+    let boston = City::new("Boston");
+    let chicago = City::new("Chicago");
+    let denver = City::new("Denver");
+    let elpaso = City::new("El Paso");
+
+    let routes = HashMap::from([
+        (
+            atlanta.name,
+            HashMap::from([(boston.name, 100), (denver.name, 160)]),
+        ),
+        (
+            boston.name,
+            HashMap::from([(chicago.name, 120), (denver.name, 180)]),
+        ),
+        (chicago.name, HashMap::from([(elpaso.name, 80)])),
+        (
+            denver.name,
+            HashMap::from([(chicago.name, 40), (elpaso.name, 140)]),
+        ),
+        (elpaso.name, HashMap::from([])),
+    ]);
+
+    println!("{:?}", shortest_path(&routes, atlanta.name, elpaso.name));
 }
 
 struct Vertex<T> {
