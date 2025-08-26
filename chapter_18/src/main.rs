@@ -5,7 +5,7 @@ mod weighted_graph;
 
 use dijkstra::{shortest_path, City};
 use graph::{breadth_first, depth_first, Vertex};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use weighted_graph::WeightedVertex;
 
 fn main() {
@@ -27,17 +27,11 @@ fn main() {
 
     println!("\nTraverse depth-first: ");
 
-    depth_first::traverse(&alice.borrow(), &mut HashSet::new());
+    depth_first::traverse(&alice);
 
     println!("\nSearch depth-first:");
-    println!(
-        "Found Bob: {}",
-        depth_first::search(&alice.borrow(), &"Bob", &mut HashSet::new())
-    );
-    println!(
-        "Found Diana: {}",
-        depth_first::search(&alice.borrow(), &"Diana", &mut HashSet::new())
-    );
+    println!("Found Bob: {}", depth_first::search(&alice, &"Bob"));
+    println!("Found Diana: {}", depth_first::search(&alice, &"Diana"));
 
     println!("\nTraverse breadth-first: ");
     breadth_first::traverse(&alice);
@@ -93,7 +87,7 @@ fn main() {
     println!("\n*** Exercises ***\n");
 
     println!("\nSearch breadth-first:");
-    println!("Found Bob: {}", breadth_first::search(&"Bob", &alice));
+    println!("Found Bob: {}", breadth_first::search(&alice, &"Bob"));
 
-    println!("Found Diana: {}", breadth_first::search(&"Diana", &alice));
+    println!("Found Diana: {}", breadth_first::search(&alice, &"Diana"));
 }

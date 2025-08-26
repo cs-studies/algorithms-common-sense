@@ -27,45 +27,54 @@ impl<T> Vertex<T> {
 pub mod depth_first {
     use super::*;
 
-    pub fn traverse<T>(start: &Vertex<T>, visited: &mut HashSet<T>)
+    pub fn traverse<T>(start: &Neighbor<T>)
     where
         T: Display + Eq + Hash + Clone,
     {
-        visited.insert(start.value.clone());
+        fn inner<T>(start: &Neighbor<T>, visited: &mut HashSet<T>)
+        where
+            T: Display + Eq + Hash + Clone,
+        {
+            let vertex = start.borrow();
+            if !visited.insert(vertex.value.clone()) {
+                return;
+            }
+            println!("{}", vertex.value);
 
-        println!("{}", start.value);
-
-        for neighbor in start.neighbors.iter() {
-            let vertex = neighbor.borrow();
-            if !visited.contains(&vertex.value) {
-                traverse(&vertex, visited);
+            for neighbor in &vertex.neighbors {
+                inner(neighbor, visited);
             }
         }
+        inner(start, &mut HashSet::new());
     }
 
-    pub fn search<T>(
-        start: &Vertex<T>,
-        search_for: &T,
-        visited: &mut HashSet<T>,
-    ) -> bool
+    pub fn search<T>(start: &Neighbor<T>, search_for: &T) -> bool
     where
         T: Eq + Hash + Clone,
     {
-        if search_for == &start.value {
-            return true;
-        }
-        visited.insert(start.value.clone());
-
-        for neighbor in start.neighbors.iter() {
-            let vertex = neighbor.borrow();
-            if !visited.contains(&vertex.value)
-                && search(&vertex, search_for, visited)
-            {
+        fn inner<T>(
+            start: &Neighbor<T>,
+            search_for: &T,
+            visited: &mut HashSet<T>,
+        ) -> bool
+        where
+            T: Eq + Hash + Clone,
+        {
+            let vertex = start.borrow();
+            if *search_for == vertex.value {
                 return true;
             }
+            if !visited.insert(vertex.value.clone()) {
+                return false;
+            }
+            for neighbor in &vertex.neighbors {
+                if inner(neighbor, search_for, visited) {
+                    return true;
+                }
+            }
+            false
         }
-
-        false
+        inner(start, search_for, &mut HashSet::new())
     }
 }
 
@@ -82,8 +91,8 @@ pub mod breadth_first {
         visited.insert(start.borrow().value.clone());
         queue.push_back(Rc::clone(start));
 
-        while let Some(current_rc) = queue.pop_front() {
-            let current = current_rc.borrow();
+        while let Some(current) = queue.pop_front() {
+            let current = current.borrow();
             println!("{}", current.value);
 
             for neighbor in &current.neighbors {
@@ -95,7 +104,7 @@ pub mod breadth_first {
         }
     }
 
-    pub fn search<T>(search_for: &T, start: &Neighbor<T>) -> bool
+    pub fn search<T>(start: &Neighbor<T>, search_for: &T) -> bool
     where
         T: Eq + Hash + Clone,
     {
@@ -146,25 +155,15 @@ mod tests {
     #[test]
     fn test_search_depth_first() {
         let alice = sample_graph();
-        assert!(depth_first::search(
-            &alice.borrow(),
-            &"Bob",
-            &mut HashSet::new()
-        ));
-
-        assert!(!depth_first::search(
-            &alice.borrow(),
-            &"Diana",
-            &mut HashSet::new()
-        ));
+        assert!(depth_first::search(&alice, &"Bob",));
+        assert!(!depth_first::search(&alice, &"Diana"));
     }
 
     #[test]
     fn test_search_breadth_first() {
         let alice = sample_graph();
-        assert!(breadth_first::search(&"Bob", &alice));
-
-        assert!(!breadth_first::search(&"Diana", &alice));
+        assert!(breadth_first::search(&alice, &"Bob"));
+        assert!(!breadth_first::search(&alice, &"Diana"));
     }
 
     fn sample_graph() -> Neighbor<&'static str> {
