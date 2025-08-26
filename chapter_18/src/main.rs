@@ -4,9 +4,8 @@ mod graph;
 mod weighted_graph;
 
 use dijkstra::{shortest_path, City};
-use graph::Vertex;
+use graph::{breadth_first, depth_first, Vertex};
 use std::collections::{HashMap, HashSet};
-use std::rc::Rc;
 use weighted_graph::WeightedVertex;
 
 fn main() {
@@ -16,33 +15,32 @@ fn main() {
     let bob = Vertex::new("Bob");
     let cynthia = Vertex::new("Cynthia");
 
-    alice.borrow_mut().add_neighbor(Rc::clone(&bob));
-    alice.borrow_mut().add_neighbor(Rc::clone(&cynthia));
+    alice.borrow_mut().add_neighbor(&bob);
+    alice.borrow_mut().add_neighbor(&cynthia);
 
-    bob.borrow_mut().add_neighbor(Rc::clone(&cynthia));
-    cynthia.borrow_mut().add_neighbor(Rc::clone(&bob));
+    bob.borrow_mut().add_neighbor(&cynthia);
+    cynthia.borrow_mut().add_neighbor(&bob);
 
     dbg!(&alice);
     dbg!(&bob);
     dbg!(&cynthia);
 
-    println!("\nTraverse deapth-first: ");
-    alice.borrow().traverse_depth_first(&mut HashSet::new());
+    println!("\nTraverse depth-first: ");
 
+    depth_first::traverse(&alice.borrow(), &mut HashSet::new());
+
+    println!("\nSearch depth-first:");
     println!(
-        "\nFound Bob: {}",
-        alice
-            .borrow()
-            .search_depth_first(&"Bob", &mut HashSet::new())
+        "Found Bob: {}",
+        depth_first::search(&alice.borrow(), &"Bob", &mut HashSet::new())
     );
     println!(
-        "Found Alice: {}",
-        bob.borrow()
-            .search_depth_first(&"Alice", &mut HashSet::new())
+        "Found Diana: {}",
+        depth_first::search(&alice.borrow(), &"Diana", &mut HashSet::new())
     );
 
     println!("\nTraverse breadth-first: ");
-    alice.borrow().traverse_breadth_first(&alice);
+    breadth_first::traverse(&alice);
 
     let mut dallas = WeightedVertex::new("Dallas");
     let mut toronto = WeightedVertex::new("Toronto");
@@ -90,4 +88,12 @@ fn main() {
             elpaso.name
         )
     );
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    println!("\nSearch breadth-first:");
+    println!("Found Bob: {}", breadth_first::search(&"Bob", &alice));
+
+    println!("Found Diana: {}", breadth_first::search(&"Diana", &alice));
 }
