@@ -2,24 +2,17 @@ mod dijkstra;
 mod dijkstra_priority_queue;
 mod graph;
 mod weighted_graph;
+mod exercises;
 
 use dijkstra::{shortest_path, City};
-use graph::{breadth_first, depth_first, Vertex};
+use graph::{breadth_first, depth_first};
 use std::collections::HashMap;
 use weighted_graph::WeightedVertex;
 
 fn main() {
     println!("\n*** Chapter 18 ***\n");
 
-    let alice = Vertex::new("Alice");
-    let bob = Vertex::new("Bob");
-    let cynthia = Vertex::new("Cynthia");
-
-    alice.borrow_mut().add_neighbor(&bob);
-    alice.borrow_mut().add_neighbor(&cynthia);
-
-    bob.borrow_mut().add_neighbor(&cynthia);
-    cynthia.borrow_mut().add_neighbor(&bob);
+    let (alice, bob, cynthia) = graph::sample();
 
     dbg!(&alice);
     dbg!(&bob);
@@ -87,7 +80,7 @@ fn main() {
     println!("\n*** Exercises ***\n");
 
     println!("\nSearch breadth-first:");
-    println!("Found Bob: {}", breadth_first::search(&alice, &"Bob"));
+    println!("Found Bob: {}", exercises::bfs(&alice, &"Bob"));
 
-    println!("Found Diana: {}", breadth_first::search(&alice, &"Diana"));
+    println!("Found Diana: {}", exercises::bfs(&alice, &"Diana"));
 }
