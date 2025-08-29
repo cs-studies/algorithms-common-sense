@@ -71,12 +71,20 @@ pub fn shortest_path(
     path
 }
 
-#[cfg(test)]
-mod tests {
+pub(crate) mod sample {
     use super::*;
 
-    #[test]
-    fn test_shortest_path() {
+    #[allow(dead_code)]
+    pub(crate) struct SampleData {
+        pub(crate) atlanta: City,
+        pub(crate) boston: City,
+        pub(crate) chicago: City,
+        pub(crate) denver: City,
+        pub(crate) elpaso: City,
+        pub(crate) routes: HashMap<Name, HashMap<Name, Price>>,
+    }
+
+    pub(crate) fn data() -> SampleData {
         let atlanta = City::new("Atlanta");
         let boston = City::new("Boston");
         let chicago = City::new("Chicago");
@@ -100,10 +108,28 @@ mod tests {
             (elpaso.name, HashMap::from([])),
         ]);
 
-        let path = shortest_path(&routes, atlanta.name, elpaso.name);
+        SampleData {
+            atlanta,
+            boston,
+            chicago,
+            denver,
+            elpaso,
+            routes,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_shortest_path() {
+        let s = sample::data();
+        let path = shortest_path(&s.routes, s.atlanta.name, s.elpaso.name);
         assert_eq!(
             path,
-            vec![atlanta.name, denver.name, chicago.name, elpaso.name]
+            vec![s.atlanta.name, s.denver.name, s.chicago.name, s.elpaso.name]
         );
     }
 }

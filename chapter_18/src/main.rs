@@ -1,12 +1,11 @@
 mod dijkstra;
 mod dijkstra_priority_queue;
+mod exercises;
 mod graph;
 mod weighted_graph;
-mod exercises;
 
-use dijkstra::{shortest_path, City};
+use dijkstra::shortest_path;
 use graph::{breadth_first, depth_first};
-use std::collections::HashMap;
 use weighted_graph::WeightedVertex;
 
 fn main() {
@@ -40,39 +39,20 @@ fn main() {
 
     println!("\nDijkstra's algorithm:");
 
-    let atlanta = City::new("Atlanta");
-    let boston = City::new("Boston");
-    let chicago = City::new("Chicago");
-    let denver = City::new("Denver");
-    let elpaso = City::new("El Paso");
-
-    let routes = HashMap::from([
-        (
-            atlanta.name,
-            HashMap::from([(boston.name, 100), (denver.name, 160)]),
-        ),
-        (
-            boston.name,
-            HashMap::from([(chicago.name, 120), (denver.name, 180)]),
-        ),
-        (chicago.name, HashMap::from([(elpaso.name, 80)])),
-        (
-            denver.name,
-            HashMap::from([(chicago.name, 40), (elpaso.name, 140)]),
-        ),
-        (elpaso.name, HashMap::from([])),
-    ]);
-
-    println!("{:?}", shortest_path(&routes, atlanta.name, elpaso.name));
+    let s = dijkstra::sample::data();
+    println!(
+        "{:?}",
+        shortest_path(&s.routes, s.atlanta.name, s.elpaso.name)
+    );
 
     println!("\n Dijkstra's algorithm with priority queue:");
 
     println!(
         "{:?}",
         dijkstra_priority_queue::shortest_path(
-            &routes,
-            atlanta.name,
-            elpaso.name
+            &s.routes,
+            s.atlanta.name,
+            s.elpaso.name
         )
     );
 

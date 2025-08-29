@@ -53,45 +53,23 @@ pub fn shortest_path(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::dijkstra::City;
+    use crate::dijkstra::sample;
 
     #[test]
     fn test_shortest_path() {
-        let atlanta = City::new("Atlanta");
-        let boston = City::new("Boston");
-        let chicago = City::new("Chicago");
-        let denver = City::new("Denver");
-        let elpaso = City::new("El Paso");
-
-        let routes = HashMap::from([
-            (
-                atlanta.name,
-                HashMap::from([(boston.name, 100), (denver.name, 160)]),
-            ),
-            (
-                boston.name,
-                HashMap::from([(chicago.name, 120), (denver.name, 180)]),
-            ),
-            (chicago.name, HashMap::from([(elpaso.name, 80)])),
-            (
-                denver.name,
-                HashMap::from([(chicago.name, 40), (elpaso.name, 140)]),
-            ),
-            (elpaso.name, HashMap::from([])),
-        ]);
-
-        let path = shortest_path(&routes, atlanta.name, elpaso.name);
+        let s = sample::data();
+        let path = shortest_path(&s.routes, s.atlanta.name, s.elpaso.name);
         assert_eq!(
             path,
-            vec![atlanta.name, denver.name, chicago.name, elpaso.name]
+            vec![s.atlanta.name, s.denver.name, s.chicago.name, s.elpaso.name]
         );
     }
 
     #[test]
     fn test_shortest_path_same_city() {
-        let atlanta = City::new("Atlanta");
-        let routes = HashMap::from([(atlanta.name, HashMap::from([]))]);
-        let path = shortest_path(&routes, atlanta.name, atlanta.name);
-        assert_eq!(path, vec![atlanta.name]);
+        let s = sample::data();
+        let routes = HashMap::from([(s.atlanta.name, HashMap::from([]))]);
+        let path = shortest_path(&routes, s.atlanta.name, s.atlanta.name);
+        assert_eq!(path, vec![s.atlanta.name]);
     }
 }
