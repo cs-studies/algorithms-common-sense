@@ -12,14 +12,14 @@ pub(crate) struct Vertex<T> {
 }
 
 impl<T> Vertex<T> {
-    fn new(value: T) -> Neighbor<T> {
+    pub(crate) fn new(value: T) -> Neighbor<T> {
         Rc::new(RefCell::new(Self {
             value,
             neighbors: Vec::new(),
         }))
     }
 
-    fn add_neighbor(&mut self, neighbor: &Neighbor<T>) {
+    pub(crate) fn add_neighbor(&mut self, neighbor: &Neighbor<T>) {
         self.neighbors.push(Rc::clone(neighbor));
     }
 }
@@ -144,7 +144,7 @@ mod tests {
     #[test]
     fn test_search_depth_first() {
         let graph = sample();
-        assert!(depth_first::search(&graph.0, &"Bob",));
+        assert!(depth_first::search(&graph.0, &graph.1.borrow().value));
         assert!(!depth_first::search(&graph.0, &"Diana"));
     }
 }

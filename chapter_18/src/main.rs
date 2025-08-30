@@ -22,7 +22,10 @@ fn main() {
     depth_first::traverse(&alice);
 
     println!("\nSearch depth-first:");
-    println!("Found Bob: {}", depth_first::search(&alice, &"Bob"));
+    println!(
+        "Found Bob: {}",
+        depth_first::search(&alice, &bob.borrow().value)
+    );
     println!("Found Diana: {}", depth_first::search(&alice, &"Diana"));
 
     println!("\nTraverse breadth-first: ");

@@ -34,12 +34,11 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::graph::sample;
 
     #[test]
     fn test_bfs() {
-        let graph = sample();
-        assert!(bfs(&graph.0, &"Bob"));
+        let graph = crate::graph::sample();
+        assert!(bfs(&graph.0, &graph.1.borrow().value));
         assert!(!bfs(&graph.0, &"Diana"));
     }
 }
