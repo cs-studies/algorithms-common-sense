@@ -63,7 +63,11 @@ fn main() {
     println!("\n*** Exercises ***\n");
 
     println!("\nSearch breadth-first:");
-    println!("Found Bob: {}", exercises::bfs(&alice, &"Bob"));
-
+    println!("Found Bob: {}", exercises::bfs(&alice, &bob.borrow().value));
     println!("Found Diana: {}", exercises::bfs(&alice, &"Diana"));
+
+    println!("\nShortest path:");
+    let s = exercises::sample();
+    let path = exercises::shortest_path(&s.0, &s.2.borrow().value);
+    println!("{:?}", path);
 }
