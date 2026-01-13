@@ -108,11 +108,13 @@ mod tests {
     fn test_has_duplicates() {
         assert_eq!(has_duplicates(&[]), false);
         assert!(has_duplicates(&[1, 5, 3, 9, 1, 4]));
+        assert!(!has_duplicates(&[1, 5, 3, 9, 4]));
     }
 
     #[test]
     fn test_has_duplicates_linear() {
         assert_eq!(has_duplicates_linear(&[]), false);
         assert!(has_duplicates_linear(&[1, 5, 3, 9, 1, 4]));
+        assert!(!has_duplicates_linear(&[1, 5, 3, 9, 4]));
     }
 }
