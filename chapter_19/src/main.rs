@@ -13,6 +13,14 @@ fn main() {
     ];
     let uppercased = make_uppercase_2(words);
     println!("{:?}", uppercased);
+
+    let mut a = [1, 4, 5, 2, 9];
+    println!("\nArray: {:?}", a);
+    println!("Duplicates: {}\n", has_duplicates_3(&mut a));
+
+    let mut a = [65, -55, 45, 45, 10];
+    println!("Array: {:?}", a);
+    println!("Duplicates: {}\n", has_duplicates_3(&mut a));
 }
 
 fn make_uppercase(words: &[&str]) -> Vec<String> {
@@ -29,6 +37,19 @@ fn make_uppercase_2(mut words: Vec<String>) -> Vec<String> {
         *w = w.to_uppercase();
     }
     words
+}
+
+// See /chapter_04/src/main.rs
+fn has_duplicates_3(data: &mut [i32]) -> bool {
+    data.sort();
+
+    for i in 1..data.len() {
+        println!("Checked if {:?}=={:?}", data[i - 1], data[i]);
+        if data[i - 1] == data[i] {
+            return true;
+        }
+    }
+    false
 }
 
 #[cfg(test)]
@@ -50,5 +71,15 @@ mod tests {
         let words =
             vec!["one".to_string(), "two".to_string(), "three".to_string()];
         assert_eq!(make_uppercase_2(words), vec!["ONE", "TWO", "THREE"]);
+    }
+
+    #[test]
+    fn test_has_duplicates_3() {
+        assert!(!has_duplicates_3(&mut []));
+        assert!(!has_duplicates_3(&mut [1]));
+        assert!(has_duplicates_3(&mut [1, 1]));
+        assert!(!has_duplicates_3(&mut [1, 2]));
+        assert!(has_duplicates_3(&mut [1, 5, 3, 9, 1, 4]));
+        assert!(!has_duplicates_3(&mut [1, 5, 3, 9, 4]));
     }
 }
