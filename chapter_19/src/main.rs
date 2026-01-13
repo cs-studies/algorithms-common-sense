@@ -21,6 +21,16 @@ fn main() {
     let mut a = [65, -55, 45, 45, 10];
     println!("Array: {:?}", a);
     println!("Duplicates: {}\n", has_duplicates_3(&mut a));
+
+    // 320000 overflows the stack in my case.
+    println!("\nRecurse:");
+    recurse(5);
+    // println!("done");
+
+    // Runs well with i32::MAX.
+    println!("\nLoop:");
+    non_recurse(5);
+    // println!("done");
 }
 
 fn make_uppercase(words: &[&str]) -> Vec<String> {
@@ -50,6 +60,21 @@ fn has_duplicates_3(data: &mut [i32]) -> bool {
         }
     }
     false
+}
+
+fn recurse(n: i32) {
+    if n < 0 {
+        return;
+    }
+    println!("{n}");
+    recurse(n - 1);
+}
+
+fn non_recurse(mut n: i32) {
+    while n >= 0 {
+        println!("{n}");
+        n -= 1;
+    }
 }
 
 #[cfg(test)]
