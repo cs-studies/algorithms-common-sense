@@ -29,7 +29,7 @@ fn main() {
 
     // Runs well with i32::MAX.
     println!("\nLoop:");
-    non_recurse(5);
+    loop_down(5);
     // println!("done");
 }
 
@@ -70,7 +70,7 @@ fn recurse(n: i32) {
     recurse(n - 1);
 }
 
-fn non_recurse(mut n: i32) {
+fn loop_down(mut n: i32) {
     while n >= 0 {
         println!("{n}");
         n -= 1;
