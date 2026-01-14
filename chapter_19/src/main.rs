@@ -1,3 +1,5 @@
+mod exercises;
+
 fn main() {
     println!("\n*** Chapter 19 ***\n");
 
@@ -31,6 +33,17 @@ fn main() {
     println!("\nLoop:");
     loop_down(5);
     // println!("done");
+
+    //// Exercises
+    println!("\n*** Exercises ***\n");
+
+    let v = vec![5, 4, 3, 2, 1];
+    println!("Vector: {:?}", v);
+    println!("reverse_1: {:?}", exercises::reverse_1(&v));
+
+    let v = vec![5, 4, 3, 2, 1];
+    println!("\nVector: {:?}", v);
+    println!("reverse_2: {:?}", exercises::reverse_2(v));
 }
 
 fn make_uppercase(words: &[&str]) -> Vec<String> {
@@ -106,5 +119,29 @@ mod tests {
         assert!(!has_duplicates_3(&mut [1, 2]));
         assert!(has_duplicates_3(&mut [1, 5, 3, 9, 1, 4]));
         assert!(!has_duplicates_3(&mut [1, 5, 3, 9, 4]));
+    }
+
+    #[test]
+    fn test_reverse_1() {
+        assert_eq!(exercises::reverse_1(&Vec::<i8>::new()), vec![]);
+        assert_eq!(exercises::reverse_1(&vec![1]), vec![1]);
+        assert_eq!(exercises::reverse_1(&vec![1, 2]), vec![2, 1]);
+        assert_eq!(exercises::reverse_1(&vec![1, 2, 3]), vec![3, 2, 1]);
+        assert_eq!(
+            exercises::reverse_1(&vec!['a', 'b', 'c']),
+            vec!['c', 'b', 'a']
+        );
+    }
+
+    #[test]
+    fn test_reverse_2() {
+        assert_eq!(exercises::reverse_2(Vec::<i8>::new()), vec![]);
+        assert_eq!(exercises::reverse_2(vec![1]), vec![1]);
+        assert_eq!(exercises::reverse_2(vec![1, 2]), vec![2, 1]);
+        assert_eq!(exercises::reverse_2(vec![1, 2, 3]), vec![3, 2, 1]);
+        assert_eq!(
+            exercises::reverse_2(vec!['a', 'b', 'c']),
+            vec!['c', 'b', 'a']
+        );
     }
 }
