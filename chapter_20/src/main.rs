@@ -1,4 +1,5 @@
 mod shelf;
+mod sum;
 
 fn main() {
     println!("\n*** Chapter 20 ***\n");
@@ -14,4 +15,10 @@ fn main() {
 
     let connected = shelf::books_with_authors_2(&books, &authors);
     println!("{:#?}", connected);
+
+    let a = &[2, 0, 4, 1, 7, 9];
+    println!("add up to 10: {:#?}", sum::two_sum_1(a));
+
+    let a = &[2, 0, 4, 1, 7, 9];
+    println!("add up to 10: {:#?}", sum::two_sum_2(a));
 }
