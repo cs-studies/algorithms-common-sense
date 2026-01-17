@@ -17,8 +17,10 @@ fn main() {
     println!("{:#?}", connected);
 
     let a = &[2, 0, 4, 1, 7, 9];
-    println!("add up to 10: {:#?}", sum::two_sum_1(a));
+    println!("\ndata: {:?}", a);
+    println!("Found numbers that add up to 10: {}", sum::two_sum_1(a));
 
     let a = &[2, 0, 4, 1, 7, 9];
-    println!("add up to 10: {:#?}", sum::two_sum_2(a));
+    println!("\ndata: {:?}", a);
+    println!("Found numbers that add up to 10: {}", sum::two_sum_2(a));
 }
