@@ -1,6 +1,7 @@
 mod coins;
 mod shelf;
 mod sum;
+mod swap;
 
 fn main() {
     println!("\n*** Chapter 20 ***\n");
@@ -36,4 +37,22 @@ fn main() {
 
     let n = 9;
     println!("You win with {} coins: {}", n, coins::is_winning_2(n));
+
+    let a1 = [5, 3, 2, 9, 1];
+    let a2 = [1, 12, 5];
+    println!("\na1: {:?}", &a1);
+    println!("a2: {:?}", &a2);
+    println!(
+        "Indices to swap: {:?}",
+        swap::find_indices_1(&a1, &a2).unwrap()
+    );
+
+    let a1 = [5, 3, 2, 9, 1];
+    let a2 = [1, 12, 5];
+    println!("\na1: {:?}", &a1);
+    println!("a2: {:?}", &a2);
+    println!(
+        "Indices to swap: {:?}",
+        swap::find_indices_2(&a1, &a2).unwrap()
+    );
 }
