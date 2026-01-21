@@ -1,3 +1,4 @@
+mod anagrams;
 mod coins;
 mod greedy;
 mod shelf;
@@ -70,4 +71,12 @@ fn main() {
     let d = [50, 51, 48, 49, 47, 48, 46];
     println!("\ndata: {:?}", &d);
     println!("Upward trend: {:?}", greedy::upward_trend(&d));
+
+    let s1 = "rattles";
+    let s2 = "startle";
+    println!("\ns1: {s1}");
+    println!("s2: {s2}");
+    println!("are anagrams: {}", anagrams::are_anagrams_1(s1, s2));
+
+    println!("are anagrams: {}", anagrams::are_anagrams_2(s1, s2));
 }
