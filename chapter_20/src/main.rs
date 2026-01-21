@@ -1,5 +1,6 @@
 mod anagrams;
 mod coins;
+mod exercise1;
 mod greedy;
 mod group;
 mod shelf;
@@ -83,4 +84,13 @@ fn main() {
     let d = ['a', 'c', 'd', 'b', 'b', 'c', 'a', 'd', 'c', 'b', 'a', 'd'];
     println!("\narray: {:?}", &d);
     println!("grouped: {:?}", group::group_array(&d));
+
+    println!("\n*** Exercises ***\n");
+
+    let basketball_players = exercise1::sample::basketball_players();
+    let football_players = exercise1::sample::football_players();
+    println!(
+        "Same players: {:#?}",
+        exercise1::find_same_players(&basketball_players, &football_players)
+    );
 }
