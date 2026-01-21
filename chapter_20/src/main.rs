@@ -1,6 +1,7 @@
 mod anagrams;
 mod coins;
 mod greedy;
+mod group;
 mod shelf;
 mod sum;
 mod swap;
@@ -77,6 +78,9 @@ fn main() {
     println!("\ns1: {s1}");
     println!("s2: {s2}");
     println!("are anagrams: {}", anagrams::are_anagrams_1(s1, s2));
-
     println!("are anagrams: {}", anagrams::are_anagrams_2(s1, s2));
+
+    let d = ['a', 'c', 'd', 'b', 'b', 'c', 'a', 'd', 'c', 'b', 'a', 'd'];
+    println!("\narray: {:?}", &d);
+    println!("grouped: {:?}", group::group_array(&d));
 }
