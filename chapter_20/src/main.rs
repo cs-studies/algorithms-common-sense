@@ -1,6 +1,7 @@
 mod anagrams;
 mod coins;
 mod exercise1;
+mod exercise2;
 mod greedy;
 mod group;
 mod shelf;
@@ -93,4 +94,18 @@ fn main() {
         "Same players: {:#?}",
         exercise1::find_same_players(&basketball_players, &football_players)
     );
+
+    let d = [2, 3, 0, 6, 1, 5];
+    println!("\narray: {:?}", d);
+    println!("Missing number: {:?}", exercise2::find_missing_number_1(&d));
+    let d = [8, 2, 3, 9, 4, 7, 5, 0, 6];
+    println!("\narray: {:?}", d);
+    println!("Missing number: {:?}", exercise2::find_missing_number_1(&d));
+
+    let d = [2, 3, 0, 6, 1, 5];
+    println!("\narray: {:?}", d);
+    println!("Missing number: {:?}", exercise2::find_missing_number_2(&d));
+    let d = [8, 2, 3, 9, 4, 7, 5, 0, 6];
+    println!("\narray: {:?}", d);
+    println!("Missing number: {:?}", exercise2::find_missing_number_2(&d));
 }
