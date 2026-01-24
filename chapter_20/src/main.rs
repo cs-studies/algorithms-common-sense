@@ -3,6 +3,7 @@ mod coins;
 mod exercise1;
 mod exercise2;
 mod exercise3;
+mod exercise4;
 mod greedy;
 mod group;
 mod shelf;
@@ -113,4 +114,11 @@ fn main() {
     let d = [10, 7, 5, 8, 11, 2, 6];
     println!("\nprices: {:?}", d);
     println!("Greatest profit: {:?}", exercise3::greatest_profit(&d));
+
+    let d = [10, 7, 5, 8];
+    println!("\nnumbers: {:?}", d);
+    println!("Greatest product: {:?}", exercise4::greatest_product(&d));
+    let d = [5, -10, -6, 9, 4];
+    println!("\nnumbers: {:?}", d);
+    println!("Greatest product: {:?}", exercise4::greatest_product(&d));
 }
