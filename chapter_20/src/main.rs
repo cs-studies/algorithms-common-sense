@@ -4,6 +4,7 @@ mod exercise1;
 mod exercise2;
 mod exercise3;
 mod exercise4;
+mod exercise5;
 mod greedy;
 mod group;
 mod shelf;
@@ -121,4 +122,11 @@ fn main() {
     let d = [5, -10, -6, 9, 4];
     println!("\nnumbers: {:?}", d);
     println!("Greatest product: {:?}", exercise4::greatest_product(&d));
+
+    let readings = [98.0, 98.0, 97.1, 99.0, 98.9, 97.8, 98.5, 98.2, 98.0, 97.1];
+    println!("\nreadings: {:?}", &readings);
+    println!(
+        "Sorted temperatures: {:?}",
+        exercise5::sort_97_to_99(&readings)
+    );
 }
