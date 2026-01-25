@@ -5,6 +5,7 @@ mod exercise2;
 mod exercise3;
 mod exercise4;
 mod exercise5;
+mod exercise6;
 mod greedy;
 mod group;
 mod shelf;
@@ -128,5 +129,19 @@ fn main() {
     println!(
         "Sorted temperatures: {:?}",
         exercise5::sort_97_to_99(&readings)
+    );
+
+    let integers = [10, 5, 12, 3, 55, 30, 4, 11, 2];
+    println!("\nintegers: {:?}", &integers);
+    println!(
+        "Longest sequence: {:?}",
+        exercise6::longest_sequence_len(&integers)
+    );
+
+    let integers = [19, 13, 15, 12, 18, 14, 17, 11];
+    println!("\nintegers: {:?}", &integers);
+    println!(
+        "Longest sequence: {:?}",
+        exercise6::longest_sequence_len(&integers)
     );
 }
